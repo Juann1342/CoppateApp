@@ -5,7 +5,6 @@
     <!--Conexion a internet-->
     <uses-permission android:name="android.permission.INTERNET" />
 
-    
     <application
         android:name=".coppateApp"
         android:allowBackup="true"
