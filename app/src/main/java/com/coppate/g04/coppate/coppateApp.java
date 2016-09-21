@@ -1,4 +1,4 @@
-package com.coppate.juan.coppate;
+package com.coppate.g04.coppate;
 import android.app.Application;
 
 //Aplicación peincipal

@@ -1,10 +1,11 @@
-package com.coppate.juan.coppate;
+package com.coppate.g04.coppate;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.coppate.g04.coppate.R;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;

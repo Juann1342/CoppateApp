@@ -1,10 +1,11 @@
-package com.coppate.juan.coppate;
+package com.coppate.g04.coppate;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.coppate.g04.coppate.R;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 
