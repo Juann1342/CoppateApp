@@ -1,9 +1,11 @@
 package com.coppate.g04.coppate;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TabHost;
 
 import com.coppate.g04.coppate.R;
 import com.facebook.AccessToken;
@@ -15,6 +17,36 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+        Resources res = getResources();
+
+        TabHost tabs=(TabHost)findViewById(android.R.id.tabhost);
+        tabs.setup();
+
+        TabHost.TabSpec spec=tabs.newTabSpec("mitab1");
+        spec.setContent(R.id.tab1);
+        spec.setIndicator("",
+                res.getDrawable(android.R.drawable.ic_menu_search));
+        tabs.addTab(spec);
+
+        spec=tabs.newTabSpec("mitab2");
+        spec.setContent(R.id.tab2);
+        spec.setIndicator("",
+                res.getDrawable(android.R.drawable.ic_input_get));
+        tabs.addTab(spec);
+
+        spec=tabs.newTabSpec("mitab3");
+        spec.setContent(R.id.tab3);
+        spec.setIndicator("SALIR",
+                res.getDrawable(android.R.drawable.ic_menu_add));
+        tabs.addTab(spec);
+
+        tabs.setCurrentTab(1);
+
+
+
 
 
         if(AccessToken.getCurrentAccessToken()==null){  //si no hay sesion iniciada pasa a la pantalla de login
@@ -30,6 +62,51 @@ public class MainActivity extends AppCompatActivity {
         LoginManager.getInstance().logOut();;
         goLoginScreen(); //cierra sesion y dirige a la pantalla de login
     }
+
+
+
+
+
+
+
+  /*  @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+
+            Toast.makeText(this,"nuevo grupo",Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        else if(id==R.id.opcion2){
+            Toast.makeText(this,"nueva difusión",Toast.LENGTH_LONG).show();
+        }
+
+        else if(id==R.id.opcion6){
+            Toast.makeText(this,"lupa",Toast.LENGTH_LONG).show();
+        }
+        else if(id==R.id.opcion7){
+            //Toast.makeText(this,"lupa",Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(MainActivity.this,Main2Activity.class);
+            startActivity(intent);
+
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+*/
 }
 
 

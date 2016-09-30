@@ -26,6 +26,7 @@ public class Login extends AppCompatActivity {
 
         loginButton = (LoginButton) findViewById(R.id.loginButton);
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
             @Override
             public void onSuccess(LoginResult loginResult) { //Si el inicio de sesion es exitoso
                 goMainScreen();
@@ -37,17 +38,18 @@ public class Login extends AppCompatActivity {
 
             }
 
-            @Override
+           @Override
             public void onError(FacebookException error) { //Muestra mensaje de que requiere conexion a internet si es que no hay.
-                Toast.makeText(getApplicationContext(),R.string.com_facebook_internet_permission_error_message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Error al iniciar sesion en facebook", Toast.LENGTH_SHORT).show();
 
 
-            }
+
+           }
         });
     }
 
     private void goMainScreen() {
-        Intent intent = new Intent(this,Login.class);
+        Intent intent = new Intent(this,MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);  //Unica pantalla en ejecución
     }
