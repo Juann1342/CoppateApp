@@ -1,9 +1,11 @@
+
 package com.coppate.g04.coppate;
 
 import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TabHost;
 
@@ -17,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
 
 
@@ -37,11 +42,21 @@ public class MainActivity extends AppCompatActivity {
                 res.getDrawable(android.R.drawable.ic_input_get));
         tabs.addTab(spec);
 
+
+
         spec=tabs.newTabSpec("mitab3");
         spec.setContent(R.id.tab3);
+        spec.setIndicator("Tab 3",
+                res.getDrawable(android.R.drawable.ic_menu_add));
+        tabs.addTab(spec);
+
+        spec=tabs.newTabSpec("mitab3");
+        spec.setContent(R.id.tab4);
         spec.setIndicator("SALIR",
                 res.getDrawable(android.R.drawable.ic_menu_add));
         tabs.addTab(spec);
+
+
 
         tabs.setCurrentTab(1);
 
