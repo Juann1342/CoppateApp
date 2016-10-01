@@ -30,30 +30,18 @@ public class MainActivity extends AppCompatActivity {
         TabHost tabs=(TabHost)findViewById(android.R.id.tabhost);
         tabs.setup();
 
-        TabHost.TabSpec spec=tabs.newTabSpec("mitab1");
+        TabHost.TabSpec spec=tabs.newTabSpec("MIS EVENTOS");
         spec.setContent(R.id.tab1);
         spec.setIndicator("",
-                res.getDrawable(android.R.drawable.ic_menu_search));
+                res.getDrawable(android.R.drawable.ic_menu_agenda));
         tabs.addTab(spec);
 
-        spec=tabs.newTabSpec("mitab2");
+
+
+        spec=tabs.newTabSpec("CERCANOS");
         spec.setContent(R.id.tab2);
         spec.setIndicator("",
-                res.getDrawable(android.R.drawable.ic_input_get));
-        tabs.addTab(spec);
-
-
-
-        spec=tabs.newTabSpec("mitab3");
-        spec.setContent(R.id.tab3);
-        spec.setIndicator("Tab 3",
-                res.getDrawable(android.R.drawable.ic_menu_add));
-        tabs.addTab(spec);
-
-        spec=tabs.newTabSpec("mitab3");
-        spec.setContent(R.id.tab4);
-        spec.setIndicator("SALIR",
-                res.getDrawable(android.R.drawable.ic_menu_add));
+                res.getDrawable(android.R.drawable.ic_menu_mylocation));
         tabs.addTab(spec);
 
 
