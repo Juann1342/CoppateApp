@@ -23,12 +23,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ce_lugarEncuentro"
+        android:hint="Lugar de Encuentro"
         android:layout_below="@+id/ce_nameEvent"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:hint="Lugar de Encuentro"
-        android:layout_alignRight="@+id/ce_spnTipoEvento"
-        android:layout_alignEnd="@+id/ce_spnTipoEvento" />
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -36,10 +34,10 @@
         android:inputType="date"
         android:ems="10"
         android:id="@+id/ce_fecha_evento"
-        android:layout_below="@+id/ce_lugarEncuentro"
+        android:hint="Fecha"
+        android:layout_below="@+id/ce_costo_evento"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:hint="Fecha" />
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -47,10 +45,10 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/ce_cupoMin"
+        android:hint="Cupo Minimo"
         android:layout_below="@+id/ce_fecha_evento"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:hint="Cupo Minimo" />
+        android:layout_alignRight="@+id/ce_nameEvent"
+        android:layout_alignEnd="@+id/ce_nameEvent" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -58,10 +56,12 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/ce_cupoMax"
-        android:layout_below="@+id/ce_cupoMin"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:hint="Cupo Maximo" />
+        android:hint="Cupo Maximo"
+        android:layout_alignTop="@+id/ce_cupoMin"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/ce_lugarEncuentro"
+        android:layout_toEndOf="@+id/ce_lugarEncuentro" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -69,12 +69,12 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/ce_edadDesde"
+        android:hint="Edad Desde"
         android:layout_below="@+id/ce_cupoMax"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:hint="Edad Desde"
-        android:layout_toLeftOf="@+id/ce_btnCrearEvento"
-        android:layout_toStartOf="@+id/ce_btnCrearEvento" />
+        android:layout_toLeftOf="@+id/ce_cupoMax"
+        android:layout_toStartOf="@+id/ce_cupoMax" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -83,11 +83,9 @@
         android:ems="10"
         android:id="@+id/ce_edadHasta"
         android:hint="Edad Hasta"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/ce_cupoMax"
-        android:layout_toEndOf="@+id/ce_cupoMax" />
+        android:layout_alignTop="@+id/ce_edadDesde"
+        android:layout_toRightOf="@+id/ce_edadDesde"
+        android:layout_toEndOf="@+id/ce_edadDesde" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -96,45 +94,83 @@
         android:ems="10"
         android:id="@+id/ce_descripEvent"
         android:hint="Descripcion del Evento"
-        android:layout_below="@+id/ce_edadHasta"
+        android:layout_below="@+id/ce_lugarEncuentro"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Crear Evento"
         android:id="@+id/ce_btnCrearEvento"
+        android:onClick="CrearEvento"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="CrearEvento" />
+        android:layout_alignRight="@+id/ce_spnSexoEvento"
+        android:layout_alignEnd="@+id/ce_spnSexoEvento"
+        android:layout_toEndOf="@+id/ce_edadDesde"
+        android:layout_toRightOf="@+id/ce_edadDesde" />
 
     <Spinner
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/ce_spnTipoEvento"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/ce_fecha_evento"
-        android:layout_toEndOf="@+id/ce_fecha_evento"
-        android:textAlignment="center" />
+        android:layout_below="@+id/ce_edadDesde"
+        android:textAlignment="viewStart"
+        android:layout_toEndOf="@+id/textView"
+        android:layout_toRightOf="@+id/textView" />
 
     <Spinner
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/ce_spnSexoEvento"
-        android:textAlignment="center"
-        android:layout_below="@+id/ce_lugarEncuentro"
-        android:layout_toRightOf="@+id/ce_fecha_evento"
-        android:layout_toEndOf="@+id/ce_fecha_evento" />
+        android:textAlignment="viewStart"
+        android:layout_below="@+id/ce_spnTipoEvento"
+        android:layout_toEndOf="@+id/ce_cupoMin"
+        android:layout_alignLeft="@+id/ce_spnTipoEvento"
+        android:layout_alignStart="@+id/ce_spnTipoEvento" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Invitar Contactos"
         android:id="@+id/ce_acceso_a_contactos"
-        android:layout_above="@+id/ce_btnCrearEvento"
+        android:layout_alignTop="@+id/ce_btnCrearEvento"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/ce_costo_evento"
+        android:hint="Costo para mostrar"
+        android:layout_below="@+id/ce_descripEvent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Tipo: "
+        android:id="@+id/textView"
+        android:layout_below="@+id/ce_edadDesde"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/ce_spnTipoEvento" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Sexo:"
+        android:id="@+id/textView3"
+        android:layout_alignTop="@+id/ce_spnSexoEvento"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/ce_spnSexoEvento"
+        android:layout_toStartOf="@+id/ce_spnTipoEvento"
+        android:layout_toLeftOf="@+id/ce_spnTipoEvento" />
 
 </RelativeLayout>

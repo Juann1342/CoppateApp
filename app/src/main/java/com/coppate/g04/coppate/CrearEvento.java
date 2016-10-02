@@ -23,11 +23,13 @@ public class CrearEvento extends AppCompatActivity {
     EditText cupo_max;
     EditText edad_desde;
     EditText edad_hasta;
+    EditText costo;
     Button btn_crear;
     Button btn_invitar_contactos;
     Spinner spn_tipo_evento;
     Spinner spn_sexo;
 
+    // estos strings los tenemos que tomar de la BD, son solo de pruebas
     String[] opciones_sexo = {"Masculino", "Femenino"};
     String[] opciones_tipo = {"Social", "Privado"};
     String sexo = "";
@@ -51,6 +53,8 @@ public class CrearEvento extends AppCompatActivity {
         cupo_max = (EditText) findViewById(R.id.ce_cupoMax);
         edad_desde = (EditText) findViewById(R.id.ce_edadDesde);
         edad_hasta = (EditText) findViewById(R.id.ce_edadHasta);
+        costo = (EditText) findViewById(R.id.ce_costo_evento);
+
         btn_crear = (Button) findViewById(R.id.ce_btnCrearEvento);
         btn_invitar_contactos = (Button) findViewById(R.id.ce_acceso_a_contactos);
 
