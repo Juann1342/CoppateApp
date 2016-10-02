@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="com.coppate.g04.coppate.CrearEvento">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ce_nameEvent"
+        android:hint="Nombre del Evento"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ce_lugarEncuentro"
+        android:layout_below="@+id/ce_nameEvent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="Lugar de Encuentro"
+        android:layout_alignRight="@+id/ce_spnTipoEvento"
+        android:layout_alignEnd="@+id/ce_spnTipoEvento" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/ce_fecha_evento"
+        android:layout_below="@+id/ce_lugarEncuentro"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="Fecha" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/ce_cupoMin"
+        android:layout_below="@+id/ce_fecha_evento"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="Cupo Minimo" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/ce_cupoMax"
+        android:layout_below="@+id/ce_cupoMin"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="Cupo Maximo" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/ce_edadDesde"
+        android:layout_below="@+id/ce_cupoMax"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="Edad Desde"
+        android:layout_toLeftOf="@+id/ce_btnCrearEvento"
+        android:layout_toStartOf="@+id/ce_btnCrearEvento" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/ce_edadHasta"
+        android:hint="Edad Hasta"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/ce_cupoMax"
+        android:layout_toEndOf="@+id/ce_cupoMax" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/ce_descripEvent"
+        android:hint="Descripcion del Evento"
+        android:layout_below="@+id/ce_edadHasta"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crear Evento"
+        android:id="@+id/ce_btnCrearEvento"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="CrearEvento" />
+
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ce_spnTipoEvento"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ce_fecha_evento"
+        android:layout_toEndOf="@+id/ce_fecha_evento"
+        android:textAlignment="center" />
+
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ce_spnSexoEvento"
+        android:textAlignment="center"
+        android:layout_below="@+id/ce_lugarEncuentro"
+        android:layout_toRightOf="@+id/ce_fecha_evento"
+        android:layout_toEndOf="@+id/ce_fecha_evento" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Invitar Contactos"
+        android:id="@+id/ce_acceso_a_contactos"
+        android:layout_above="@+id/ce_btnCrearEvento"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
