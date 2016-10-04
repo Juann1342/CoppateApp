@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         btn_crear_evento = (Button)findViewById(R.id.ma_crear_evento);
         btn_crear_evento.setOnClickListener(new View.OnClickListener() {
             @Override
