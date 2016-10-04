@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);  //dirige a la pantalla de login y ejecuta solo esa
     }
     public void logout(View view){
-        LoginManager.getInstance().logOut();;
+        LoginManager.getInstance().logOut();
         goLoginScreen(); //cierra sesion y dirige a la pantalla de login
     }
 

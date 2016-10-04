@@ -8,18 +8,6 @@
     android:orientation="vertical"
     android:background="#558445">
 
-    <include android:id="@+id/toolbar"
-        layout="@layout/toolbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Crear Evento"
-        android:id="@+id/ma_crear_evento"
-        android:layout_gravity="center_horizontal"
-        android:onClick="ma_CrearEvento" />
 
     <TabHost android:id="@android:id/tabhost"
         android:layout_width="match_parent"
@@ -48,6 +36,14 @@
                         android:text="Contenido Tab 1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Crear Evento"
+                        android:id="@+id/ma_crear_evento"
+                        android:layout_gravity="center_horizontal"
+                        android:onClick="ma_CrearEvento" />
 
                 </LinearLayout>
 
