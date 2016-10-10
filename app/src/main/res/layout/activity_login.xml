@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/fondogris"
+    android:background="@drawable/fondoicon"
     tools:context="com.coppate.g04.coppate.Login">
 
     <!--Boton que proporciona facebook-->
@@ -21,5 +21,15 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="77dp" />
+
+    <Button
+        android:text="Términos y condiciones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/button2"
+        android:backgroundTint="@drawable/com_facebook_auth_dialog_cancel_background"
+        tools:background="?attr/editTextBackground" />
 
 </RelativeLayout>
