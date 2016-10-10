@@ -78,7 +78,13 @@ public class MainActivity extends AppCompatActivity {
         LoginManager.getInstance().logOut();
         goLoginScreen(); //cierra sesion y dirige a la pantalla de login
     }
+    private void goMapa() {
+        Intent intent = new Intent(this,Mapa.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);}  //dirige a la pantalla de mapa y ejecuta solo esa
 
+    public void mapa(View view){
+        goMapa();}
 
 
 

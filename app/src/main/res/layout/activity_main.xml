@@ -8,11 +8,7 @@
     android:orientation="vertical"
     android:background="@color/cardview_shadow_end_color">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="crear evento"
-        android:id="@+id/ma_crear_evento" />
+
 
     <TabHost android:id="@android:id/tabhost"
         android:layout_width="match_parent"
@@ -20,6 +16,7 @@
 
 
         <LinearLayout
+
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
@@ -42,6 +39,11 @@
                         android:text="Contenido Tab 1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="crear evento"
+                        android:id="@+id/ma_crear_evento" />
 
 
                 </LinearLayout>
@@ -55,13 +57,20 @@
                         android:text="Contenido Tab 2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
-
                     <Button
                         android:onClick="logout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/com_facebook_loginview_log_out_action"
                         android:id="@+id/button" />
+                    <Button
+                        android:onClick="mapa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mapa"
+                        android:id="@+id/mapa" />
+
+
                 </LinearLayout>
                 <LinearLayout android:id="@+id/tab3"
                     android:orientation="vertical"
@@ -76,6 +85,7 @@
 
 
                 </LinearLayout>
+
 
 
             </FrameLayout>

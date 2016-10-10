@@ -8,6 +8,17 @@
     <!-- le damos permisos a la app para acceder a los contactos del celular -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+
+    <!-- maps -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+
     <application
         android:name=".coppateApp"
         android:allowBackup="true"
@@ -28,7 +39,17 @@
         </activity>
         <activity android:name=".Login" />
         <activity android:name=".MensajeDescargo" />
-        <activity android:name=".CrearEvento"></activity>
+        <activity android:name=".CrearEvento" />
+        <activity android:name=".Mapa"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCY1fFFskUJyQjww5Ie8srS4qEA-vWkZpA" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+
     </application>
 
 </manifest>

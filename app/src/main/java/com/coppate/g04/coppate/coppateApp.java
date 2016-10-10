@@ -1,5 +1,7 @@
 package com.coppate.g04.coppate;
 import android.app.Application;
+import android.content.Context;
+
 
 //Aplicación peincipal
 import com.facebook.FacebookSdk;
@@ -17,7 +19,8 @@ public class coppateApp extends Application {
         super.onCreate();
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
-    }
+
+}
 }
 
 
