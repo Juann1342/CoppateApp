@@ -15,6 +15,7 @@ import com.facebook.login.LoginManager;
 
 public class MainActivity extends AppCompatActivity {
 
+    // bla blab lbaa
     Button btn_crear_evento;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
