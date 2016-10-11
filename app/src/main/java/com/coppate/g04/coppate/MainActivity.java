@@ -37,8 +37,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.button) {
+            LoginManager.getInstance().logOut();
+            goLoginScreen(); //cierra sesion y dirige a la pantalla de login
+            //return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -103,10 +105,7 @@ public class MainActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);  //dirige a la pantalla de login y ejecuta solo esa
     }
-    public void logout(View view){
-        LoginManager.getInstance().logOut();
-        goLoginScreen(); //cierra sesion y dirige a la pantalla de login
-    }
+
     private void goMapa() {
         Intent intent = new Intent(this,Mapa.class);
         startActivity(intent);}  //dirige a la pantalla de mapa y ejecuta solo esa
