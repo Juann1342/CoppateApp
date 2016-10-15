@@ -8,9 +8,6 @@
 <!-- le damos permisos a la app para acceder a los contactos del celular -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
-
-
-
     <!-- maps -->
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -33,6 +30,7 @@
     <activity android:name=".Login" />
     <activity android:name=".MensajeDescargo" />
     <activity android:name=".CrearEvento" />
+    <activity android:name=".InvitarContactos" />
 
     <activity android:name="com.coppate.g04.coppate.MapsActivity" android:label="@string/title_activity_maps"/>
 

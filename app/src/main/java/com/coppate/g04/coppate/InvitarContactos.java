@@ -8,19 +8,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 
 public class InvitarContactos extends AppCompatActivity {
 
-    private static final int CONTACT_PICK_REQUEST = 1;
+    private static final int CONTACT_PICK_REQUEST = 1000;
     ListView contactsChooser;
     Button btnDone;
     TextView txtFilter;
@@ -38,7 +40,6 @@ public class InvitarContactos extends AppCompatActivity {
         txtFilter = (TextView) findViewById(R.id.txt_filter);
         txtLoadInfo = (TextView) findViewById(R.id.txt_load_progress);
 
-        ArrayList<String> lista = (ArrayList<String>) getIntent().getStringArrayListExtra("ListaContactos");
 
         contactsListAdapter = new ContactsListAdapter(this,new ContactsList());
 
@@ -134,4 +135,20 @@ public class InvitarContactos extends AppCompatActivity {
         }
 
     }
+    private void mostrarToast(String str) {
+        try {
+            Toast toast2 =
+                    Toast.makeText(getApplicationContext(),
+                            str.toString(), Toast.LENGTH_SHORT);
+
+
+            toast2.setGravity(Gravity.CENTER | Gravity.LEFT, 0, 0);
+
+            toast2.show();
+        }
+        catch (Exception e){
+            mostrarToast("Error no se ha podido mostrar el texto en pantalla");
+        }
+    }
+
 }

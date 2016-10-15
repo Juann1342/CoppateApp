@@ -137,7 +137,7 @@
         android:layout_alignTop="@+id/ce_btnCrearEvento"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:onClick="pickContact" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 
     <EditText
         android:layout_width="wrap_content"
