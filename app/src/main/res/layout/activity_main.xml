@@ -43,11 +43,11 @@
                         android:layout_height="wrap_content" />
 
                     <Button
-                        android:onClick="mapa"
+                        android:onClick="irMapa"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Mapa"
-                        android:id="@+id/mapa" />
+                        android:id="@+id/botonMapa" />
 
 
                 </LinearLayout>

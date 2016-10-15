@@ -15,8 +15,10 @@ import android.widget.TabHost;
 import com.coppate.g04.coppate.R;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
     // bla blab lbaa
     Button btn_crear_evento;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             //return true;
         }
 
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -50,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
 
 
@@ -107,11 +109,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void goMapa() {
-        Intent intent = new Intent(this,Mapa.class);
+        Intent intent = new Intent(this,MapsActivity.class);
         startActivity(intent);}  //dirige a la pantalla de mapa y ejecuta solo esa
 
-    public void mapa(View view){
+    public void irMapa(View view){
         goMapa();}
+
+
+    }
 
 
 
@@ -156,6 +161,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 */
-}
+
 
 

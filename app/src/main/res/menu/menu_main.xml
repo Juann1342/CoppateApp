@@ -6,7 +6,7 @@
 
         android:orderInCategory="100"
         android:title="Cerrar Sesión"
-        android:id="@+id/button" />
+        android:id="@+id/button"/>
     <!--android:id="@+id/action_settings"
     android:orderInCategory="100"
     android:title="settings"
