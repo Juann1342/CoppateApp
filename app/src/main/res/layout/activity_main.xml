@@ -32,15 +32,38 @@
                 android:layout_height="match_parent"
                 android:id="@android:id/tabcontent" >
 
-                <LinearLayout android:id="@+id/tab2"
+                <LinearLayout android:id="@+id/tab1"
                     android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/cardview_light_background"
+                    android:weightSum="1">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="crear evento"
+                        android:id="@+id/ma_crear_evento" />
+
+                    <TextView android:id="@+id/textView1"
+                        android:text="Listar mis eventos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/tab2"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" >
 
-                    <TextView android:id="@+id/textView2"
-                        android:text="Contenido Tab 2"
+
+                    <Button
+                        android:text="Buscar"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:id="@+id/botonBuscar" />
 
                     <Button
                         android:onClick="irMapa"
@@ -49,37 +72,10 @@
                         android:text="Mapa"
                         android:id="@+id/botonMapa" />
 
-
-                </LinearLayout>
-                <LinearLayout android:id="@+id/tab3"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:onClick="ma_CrearEvento">
-
-                    <TextView android:id="@+id/textView3"
-                        android:text="Contenido Tab 3"
+                    <TextView android:id="@+id/textView2"
+                        android:text="Lista de eventos cercanos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
-
-
-                </LinearLayout>
-
-                <LinearLayout android:id="@+id/tab1"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/cardview_light_background">
-
-                    <TextView android:id="@+id/textView1"
-                        android:text="Contenido Tab 1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="crear evento"
-                        android:id="@+id/ma_crear_evento" />
 
                 </LinearLayout>
 
