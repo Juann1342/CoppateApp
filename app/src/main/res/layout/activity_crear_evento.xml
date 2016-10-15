@@ -136,7 +136,8 @@
         android:id="@+id/ce_acceso_a_contactos"
         android:layout_alignTop="@+id/ce_btnCrearEvento"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:onClick="pickContact" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -172,5 +173,55 @@
         android:layout_alignBottom="@+id/ce_spnSexoEvento"
         android:layout_toStartOf="@+id/ce_spnTipoEvento"
         android:layout_toLeftOf="@+id/ce_spnTipoEvento" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contacto Seleccionado: "
+        android:id="@+id/textView4"
+        android:layout_below="@+id/ce_spnSexoEvento"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ce_lista_coppados"
+        android:layout_below="@+id/ce_spnSexoEvento"
+        android:layout_toRightOf="@+id/textView4"
+        android:layout_toEndOf="@+id/textView4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Numero: "
+        android:id="@+id/textView5"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ce_lista_coppados2"
+        android:layout_alignTop="@+id/textView5"
+        android:layout_toRightOf="@+id/textView5"
+        android:layout_toEndOf="@+id/textView5" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ce_lista_coppados22"
+        android:layout_below="@+id/ce_spnTipoEvento"
+        android:layout_toRightOf="@+id/textView3"
+        android:layout_toEndOf="@+id/textView3" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ce_spn_contactos_activos"
+        android:layout_below="@+id/ce_spnTipoEvento"
+        android:layout_toRightOf="@+id/textView4"
+        android:layout_toEndOf="@+id/textView4" />
 
 </RelativeLayout>
