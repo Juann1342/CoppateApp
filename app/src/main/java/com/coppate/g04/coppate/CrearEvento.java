@@ -1,6 +1,9 @@
 package com.coppate.g04.coppate;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -14,14 +17,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CrearEvento extends Activity {
 
+    private static final int CONTACT_PICKER_RESULT = 1000;
     //definimos los componenetes que va a tener la clase y que despues pueden llamarse para operar
     EditText nombre_evento;
     EditText lugar_evento;
@@ -35,16 +42,24 @@ public class CrearEvento extends Activity {
     Button btn_invitar_contactos;
     Spinner spn_tipo_evento;
     Spinner spn_sexo;
+    Spinner spn_contactos;
 
     // estos strings los tenemos que tomar de la BD, son solo de pruebas
     String[] opciones_sexo = {"Masculino", "Femenino"};
     String[] opciones_tipo = {"Social", "Privado"};
+    String[] contacts_selected = {""};
     String sexo = "";
     String tipo = "";
 
     private static final int RESULT_PICK_CONTACT = 85500;
     private TextView textView1;
     private TextView textView2;
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    //private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +74,7 @@ public class CrearEvento extends Activity {
 
         spn_tipo_evento = (Spinner) findViewById(R.id.ce_spnTipoEvento);
         spn_sexo = (Spinner) findViewById(R.id.ce_spnSexoEvento);
+        spn_contactos = (Spinner) findViewById(R.id.ce_spn_contactos_activos);
 
         nombre_evento = (EditText) findViewById(R.id.ce_nameEvent);
         lugar_evento = (EditText) findViewById(R.id.ce_lugarEncuentro);
@@ -72,20 +88,23 @@ public class CrearEvento extends Activity {
         btn_crear = (Button) findViewById(R.id.ce_btnCrearEvento);
         btn_invitar_contactos = (Button) findViewById(R.id.ce_acceso_a_contactos);
 
+
         // definimos los adaptadores de las listas que tenemos en este caso las opciones de sexo y tipo de evento
-        ArrayAdapter<String> adapt_sexo = new ArrayAdapter<String>(CrearEvento.this,android.R.layout.simple_spinner_item,opciones_sexo);
-        ArrayAdapter<String> adapt_tipo = new ArrayAdapter<String>(CrearEvento.this,android.R.layout.simple_spinner_item,opciones_tipo);
+        ArrayAdapter<String> adapt_sexo = new ArrayAdapter<String>(CrearEvento.this, android.R.layout.simple_spinner_item, opciones_sexo);
+        ArrayAdapter<String> adapt_tipo = new ArrayAdapter<String>(CrearEvento.this, android.R.layout.simple_spinner_item, opciones_tipo);
+        ArrayAdapter<String> adapt_contacts = new ArrayAdapter<String>(CrearEvento.this, android.R.layout.simple_spinner_item, contacts_selected);
 
         //seteamos los adaptadores a nuestra Lista desplegable
         spn_sexo.setAdapter(adapt_sexo);
         spn_tipo_evento.setAdapter(adapt_tipo);
+        spn_contactos.setAdapter(adapt_contacts);
 
 
         // se guarda el tipo que se ha seleccionado en la variable TIPO para una utilizacion posterior
         spn_tipo_evento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
+                switch (position) {
                     case 0:
                         tipo = parent.getItemAtPosition(position).toString();
                         break;
@@ -102,11 +121,11 @@ public class CrearEvento extends Activity {
             }
         });
 
-        spn_sexo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+        spn_sexo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
+                switch (position) {
                     case 0:
                         sexo = "Hombres";
                         break;
@@ -123,89 +142,52 @@ public class CrearEvento extends Activity {
             }
         });
 
-        /*
-        btn_invitar_contactos.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-              public void onClick(View v) {
-                Intent intent_invitCopp = new Intent(CrearEvento.this,InvitarCoppados.class);
-                startActivity(intent_invitCopp);
-            }
-        });*/
-
         //al hacer click en el boton, nos mostrara el texto en pantalla que se ha creado un evento
         // con el nombre que hemos ingresado
         btn_crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 // para mostrarlo en pantalla tipo mensaje se usa Toast
-                Toast toast2 =
-                        Toast.makeText(getApplicationContext(),
-                                "Se ha creado el evento: "+nombre_evento.getText()+" de tipo: "+tipo +  " solo para: "+sexo, Toast.LENGTH_LONG);
-
-                toast2.setGravity(Gravity.CENTER|Gravity.CENTER,0,0);
-
-                toast2.show();
+                mostrarToast("Se ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo);
                 // con la funcion FINISH cerramos la activity actual y volvemos a la activity que nos llamo
                 finish();
             }
         });
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        //client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    public void CrearEvento(View v){
-        Toast toast2=
-        Toast.makeText(getApplicationContext(),
-                "Toast con gravity", Toast.LENGTH_SHORT);
+    private void mostrarToast(String str) {
+        try {
+            Toast toast2 =
+                    Toast.makeText(getApplicationContext(),
+                            str.toString(), Toast.LENGTH_SHORT);
 
-        toast2.setGravity(Gravity.CENTER|Gravity.LEFT,0,0);
 
+            toast2.setGravity(Gravity.CENTER | Gravity.LEFT, 0, 0);
+
+            toast2.show();
+        }
+        catch (Exception e){
+            mostrarToast("Error no se ha podido mostrar el texto en pantalla");
+        }
     }
 
-    public void pickContact(View v)
-    {
+
+    public void pickContact(View v) {
+
+        /* este pedacito de codigo funciona, lo reemplazo para ver si funciona algo mas
         // creamos un StartActivityForResult para mostrar los contactos
         Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-        startActivityForResult(contactPickerIntent, RESULT_PICK_CONTACT);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // comprobamos si el resultado esta ok
-        if (resultCode == RESULT_OK) {
-            // Comprobar si el codigo de peticion, podriamos estar utilizando múltiples startActivityForResult (distinto a StartActivity)
-            switch (requestCode) {
-                case RESULT_PICK_CONTACT:
-                    contactPicked(data);
-                    break;
-            }
-        } else {
-            Log.e("MainActivity", "Failed to pick contact");
-        }
-    }
+        startActivityForResult(contactPickerIntent, RESULT_PICK_CONTACT);   */
+        ArrayList<String> milista = new ArrayList<String>();
+        Intent intent = new Intent(CrearEvento.this,InvitarContactos.class);
+        intent.putStringArrayListExtra("ListaContactos", milista);
+        startActivity(intent);
 
-    private void contactPicked(Intent data) {
-        Cursor cursor = null;
-        try {
-            String phoneNo = null ;
-            String name = null;
-            // el metodo GetData() va a tener el contenido URI del contacto seleccionado.
-            Uri uri = data.getData();
-            // consultamos el contenido de la URI
-            cursor = getContentResolver().query(uri, null, null, null, null);
-            cursor.moveToFirst();
-
-            // tomamos los indices de las columnas del numero y el nombre de los telefonos
-            int  phoneIndex =cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-
-            int  nameIndex =cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-            phoneNo = cursor.getString(phoneIndex);
-            name = cursor.getString(nameIndex);
-            // Establecemos el valor de los textviews
-            textView1.setText(name);
-            textView2.setText(phoneNo);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 }
