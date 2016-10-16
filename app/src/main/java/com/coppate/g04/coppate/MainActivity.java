@@ -49,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
             goLoginScreen(); //cierra sesion y dirige a la pantalla de login
             //return true;
         }
+        if (id == R.id.perfil){
+            goPerfil();
+
+        }
 
 
         return super.onOptionsItemSelected(item);
@@ -113,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
     private void goMapa() {
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
-    }  //dirige a la pantalla de mapa y ejecuta solo esa
+    }  //dirige a la pantalla de mapa
 
     public void irMapa(View view) {
         goMapa();
@@ -122,11 +126,18 @@ public class MainActivity extends AppCompatActivity {
     private void goBuscar() {
         Intent intent = new Intent(this, buscar_evento.class);
         startActivity(intent);
-    }  //dirige a la pantalla buscar y ejecuta solo esa
+    }  //dirige a la pantalla buscar
 
     public void irBuscar(View view) {
         goBuscar();
     }
+
+    private void goPerfil() {
+        Intent intent = new Intent(this, perfil.class);
+        startActivity(intent);
+    }  //dirige a la pantalla perfil
+
+
 
 
 }
