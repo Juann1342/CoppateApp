@@ -23,29 +23,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <RadioButton
-        android:text="Tipo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buscar_evento"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="36dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="74dp"
-        android:id="@+id/radio_tipo" />
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner_tipo"
-        android:layout_alignBottom="@+id/radio_tipo"
-        android:layout_toRightOf="@+id/radio_tipo"
-        android:layout_marginLeft="37dp"
-        android:layout_marginStart="37dp"
-        android:layout_alignRight="@+id/buscar_evento"
-        android:layout_alignEnd="@+id/buscar_evento" />
-
     <Button
         android:text="Buscar"
         android:layout_width="wrap_content"
@@ -56,32 +33,11 @@
         android:layout_marginBottom="26dp"
         android:id="@+id/buscar" />
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner_sexo"
-        android:layout_alignBottom="@+id/radio_sexo"
-        android:layout_alignLeft="@+id/spinner_tipo"
-        android:layout_alignStart="@+id/spinner_tipo"
-        android:layout_alignRight="@+id/spinner_tipo"
-        android:layout_alignEnd="@+id/spinner_tipo" />
-
-    <RadioButton
-        android:text="Sexo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/radio_sexo"
-        android:layout_below="@+id/radio_tipo"
-        android:layout_alignLeft="@+id/radio_tipo"
-        android:layout_alignStart="@+id/radio_tipo"
-        android:layout_marginTop="32dp" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:text=""
-        android:hint="edad hasta"
         android:ems="10"
         android:id="@+id/edad_hasta"
         android:layout_marginBottom="29dp"
@@ -105,15 +61,15 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:text=""
-        android:hint="edad desde"
         android:ems="10"
         android:id="@+id/edad_desde"
         android:layout_alignBaseline="@+id/edad_hasta"
         android:layout_alignBottom="@+id/edad_hasta"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/spinner_tipo"
-        android:layout_toStartOf="@+id/spinner_tipo" />
+        android:layout_toStartOf="@+id/spinner_tipo"
+        android:layout_alignRight="@+id/textView9"
+        android:layout_alignEnd="@+id/textView9" />
 
     <TextView
         android:text="edad desde"
@@ -126,18 +82,67 @@
         android:layout_marginStart="12dp"
         android:id="@+id/textView6" />
 
+    <TextView
+        android:text="Fecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView7"
+        android:layout_alignBaseline="@+id/fecha"
+        android:layout_alignBottom="@+id/fecha"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:text=""
-        android:hint="fecha"
+        android:hint="dd/mm/aa"
         android:ems="10"
         android:id="@+id/fecha"
-        android:layout_below="@+id/spinner_sexo"
-        android:layout_alignLeft="@+id/buscar_evento"
-        android:layout_alignStart="@+id/buscar_evento"
-        android:layout_marginTop="23dp" />
+        android:layout_above="@+id/edad_hasta"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="21dp" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_sexo"
+        android:layout_above="@+id/fecha"
+        android:layout_alignLeft="@+id/spinner_tipo"
+        android:layout_alignStart="@+id/spinner_tipo"
+        android:layout_marginBottom="28dp"
+        android:layout_alignRight="@+id/spinner_tipo"
+        android:layout_alignEnd="@+id/spinner_tipo" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_tipo"
+        android:layout_above="@+id/spinner_sexo"
+        android:layout_alignLeft="@+id/textView8"
+        android:layout_alignStart="@+id/textView8"
+        android:layout_marginBottom="23dp"
+        android:layout_alignRight="@+id/buscar_evento"
+        android:layout_alignEnd="@+id/buscar_evento" />
+
+    <TextView
+        android:text="Tipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/spinner_tipo"
+        android:layout_toRightOf="@+id/textView7"
+        android:layout_toEndOf="@+id/textView7"
+        android:id="@+id/textView9" />
+
+    <TextView
+        android:text="Sexo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/spinner_sexo"
+        android:layout_alignRight="@+id/textView9"
+        android:layout_alignEnd="@+id/textView9"
+        android:id="@+id/textView10" />
 
 
 </RelativeLayout>

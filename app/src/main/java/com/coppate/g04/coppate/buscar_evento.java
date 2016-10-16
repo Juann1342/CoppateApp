@@ -24,8 +24,9 @@ public class buscar_evento extends AppCompatActivity {
         // esta lista es provisional los datos lo tenemos que sacar de la BD
 
         List lista = new ArrayList();
-        lista.add("Privado");
-        lista.add("social");
+        lista.add("Deporte");
+        lista.add("Viaje");
+        lista.add("Fiesta");
 
         ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_dropdown_item_1line,lista);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
