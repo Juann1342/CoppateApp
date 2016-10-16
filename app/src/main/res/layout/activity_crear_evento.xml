@@ -224,4 +224,13 @@
         android:layout_toRightOf="@+id/textView4"
         android:layout_toEndOf="@+id/textView4" />
 
+    <Button
+        android:text="Lugar del evento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/crearEventoMapa"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ce_spn_contactos_activos"
+        android:layout_toEndOf="@+id/ce_spn_contactos_activos" />
+
 </RelativeLayout>

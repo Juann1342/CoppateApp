@@ -2,7 +2,9 @@ package com.coppate.g04.coppate;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -16,6 +18,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -66,6 +69,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.marcadorflag))
                         .anchor(0.0f, 1.0f)
                         .position(latLng));
+                Intent intent = new Intent(MapsActivity.this, CrearEvento.class);
+                startActivity(intent);
+
+
+                //obtener coordenadas
+                Projection proj = mMap.getProjection();
+                Point coord = proj.toScreenLocation(latLng);
+
+                Toast.makeText(
+                        MapsActivity.this,
+                        "Coordenadas\n"+"Latitud:"+latLng.latitude+"\n"+
+                                "Longitud:"+latLng.longitude+"\n",
+                        Toast.LENGTH_SHORT).show();
+
+
 
             }
         });

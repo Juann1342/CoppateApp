@@ -48,6 +48,7 @@ public class CrearEvento extends Activity {
     Spinner spn_tipo_evento;
     Spinner spn_sexo;
     Spinner spn_contactos;
+    Button mapaCrear;
 
     // estos strings los tenemos que tomar de la BD, son solo de pruebas
     String[] opciones_sexo = {"Masculino", "Femenino"};
@@ -96,6 +97,7 @@ public class CrearEvento extends Activity {
 
         btn_crear = (Button) findViewById(R.id.ce_btnCrearEvento);
         btn_invitar_contactos = (Button) findViewById(R.id.ce_acceso_a_contactos);
+        mapaCrear = (Button) findViewById(R.id.crearEventoMapa);
 
 
         // definimos los adaptadores de las listas que tenemos en este caso las opciones de sexo y tipo de evento
@@ -150,6 +152,17 @@ public class CrearEvento extends Activity {
                 // no hay funcion de nada.. algo siempre se selecciona
             }
         });
+
+
+        //Direcciona al mapa
+        mapaCrear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CrearEvento.this, MapsActivity.class);
+                startActivity(intent);  //pasa a pantalla de Crear Evento
+            }
+        });
+
 
         //al hacer click en el boton, nos mostrara el texto en pantalla que se ha creado un evento
         // con el nombre que hemos ingresado
