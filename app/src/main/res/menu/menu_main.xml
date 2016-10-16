@@ -7,6 +7,11 @@
         android:orderInCategory="100"
         android:title="Cerrar Sesión"
         android:id="@+id/button" />
+
+    <item
+        android:orderInCategory="100"
+        android:title="Perfil"
+        android:id="@+id/perfil" />
     <!--android:id="@+id/action_settings"
     android:orderInCategory="100"
     android:title="settings"
