@@ -69,7 +69,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.marcadorflag))
                         .anchor(0.0f, 1.0f)
                         .position(latLng));
-                Intent intent = new Intent(MapsActivity.this, CrearEvento.class);
+                Intent intent = new Intent(MapsActivity.this, CrearEvento.class); //ir a la activity crear evento
                 startActivity(intent);
 
 
@@ -92,7 +92,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public boolean onMarkerClick(Marker marker) {
                 Toast.makeText(getApplicationContext(),"Evento :)", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(MapsActivity.this, DescripcionEvento.class); //ir a descripcion del evento
+                startActivity(intent);
+
                 return false;
+
+
             }
         });
 

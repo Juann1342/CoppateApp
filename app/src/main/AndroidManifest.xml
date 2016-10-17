@@ -51,7 +51,9 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".buscar_evento" />
-        <activity android:name=".perfil"></activity>
+        <activity android:name=".perfil" />
+        <activity android:name=".DescripcionEvento" />
+        <activity android:name=".TermCond"></activity>
     </application>
 
 </manifest>

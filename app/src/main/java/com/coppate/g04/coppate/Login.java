@@ -3,6 +3,7 @@ package com.coppate.g04.coppate;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.coppate.g04.coppate.R;
@@ -59,6 +60,15 @@ public class Login extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode,data);
         callbackManager.onActivityResult(requestCode,resultCode,data);
 
+
+    }
+    private void TermAndCond(){
+        Intent intent = new Intent(this, TermCond.class);
+        startActivity(intent);
+    }
+
+    public void irTerminos(View view){
+        TermAndCond();
 
     }
 }

@@ -138,8 +138,6 @@ public class MainActivity extends AppCompatActivity {
     }  //dirige a la pantalla perfil
 
 
-
-
 }
 
 
