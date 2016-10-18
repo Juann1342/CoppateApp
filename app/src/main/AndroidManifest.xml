@@ -45,10 +45,10 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCY1fFFskUJyQjww5Ie8srS4qEA-vWkZpA" />
-        <meta-data
+            android:value="@string/google_maps_key" />
+       <!-- <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version" />-->
 
         <activity android:name=".buscar_evento" />
         <activity android:name=".perfil" />
