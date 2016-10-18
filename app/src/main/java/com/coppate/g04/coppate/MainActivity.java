@@ -5,18 +5,14 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TabHost;
 
-import com.coppate.g04.coppate.R;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -124,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void goBuscar() {
-        Intent intent = new Intent(this, buscar_evento.class);
+        Intent intent = new Intent(this, BuscarEvento.class);
         startActivity(intent);
     }  //dirige a la pantalla buscar
 

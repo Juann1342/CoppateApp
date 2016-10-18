@@ -8,7 +8,7 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.List;
 
-public class buscar_evento extends AppCompatActivity {
+public class BuscarEvento extends AppCompatActivity {
 
     // definimos los elementos que usamos en la clase
     Spinner tipo;
