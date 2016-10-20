@@ -4,6 +4,7 @@ package com.coppate.g04.coppate;
 // http://www.sachinmuralig.me/2013/11/android-simple-multi-contacts-picker.html
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -35,11 +36,15 @@ public class InvitarContactos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invitar_contactos);
 
+        //mostrarToast("Hola.. llegamos");
         contactsChooser = (ListView) findViewById(R.id.lst_contacts_chooser);
         btnDone = (Button) findViewById(R.id.btn_done);
         txtFilter = (TextView) findViewById(R.id.txt_filter);
         txtLoadInfo = (TextView) findViewById(R.id.txt_load_progress);
 
+
+        //recibimos la lista del activity anterior nombrado 'Contactos'
+        final ArrayList<ContactsList> contactoos = getIntent().getParcelableExtra("Contactos");
 
         contactsListAdapter = new ContactsListAdapter(this,new ContactsList());
 
@@ -79,15 +84,41 @@ public class InvitarContactos extends AppCompatActivity {
                 else{
 
                     Intent resultIntent = new Intent();
-
-                    resultIntent.putParcelableArrayListExtra("SelectedContacts", contactsListAdapter.selectedContactsList.contactArrayList);
+                    resultIntent.putParcelableArrayListExtra("ContactosSeleccionados", contactsListAdapter.selectedContactsList.contactArrayList);
+                    resultIntent.putExtra("contactos2", contactoos);
                     setResult(RESULT_OK,resultIntent);
-
+                    //mostrarToast("probando...");
                 }
                 finish();
 
             }
         });
+    }
+
+    // directamente no esta ingresando en OnactivityResult
+    @Override
+    public void onActivityResult(int requestCode,int resultCode,Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if(requestCode == CONTACT_PICK_REQUEST && resultCode == RESULT_OK){
+
+            ArrayList<Contact> selectedContacts = data.getParcelableArrayListExtra("ContactosSeleccionados");
+            ArrayList<Contact> agregarContactos = data.getParcelableExtra("contactos2");
+
+            String display="";
+            for(int i=0;i<selectedContacts.size();i++){
+
+                display += (i+1)+". "+selectedContacts.get(i).toString()+"\n";
+
+                agregarContactos.add(selectedContacts.get(i));
+
+            }
+            TextView contactsDisplay = null;
+            contactsDisplay.setText("Contactos Seleccionados : \n\n"+display);
+
+        }
+
     }
 
 
@@ -98,7 +129,7 @@ public class InvitarContactos extends AppCompatActivity {
             try{
                 contactsLoader.cancel(true);
             }catch (Exception e){
-
+                mostrarToast("Error no se han podido cargar los contactos");
             }
         }
         if(filter==null) filter="";
@@ -115,26 +146,7 @@ public class InvitarContactos extends AppCompatActivity {
 
 
 
-    @Override
-    public void onActivityResult(int requestCode,int resultCode,Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == CONTACT_PICK_REQUEST && resultCode == RESULT_OK){
-
-            ArrayList<Contact> selectedContacts = data.getParcelableArrayListExtra("SelectedContacts");
-
-            String display="";
-            for(int i=0;i<selectedContacts.size();i++){
-
-                display += (i+1)+". "+selectedContacts.get(i).toString()+"\n";
-
-            }
-            TextView contactsDisplay = null;
-            contactsDisplay.setText("Selected Contacts : \n\n"+display);
-
-        }
-
-    }
     private void mostrarToast(String str) {
         try {
             Toast toast2 =

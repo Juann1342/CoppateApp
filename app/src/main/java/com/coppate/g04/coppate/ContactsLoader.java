@@ -131,7 +131,7 @@ public class ContactsLoader extends AsyncTask<String,Void,Void> {
 
             if(txtProgress!=null){
                 txtProgress.setVisibility(View.VISIBLE);
-                String progressMessage = "Loading...("+loadedContactsCount+"/"+totalContactsCount+")";
+                String progressMessage = "Cargando Contactos...("+loadedContactsCount+"/"+totalContactsCount+")";
                 txtProgress.setText(progressMessage);
             }
 

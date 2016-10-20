@@ -3,10 +3,12 @@ package com.coppate.g04.coppate;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +19,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -54,12 +58,22 @@ public class CrearEvento extends Activity {
     String[] opciones_sexo = {"Masculino", "Femenino"};
     String[] opciones_tipo = {"Social", "Privado"};
     String[] contacts_selected = {""};
+    //ArrayList<String> arrayContact = new ArrayList<String>();
     String sexo = "";
     String tipo = "";
 
     private static final int RESULT_PICK_CONTACT = 85500;
+    final int CONTACT_PICK_REQUEST = 1000;
     private TextView textView1;
     private TextView textView2;
+
+    //Creamos la lista para tomar los contactos
+    ContactsListAdapter contactsListAdapter;
+    ContactsLoader contactsLoader;
+
+    // creamos variable para almacenar la lista de contactos y la inicializamos
+    ArrayList<Contact> ce_selectedContacts = new ArrayList<Contact>();
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -100,10 +114,16 @@ public class CrearEvento extends Activity {
         mapaCrear = (Button) findViewById(R.id.crearEventoMapa);
 
 
+        // creamos una variable de tipo LISTA DE CONTACTO
+        //final ContactsList contacts_list = new ContactsList();
+
         // definimos los adaptadores de las listas que tenemos en este caso las opciones de sexo y tipo de evento
         ArrayAdapter<String> adapt_sexo = new ArrayAdapter<String>(CrearEvento.this, android.R.layout.simple_spinner_item, opciones_sexo);
         ArrayAdapter<String> adapt_tipo = new ArrayAdapter<String>(CrearEvento.this, android.R.layout.simple_spinner_item, opciones_tipo);
         ArrayAdapter<String> adapt_contacts = new ArrayAdapter<String>(CrearEvento.this, android.R.layout.simple_spinner_item, contacts_selected);
+
+        //final ArrayAdapter<String> adapt_contacts = new ArrayAdapter<String>(CrearEvento.this, android.R.layout.simple_spinner_item, contacts_selected);
+        final ArrayList<ContactsList> contactos = new ArrayList<ContactsList>();
 
         //seteamos los adaptadores a nuestra Lista desplegable
         spn_sexo.setAdapter(adapt_sexo);
@@ -169,9 +189,14 @@ public class CrearEvento extends Activity {
         btn_crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                // para mostrarlo en pantalla tipo mensaje se usa Toast
-                mostrarToast("Se ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo);
-                // con la funcion FINISH cerramos la activity actual y volvemos a la activity que nos llamo
+                if(getActualListContact().size()>0) {
+                    // para mostrarlo en pantalla tipo mensaje se usa Toast
+                    mostrarToastLargo("Se ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo+"y se ha enviado una notificacion a los contactos seleccionados..");
+                    // con la funcion FINISH cerramos la activity actual y volvemos a la activity que nos llamo
+                    //mostrarToast("Se ha enviado una notificacion a los contactos seleccionados..");
+                }else{
+                    mostrarToastCorto("Se ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo);
+                }
                 finish();
             }
         });
@@ -182,31 +207,133 @@ public class CrearEvento extends Activity {
                 Intent pantalla = new Intent(getApplicationContext(), InvitarContactos.class);
                 //mostrarToast("Hasta aca llegamos");
                 try {
-                    startActivity(pantalla);
+                    pantalla.putExtra("Contactos", contactos);
+                    setResult(RESULT_OK,pantalla);
+                    CrearEvento.this.startActivityForResult(pantalla,CONTACT_PICK_REQUEST);
                 } catch (Exception e) {
-                    mostrarToast(e.toString());
+                    mostrarToastCorto(e.toString());
                 }
             }
         });
 
+
+
     }
 
-    private void mostrarToast(String str) {
+    /* ##############################################
+
+        TENGO QUE SEGUIR VIENDO EL ACTIVITY RESULT
+       QUE NO FUNCIONA
+
+       BUENO, AHORA SI FUNCIONA, SOLO TENGO QUE GUARDAR LOS DATOS DE CONTACTOS SELECCIONADOS
+
+     ##################################################*/
+
+    //este sera el resultado del activity de invitar contactos
+    // por ahora no esta funcionando
+    @Override
+    public void onActivityResult(int requestCode,int resultCode,Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //mostrarToast("Probando si toma algo de datos");
+        if(requestCode == CONTACT_PICK_REQUEST && resultCode == RESULT_OK){
+            //mostrarToast("Funciona.?");
+            try {
+                //ArrayList<Contact> selectedContacts = data.getParcelableArrayListExtra("SelectedContacts");
+                ArrayList<Contact> selectedContacts = data.getParcelableArrayListExtra("ContactosSeleccionados");
+                try {
+                    //mostrarToast("AL menos algo");
+                    String display = "";
+                    if(selectedContacts.isEmpty()){
+                        mostrarToastCorto("No se han seleccionado contactos");
+                    }
+                    Integer tama = selectedContacts.size();
+                    mostrarToastCorto("El tamaño total de los contactos seleccionados es: "+tama.toString());
+                    for (int i = 0; i < selectedContacts.size(); i++) {
+
+                        display += (i + 1) + ". " + selectedContacts.get(i).toString() + "\n";
+
+                    }
+                    guardarContactosEnVariable(selectedContacts);
+                }catch (Exception e){
+                    mostrarToastCorto("Casi.");
+                }
+                //mostrarToast(selectedContacts.get(1).toString());
+            }catch (Exception e){
+                mostrarToastCorto("No, no funciona");
+            }
+            //contactsDisplay.setText("Selected Contacts : \n\n"+display);
+
+        }
+        /*mostrarToast("Probando..");
+        if (resultCode == RESULT_OK) {
+            try{
+                ArrayList<Contact> selectedContacts = data.getParcelableArrayListExtra("Contactos");
+                mostrarToast(selectedContacts.get(2).toString());
+            }catch (Exception e){
+                mostrarToast("Fallo algo, vamo' a ver que");
+            }
+        }*/
+    }
+
+    private ArrayList<Contact> getActualListContact(){
+        return ce_selectedContacts;
+    }
+
+    private void setListContacts(ArrayList<Contact> contactos){
+
+        ce_selectedContacts = contactos;
+
+    }
+
+    private void guardarContactosEnVariable(ArrayList<Contact> contacts){
+        this.setListContacts(contacts);
+    }
+
+    private void mostrarToastLargo(String str) {
+        try {
+            Toast toast2 =
+                    Toast.makeText(getApplicationContext(),
+                            str.toString(), Toast.LENGTH_LONG);
+
+
+            toast2.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);
+
+            toast2.show();
+        } catch (Exception e) {
+            mostrarToastCorto("Error no se ha podido mostrar el texto en pantalla");
+        }
+    }
+
+    private void mostrarToastCorto(String str) {
         try {
             Toast toast2 =
                     Toast.makeText(getApplicationContext(),
                             str.toString(), Toast.LENGTH_SHORT);
 
 
-            toast2.setGravity(Gravity.CENTER | Gravity.LEFT, 0, 0);
+            toast2.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);
 
             toast2.show();
         } catch (Exception e) {
-            mostrarToast("Error no se ha podido mostrar el texto en pantalla");
+            mostrarToastCorto("Error no se ha podido mostrar el texto en pantalla");
         }
     }
 
+    /* por ahora no funciona... seria para mostrar un TOAST con mas estilo
 
+    private void textIconToast(String message, int icon, int duration) {
+        Toast toast = Toast.makeText(getApplicationContext(), message, duration);
+        View textView = toast.getView();
+        LinearLayout lay = new LinearLayout(getApplicationContext());
+        lay.setOrientation(LinearLayout.HORIZONTAL);
+        ImageView view = new ImageView(getApplicationContext());
+        view.setImageResource(icon);
+        lay.addView(view);
+        lay.addView(textView);
+        toast.setView(lay);
+        toast.show();
+    }*/
     public void pickContact() {
 
         /* este pedacito de codigo funciona, lo reemplazo para ver si funciona algo mas
@@ -220,7 +347,7 @@ public class CrearEvento extends Activity {
             pantalla.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(pantalla);
         } catch (Exception e) {
-            mostrarToast("Error, algo paso y ni idea que");
+            mostrarToastCorto("Error, algo paso y ni idea que");
         }
 
     }

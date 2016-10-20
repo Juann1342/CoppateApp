@@ -54,7 +54,7 @@
         <activity android:name=".BuscarEvento" />
         <activity android:name=".perfil" />
         <activity android:name=".DescripcionEvento" />
-        <activity android:name=".TermCond"></activity>
+        <activity android:name=".TermCond"/>
     </application>
 
 </manifest>
