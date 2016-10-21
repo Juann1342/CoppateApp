@@ -24,13 +24,24 @@
 
     <TextView
         android:onClick="irTerminos"
-        android:text="Términos y condiciones"
+        android:text="términos y condiciones"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:id="@+id/TermC"
+        android:textColor="@color/com_facebook_messenger_blue"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="21dp"
-        android:id="@+id/TermC" />
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Al iniciar sesión está aceptando los"
+        android:textSize="16dp"
+        android:textColor="@color/com_facebook_messenger_blue"
+        android:id="@+id/AceptarAlIniciar"
+        android:layout_above="@+id/TermC"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

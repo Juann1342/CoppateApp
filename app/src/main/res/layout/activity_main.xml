@@ -12,7 +12,6 @@
     android:background="@color/cardview_shadow_end_color">
 
 
-
     <TabHost android:id="@android:id/tabhost"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -39,11 +38,18 @@
                     android:background="@color/cardview_light_background"
                     android:weightSum="1">
 
-                    <Button
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="crear evento"
-                        android:id="@+id/ma_crear_evento" />
+                        android:orientation="horizontal">
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="crear evento"
+                            android:id="@+id/ma_crear_evento" />
+
+                    </LinearLayout>
+
 
                     <TextView android:id="@+id/textView1"
                         android:text="Listar mis eventos"
@@ -54,29 +60,42 @@
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/tab2"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" >
 
-
-                    <Button
-                        android:onClick="irBuscar"
-                        android:text="Buscar"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/botonBuscar" />
+                        android:orientation="horizontal">
 
-                    <Button
-                        android:onClick="irMapa"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Mapa"
-                        android:id="@+id/botonMapa" />
+                        <Button
+                            android:onClick="irBuscar"
+                            android:text="Buscar"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/botonBuscar" />
+                        <Button
+                            android:onClick="irMapa"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Mapa"
+                            android:id="@+id/botonMapa" />
+
+
+                    </LinearLayout>
+
+
+
 
                     <TextView android:id="@+id/textView2"
                         android:text="Lista de eventos cercanos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+
+
 
                 </LinearLayout>
 
@@ -85,6 +104,8 @@
 
         </LinearLayout>
     </TabHost>
+
+
 </LinearLayout>
 
     <!-- <?xml version="1.0" encoding="utf-8"?>
