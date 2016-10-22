@@ -46,15 +46,19 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-       <!-- <meta-data
+        <!--
+            <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />-->
-
+            android:value="@integer/google_play_services_version" />
+        -->
 
         <activity android:name=".BuscarEvento" />
         <activity android:name=".perfil" />
         <activity android:name=".DescripcionEvento" />
-        <activity android:name=".TermCond"/>
+        <activity android:name=".TermCond" />
+        <activity
+            android:name=".MapsActivityCercanos"
+            android:label="@string/title_activity_maps_buscar"></activity>
     </application>
 
 </manifest>

@@ -11,34 +11,20 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.LayoutAnimationController;
-import android.view.animation.TranslateAnimation;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
-    private LinearLayout botonesOcultos;
-
-    Button btnSeleccionar;
-    Button btnCancelar;
+public class MapsActivityCercanos extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
@@ -49,32 +35,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     double lat = 0.0;
     double lon = 0.0;
 
-    boolean mostrarBotones = false;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
-
-
-
-        botonesOcultos = (LinearLayout) findViewById(R.id.layBtnMap);
-
-        btnSeleccionar = (Button) findViewById(R.id.btnCrearEnUbicacion);
-
-
-
-        btnCancelar = (Button) findViewById(R.id.btnCancelarUbicacion);
-        btnCancelar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mostrarBotones=false;
-                finish();
-            }
-        });
-
+        setContentView(R.layout.activity_maps_cercanos);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -83,10 +48,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
         miUbicacion();
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -100,38 +65,51 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //marcador para eventos en el mapa
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
-            public void onMapLongClick(final LatLng latLng) {  //obtiene latitud y longitud de donde estoy pulsando
-                animar(true);
-                botonesOcultos.setVisibility(View.VISIBLE);
-                mMap.addMarker(new MarkerOptions()
+            public void onMapLongClick(LatLng latLng) {  //obtiene latitud y longitud de donde estoy pulsando
+
+                //###############USAR PARA LEVANTAR EVENTOS DE LA BD Y MARCARLOS EN EL MAPA#######
+
+             /*   mMap.addMarker(new MarkerOptions()
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.marcadorflag))
                         .anchor(0.0f, 1.0f)
                         .position(latLng));
 
 
-                btnSeleccionar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-
 
                 //obtener coordenadas
-                    Projection proj = mMap.getProjection();
-                    Point coord = proj.toScreenLocation(latLng);
+                Projection proj = mMap.getProjection();
+                Point coord = proj.toScreenLocation(latLng);
 
-                    Toast.makeText(
-                        MapsActivity.this,
+                Toast.makeText(
+                        MapsActivityCercanos.this,
                         "Coordenadas\n"+"Latitud:"+latLng.latitude+"\n"+
                                 "Longitud:"+latLng.longitude+"\n",
-                        Toast.LENGTH_SHORT).show();
-                    finish();    }
-                });
+                        Toast.LENGTH_SHORT).show(); */
+                    //###########################################//
+                Intent intent = new Intent(MapsActivityCercanos.this, CrearEvento.class); //ir a la activity crear evento
+                startActivity(intent);
 
+                finish();
 
 
 
             }
         });
+//acciones al pulsar un marcador
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Toast.makeText(getApplicationContext(),"Evento :)", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(MapsActivityCercanos.this, DescripcionEvento.class); //ir a descripcion del evento
+                startActivity(intent);
+
+                return false;
+
+
+            }
+        });
+
 
     }
 
@@ -150,7 +128,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(miUbicacion);
     }
 
-    //metodo para obtener la ubicación, se comprueba si es null para que la app no se cierre si sucede
+    //metodo para obtener mi ubicación, se comprueba si es null para que la app no se cierre si sucede
     public void actualizarUbicacion(Location location) {
         if (location != null) {
             lat = location.getLatitude();
@@ -203,29 +181,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,15000,0,locListener);
     }
 
-    private void animar(boolean mostrar)   //Metodo de animacion para mostrar / ocultar layout
-    {
-        AnimationSet set = new AnimationSet(true);
-        Animation animation;
-        if (mostrar)
-        {
-            //desde la esquina inferior derecha a la superior izquierda
-            animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-        }
-        else
-        {    //desde la esquina superior izquierda a la esquina inferior derecha
-            animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f);
-        }
-        //duración en milisegundos
-        animation.setDuration(500);
-        set.addAnimation(animation);
-        LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
-
-        botonesOcultos.setLayoutAnimation(controller);
-        botonesOcultos.startAnimation(animation);
-    }
-
-    }
-
-
+}
 

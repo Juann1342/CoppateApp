@@ -4,5 +4,6 @@
     <!-- Id de la aplicación en facebook-->
     <string name="facebook_app_id">1528095683874584</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps_buscar">Buscar evento</string>
 
 </resources>

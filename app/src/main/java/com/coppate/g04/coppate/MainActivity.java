@@ -85,16 +85,6 @@ public class MainActivity extends AppCompatActivity {
         spec.setIndicator("", getResources().getDrawable(R.drawable.buscar));
         tabs.addTab(spec);
 
-        //  spec=tabs.newTabSpec("mitab3");
-        //   spec.setContent(R.id.tab3);
-        //  spec.setIndicator("",getResources().getDrawable(R.drawable.crearevento));
-        //  tabs.addTab(spec);
-
-        /*spec=tabs.newTabSpec("mitab3");
-        spec.setContent(R.id.tab3);
-        spec.setIndicator("SALIR",
-                res.getDrawable(android.R.drawable.ic_menu_add));
-        tabs.addTab(spec);*/
 
         tabs.setCurrentTab(1);
 
@@ -111,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void goMapa() {
-        Intent intent = new Intent(this, MapsActivity.class);
+        Intent intent = new Intent(this, MapsActivityCercanos.class);
         startActivity(intent);
     }  //dirige a la pantalla de mapa
 
