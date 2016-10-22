@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/cardview_compat_inset_shadow"
+    android:paddingRight="@dimen/cardview_compat_inset_shadow"
+    android:paddingTop="@dimen/cardview_compat_inset_shadow"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity"
-    android:orientation="vertical"
-    android:background="@color/cardview_shadow_end_color">
+    android:orientation="horizontal"
+    android:background="@color/colorPrimary">
 
 
     <TabHost android:id="@android:id/tabhost"
@@ -25,39 +25,14 @@
 
             <TabWidget android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@android:id/tabs" />
+                android:id="@android:id/tabs"
+                android:background="@color/com_facebook_button_background_color_selected"
+                android:dividerPadding="1dip"
+                android:orientation="horizontal" />
 
             <FrameLayout android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@android:id/tabcontent" >
-
-                <LinearLayout android:id="@+id/tab1"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/cardview_light_background"
-                    android:weightSum="1">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <Button
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="crear evento"
-                            android:id="@+id/ma_crear_evento" />
-
-                    </LinearLayout>
-
-
-                    <TextView android:id="@+id/textView1"
-                        android:text="Listar mis eventos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-
-                </LinearLayout>
 
                 <LinearLayout android:id="@+id/tab2"
                     android:orientation="vertical"
@@ -75,14 +50,25 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:id="@+id/botonBuscar" />
+                            android:id="@+id/botonBuscar"
+                            android:background="@android:color/holo_orange_dark"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_margin="10dp" />
+
                         <Button
                             android:onClick="irMapa"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:text="Mapa"
-                            android:id="@+id/botonMapa" />
+                            android:id="@+id/botonMapa"
+                            android:background="@android:color/holo_orange_dark"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_margin="10dp" />
 
 
                     </LinearLayout>
@@ -95,6 +81,38 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
+
+
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/tab1"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="crear evento"
+                            android:id="@+id/ma_crear_evento"
+                            android:background="@android:color/holo_orange_dark"
+                            android:layout_margin="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp" />
+                    </LinearLayout>
+
+
+                    <TextView android:id="@+id/textView1"
+                        android:text="Listar mis eventos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
 
                 </LinearLayout>
