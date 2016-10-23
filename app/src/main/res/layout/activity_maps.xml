@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/mapLayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -10,22 +11,29 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:background="@color/colorAccent">
 
 
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Crear"
-            android:id="@+id/btnCrearEnUbicacion" />
+            android:text="Seleccionar"
+            android:id="@+id/btnCrearEnUbicacion"
+            android:background="@color/colorBotones"
+            android:textColor="#ffff"
+            android:layout_marginRight="2dp"/>
 
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Cancelar"
-            android:id="@+id/btnCancelarUbicacion" />
+            android:id="@+id/btnCancelarUbicacion"
+            android:background="@color/colorBotones"
+            android:textColor="#ffff"
+            android:layout_marginLeft="2dp"/>
 
     </LinearLayout>
 

@@ -26,7 +26,7 @@
             <TabWidget android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@android:id/tabs"
-                android:background="@color/com_facebook_button_background_color_selected"
+                android:background="@color/colorAccent"
                 android:dividerPadding="1dip"
                 android:orientation="horizontal" />
 
@@ -34,10 +34,49 @@
                 android:layout_height="match_parent"
                 android:id="@android:id/tabcontent" >
 
+                <LinearLayout android:id="@+id/tab1"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1"
+                        android:background="#ffff">
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="crear evento"
+                            android:id="@+id/ma_crear_evento"
+                            android:background="@color/colorBotones"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_marginBottom="10dp" />
+
+
+                    </LinearLayout>
+
+
+                    <TextView android:id="@+id/textView1"
+                        android:text="Listar mis eventos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
                 <LinearLayout android:id="@+id/tab2"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -51,11 +90,12 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:id="@+id/botonBuscar"
-                            android:background="@android:color/holo_orange_dark"
+                            android:background="@color/colorBotones"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
-                            android:layout_margin="10dp" />
+                            android:layout_margin="10dp"
+                            android:textColor="@color/colorPrimary"/>
 
                         <Button
                             android:onClick="irMapa"
@@ -64,11 +104,12 @@
                             android:layout_height="wrap_content"
                             android:text="Mapa"
                             android:id="@+id/botonMapa"
-                            android:background="@android:color/holo_orange_dark"
+                            android:background="@color/colorBotones"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
-                            android:layout_margin="10dp" />
+                            android:layout_margin="10dp"
+                            android:textColor="@color/colorPrimary"/>
 
 
                     </LinearLayout>
@@ -81,38 +122,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-
-
-                </LinearLayout>
-
-                <LinearLayout android:id="@+id/tab1"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorPrimary"
-                    >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <Button
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="crear evento"
-                            android:id="@+id/ma_crear_evento"
-                            android:background="@android:color/holo_orange_dark"
-                            android:layout_margin="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginTop="10dp" />
-                    </LinearLayout>
-
-
-                    <TextView android:id="@+id/textView1"
-                        android:text="Listar mis eventos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
 
 
                 </LinearLayout>
