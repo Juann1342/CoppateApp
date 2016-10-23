@@ -1,10 +1,9 @@
-
 package com.coppate.g04.coppate;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     // boton que redirige a la actitiy crear evento
     Button btn_crear_evento;
+    Button comentar;
 
 
     @Override
@@ -28,9 +28,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
-
-
 
 
     @Override
@@ -46,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             goLoginScreen(); //cierra sesion y dirige a la pantalla de login
             //return true;
         }
-        if (id == R.id.perfil){
+        if (id == R.id.perfil) {
             goPerfil();
 
         }
@@ -67,6 +64,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CrearEvento.class);
                 startActivity(intent);  //pasa a pantalla de Crear Evento
+            }
+        });
+        comentar = (Button) findViewById(R.id.opinion);
+        comentar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, OpinionUsuario.class);
+                startActivity(intent);
             }
         });
 

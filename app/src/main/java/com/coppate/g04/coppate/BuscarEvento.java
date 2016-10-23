@@ -1,7 +1,7 @@
 package com.coppate.g04.coppate;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -28,11 +28,11 @@ public class BuscarEvento extends AppCompatActivity {
         lista.add("Viaje");
         lista.add("Fiesta");
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_dropdown_item_1line,lista);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, lista);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tipo.setAdapter(arrayAdapter);
 
-       // tipo.setOnItemSelectedListener(); esta linea la deje porque hay que seguir cuando este la BD
+        // tipo.setOnItemSelectedListener(); esta linea la deje porque hay que seguir cuando este la BD
 
         sexo = (Spinner) findViewById(R.id.spinner_sexo);
 
@@ -44,7 +44,7 @@ public class BuscarEvento extends AppCompatActivity {
         lista1.add("Mixto");
         lista1.add("Transexual");
 
-        ArrayAdapter arrayAdapter1 = new ArrayAdapter(this,android.R.layout.simple_dropdown_item_1line,lista1);
+        ArrayAdapter arrayAdapter1 = new ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, lista1);
         arrayAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sexo.setAdapter(arrayAdapter1);
 

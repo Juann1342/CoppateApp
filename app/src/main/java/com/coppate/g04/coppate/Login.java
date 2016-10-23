@@ -1,8 +1,8 @@
 package com.coppate.g04.coppate;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -33,41 +33,43 @@ public class Login extends AppCompatActivity {
                 goMainScreen();
 
             }
+
             @Override
             public void onCancel() {
-                Toast.makeText(getApplicationContext(),R.string.com_facebook_loginview_cancel_action,Toast.LENGTH_SHORT).show(); //Muestra el mensaje de cancelado y vuelvee al login
+                Toast.makeText(getApplicationContext(), R.string.com_facebook_loginview_cancel_action, Toast.LENGTH_SHORT).show(); //Muestra el mensaje de cancelado y vuelvee al login
 
             }
 
-           @Override
+            @Override
             public void onError(FacebookException error) { //Muestra mensaje de que requiere conexion a internet si es que no hay.
-                Toast.makeText(getApplicationContext(),"Error al iniciar sesion en facebook", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Error al iniciar sesion en facebook", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
 
 
-
-           }
+            }
         });
     }
 
     private void goMainScreen() {
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);  //Unica pantalla en ejecución
     }
 
     @Override
-    protected void onActivityResult(int requestCode,int resultCode, Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-        callbackManager.onActivityResult(requestCode,resultCode,data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
 
 
     }
-    private void TermAndCond(){
+
+    private void TermAndCond() {
         Intent intent = new Intent(this, TermCond.class);
         startActivity(intent);
     }
 
-    public void irTerminos(View view){
+    public void irTerminos(View view) {
         TermAndCond();
 
     }

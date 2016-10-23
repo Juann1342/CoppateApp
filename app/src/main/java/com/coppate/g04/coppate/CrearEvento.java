@@ -1,38 +1,19 @@
 package com.coppate.g04.coppate;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Parcelable;
-import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class CrearEvento extends Activity {
@@ -85,6 +66,9 @@ public class CrearEvento extends Activity {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     //private GoogleApiClient client;
+
+    Funciones funciones = new Funciones();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -183,20 +167,18 @@ public class CrearEvento extends Activity {
             }
         });
 
-
         //al hacer click en el boton, nos mostrara el texto en pantalla que se ha creado un evento
         // con el nombre que hemos ingresado
         btn_crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if(getActualListContact().size()>0) {
+                if (getActualListContact().size() > 0) {
                     // para mostrarlo en pantalla tipo mensaje se usa Toast
-                    mostrarToastLargo("Se ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo+"y se ha enviado una notificacion a los contactos seleccionados..");
-                    // con la funcion FINISH cerramos la activity actual y volvemos a la activity que nos llamo
-                    //mostrarToast("Se ha enviado una notificacion a los contactos seleccionados..");
-                }else{
-                    mostrarToastCorto("Se ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo);
+                    funciones.mostrarToastLargo(("Se ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo + " y se ha enviado una notificacion a los contactos seleccionados.."), getApplicationContext());
+                } else {
+                    funciones.mostrarToastCorto(("Se ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo), getApplicationContext());
                 }
+                // con la funcion FINISH cerramos la activity actual y volvemos a la activity que nos llamo
                 finish();
             }
         });
@@ -208,14 +190,13 @@ public class CrearEvento extends Activity {
                 //mostrarToast("Hasta aca llegamos");
                 try {
                     pantalla.putExtra("Contactos", contactos);
-                    setResult(RESULT_OK,pantalla);
-                    CrearEvento.this.startActivityForResult(pantalla,CONTACT_PICK_REQUEST);
+                    setResult(RESULT_OK, pantalla);
+                    CrearEvento.this.startActivityForResult(pantalla, CONTACT_PICK_REQUEST);
                 } catch (Exception e) {
-                    mostrarToastCorto(e.toString());
+                    funciones.mostrarToastCorto(e.toString(), getApplicationContext());
                 }
             }
         });
-
 
 
     }
@@ -232,11 +213,11 @@ public class CrearEvento extends Activity {
     //este sera el resultado del activity de invitar contactos
     // por ahora no esta funcionando
     @Override
-    public void onActivityResult(int requestCode,int resultCode,Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         //mostrarToast("Probando si toma algo de datos");
-        if(requestCode == CONTACT_PICK_REQUEST && resultCode == RESULT_OK){
+        if (requestCode == CONTACT_PICK_REQUEST && resultCode == RESULT_OK) {
             //mostrarToast("Funciona.?");
             try {
                 //ArrayList<Contact> selectedContacts = data.getParcelableArrayListExtra("SelectedContacts");
@@ -244,23 +225,23 @@ public class CrearEvento extends Activity {
                 try {
                     //mostrarToast("AL menos algo");
                     String display = "";
-                    if(selectedContacts.isEmpty()){
-                        mostrarToastCorto("No se han seleccionado contactos");
+                    if (selectedContacts.isEmpty()) {
+                        funciones.mostrarToastCorto("No se han seleccionado contactos", getApplicationContext());
                     }
                     Integer tama = selectedContacts.size();
-                    mostrarToastCorto("El tamaño total de los contactos seleccionados es: "+tama.toString());
+                    funciones.mostrarToastCorto("El tamaño total de los contactos seleccionados es: " + tama.toString(), getApplicationContext());
                     for (int i = 0; i < selectedContacts.size(); i++) {
 
                         display += (i + 1) + ". " + selectedContacts.get(i).toString() + "\n";
 
                     }
                     guardarContactosEnVariable(selectedContacts);
-                }catch (Exception e){
-                    mostrarToastCorto("Casi.");
+                } catch (Exception e) {
+                    funciones.mostrarToastCorto("Casi.", getApplicationContext());
                 }
                 //mostrarToast(selectedContacts.get(1).toString());
-            }catch (Exception e){
-                mostrarToastCorto("No, no funciona");
+            } catch (Exception e) {
+                funciones.mostrarToastCorto("No, no funciona", getApplicationContext());
             }
             //contactsDisplay.setText("Selected Contacts : \n\n"+display);
 
@@ -276,49 +257,20 @@ public class CrearEvento extends Activity {
         }*/
     }
 
-    private ArrayList<Contact> getActualListContact(){
+    private ArrayList<Contact> getActualListContact() {
         return ce_selectedContacts;
     }
 
-    private void setListContacts(ArrayList<Contact> contactos){
+    private void setListContacts(ArrayList<Contact> contactos) {
 
         ce_selectedContacts = contactos;
 
     }
 
-    private void guardarContactosEnVariable(ArrayList<Contact> contacts){
+    private void guardarContactosEnVariable(ArrayList<Contact> contacts) {
         this.setListContacts(contacts);
     }
 
-    private void mostrarToastLargo(String str) {
-        try {
-            Toast toast2 =
-                    Toast.makeText(getApplicationContext(),
-                            str.toString(), Toast.LENGTH_LONG);
-
-
-            toast2.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);
-
-            toast2.show();
-        } catch (Exception e) {
-            mostrarToastCorto("Error no se ha podido mostrar el texto en pantalla");
-        }
-    }
-
-    private void mostrarToastCorto(String str) {
-        try {
-            Toast toast2 =
-                    Toast.makeText(getApplicationContext(),
-                            str.toString(), Toast.LENGTH_SHORT);
-
-
-            toast2.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);
-
-            toast2.show();
-        } catch (Exception e) {
-            mostrarToastCorto("Error no se ha podido mostrar el texto en pantalla");
-        }
-    }
 
     /* por ahora no funciona... seria para mostrar un TOAST con mas estilo
 
@@ -347,7 +299,7 @@ public class CrearEvento extends Activity {
             pantalla.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(pantalla);
         } catch (Exception e) {
-            mostrarToastCorto("Error, algo paso y ni idea que");
+            funciones.mostrarToastCorto("Error, algo paso y ni idea que", getApplicationContext());
         }
 
     }

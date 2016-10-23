@@ -3,19 +3,20 @@ package com.coppate.g04.coppate;
 /**
  * Created by Jul-note on 14/10/2016.
  */
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
 
 public class Contact implements Parcelable {
 
-    public String id,name,phone,label;
+    public String id, name, phone, label;
 
-    Contact(String id, String name,String phone,String label){
-        this.id=id;
-        this.name=name;
-        this.phone=phone;
-        this.label=label;
+    Contact(String id, String name, String phone, String label) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.label = label;
     }
 
     protected Contact(Parcel in) {
@@ -38,9 +39,8 @@ public class Contact implements Parcelable {
     };
 
     @Override
-    public String toString()
-    {
-        return name+" | "+label+" : "+phone;
+    public String toString() {
+        return name + " | " + label + " : " + phone;
     }
 
     @Override

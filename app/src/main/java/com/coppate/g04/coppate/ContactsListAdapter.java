@@ -16,31 +16,29 @@ import java.util.ArrayList;
 public class ContactsListAdapter extends BaseAdapter {
 
     InvitarContactos context;
-    ContactsList contactsList,filteredContactsList,selectedContactsList;
+    ContactsList contactsList, filteredContactsList, selectedContactsList;
     String filterContactName;
 
-    ContactsListAdapter(InvitarContactos context, ContactsList contactsList){
+    ContactsListAdapter(InvitarContactos context, ContactsList contactsList) {
 
         super();
         this.context = context;
         this.contactsList = contactsList;
-        this.filteredContactsList=new ContactsList();
+        this.filteredContactsList = new ContactsList();
         this.selectedContactsList = new ContactsList();
         this.filterContactName = "";
     }
 
-    public void filter(String filterContactName){
-
+    public void filter(String filterContactName) {
 
 
         filteredContactsList.contactArrayList.clear();
 
-        if(filterContactName.isEmpty() || filterContactName.length()<1){
+        if (filterContactName.isEmpty() || filterContactName.length() < 1) {
             filteredContactsList.contactArrayList.addAll(contactsList.contactArrayList);
             this.filterContactName = "";
 
-        }
-        else {
+        } else {
             this.filterContactName = filterContactName.toLowerCase().trim();
             for (int i = 0; i < contactsList.contactArrayList.size(); i++) {
 
@@ -52,7 +50,7 @@ public class ContactsListAdapter extends BaseAdapter {
 
     }
 
-    public void addContacts(ArrayList<Contact> contacts){
+    public void addContacts(ArrayList<Contact> contacts) {
         this.contactsList.contactArrayList.addAll(contacts);
         this.filter(this.filterContactName);
 
@@ -78,8 +76,8 @@ public class ContactsListAdapter extends BaseAdapter {
 
         ViewHolder viewHolder = null;
 
-        if(convertView==null){
-            LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+        if (convertView == null) {
+            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 
             convertView = inflater.inflate(R.layout.contact_item, parent, false);
 
@@ -87,7 +85,7 @@ public class ContactsListAdapter extends BaseAdapter {
             viewHolder.chkContact = (CheckBox) convertView.findViewById(R.id.chk_contact);
             convertView.setTag(viewHolder);
 
-        }else {
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
@@ -100,10 +98,9 @@ public class ContactsListAdapter extends BaseAdapter {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Contact contact = filteredContactsList.getContact(buttonView.getId());
 
-                if(contact!=null && isChecked && !alreadySelected(contact)){
+                if (contact != null && isChecked && !alreadySelected(contact)) {
                     selectedContactsList.addContact(contact);
-                }
-                else if(contact!=null && !isChecked){
+                } else if (contact != null && !isChecked) {
                     selectedContactsList.removeContact(contact);
                 }
             }
@@ -112,15 +109,14 @@ public class ContactsListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public boolean alreadySelected(Contact contact)
-    {
-        if(this.selectedContactsList.getContact(Integer.parseInt(contact.id))!=null)
+    public boolean alreadySelected(Contact contact) {
+        if (this.selectedContactsList.getContact(Integer.parseInt(contact.id)) != null)
             return true;
 
         return false;
     }
 
-    public static class ViewHolder{
+    public static class ViewHolder {
 
         CheckBox chkContact;
     }
