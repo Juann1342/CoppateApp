@@ -30,10 +30,14 @@ public class InvitarContactos extends AppCompatActivity {
     ContactsListAdapter contactsListAdapter;
     ContactsLoader contactsLoader;
 
+    Funciones funciones;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invitar_contactos);
+
+        funciones = new Funciones(getApplicationContext());
 
         contactsChooser = (ListView) findViewById(R.id.lst_contacts_chooser);
         btnDone = (Button) findViewById(R.id.btn_done);
@@ -125,7 +129,7 @@ public class InvitarContactos extends AppCompatActivity {
             try {
                 contactsLoader.cancel(true);
             } catch (Exception e) {
-                mostrarToast("Error no se han podido cargar los contactos");
+                funciones.mostrarToastCorto("Error no se han podido cargar los contactos");
             }
         }
         if (filter == null) filter = "";
