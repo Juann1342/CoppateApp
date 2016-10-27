@@ -75,6 +75,8 @@ public class CrearEvento extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /* tratando de darle movimiento entre las pantallas
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);*/
         setContentView(R.layout.activity_crear_evento);
 
         funciones = new Funciones(getApplicationContext());
@@ -181,7 +183,7 @@ public class CrearEvento extends Activity {
                     funciones.mostrarToastLargo(("Se ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo + " y se ha enviado una notificacion a los contactos seleccionados.."));
                 } else {
                     funciones.mostrarToastCorto(("Se ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo));
-                    funciones.playSound(arg0);
+                    funciones.playSoundGotaAgua(arg0);
                 }
                 // con la funcion FINISH cerramos la activity actual y volvemos a la activity que nos llamo
                 finish();
@@ -197,6 +199,10 @@ public class CrearEvento extends Activity {
                     pantalla.putExtra("Contactos", contactos);
                     setResult(RESULT_OK, pantalla);
                     CrearEvento.this.startActivityForResult(pantalla, CONTACT_PICK_REQUEST);
+
+                    /* Apply our splash exit (fade out) and main
+                        entry (fade in) animation transitions. */
+                    //overridePendingTransition(R.anim.mainfadein,R.anim.splashfadeout);
                 } catch (Exception e) {
                     funciones.mostrarToastCorto(e.toString());
                 }

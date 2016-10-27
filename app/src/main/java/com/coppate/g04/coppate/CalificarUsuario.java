@@ -37,6 +37,7 @@ public class CalificarUsuario extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_calificar_usuario);
 
         // le seteamos el contexto a las funciones generales

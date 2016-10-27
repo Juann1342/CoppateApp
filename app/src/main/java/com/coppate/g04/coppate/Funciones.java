@@ -39,6 +39,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static com.coppate.g04.coppate.R.raw.gotaagua;
 import static com.coppate.g04.coppate.R.raw.pajaros;
 
 /**
@@ -92,8 +93,8 @@ public class Funciones implements Parcelable {
         }
     }
 
-    public void playSound(View v) {
-        MediaPlayer mp = MediaPlayer.create(getContexto(), R.raw.pajaros);
+    public void playSoundGotaAgua(View v) {
+        MediaPlayer mp = MediaPlayer.create(getContexto(), R.raw.gotaagua);
         mp.start();
     }
 

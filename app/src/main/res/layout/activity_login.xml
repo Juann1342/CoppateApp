@@ -41,8 +41,6 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
                 android:layout_marginBottom="77dp" />
         </LinearLayout>
 
@@ -50,24 +48,26 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1.08">
-
-            <TextView
-                android:onClick="irTerminos"
-                android:text="términos y condiciones"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16dp"
-                android:id="@+id/TermC"
-                android:textColor="@color/com_facebook_messenger_blue"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true" />
+            android:layout_weight="1.08"
+            android:weightSum="1"
+            android:textAlignment="center">
 
             <CheckBox
                 android:text="Al iniciar sesión está aceptando los términos y condiciones"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/al_acepta_terminos" />
+                android:id="@+id/al_acepta_terminos"
+                android:layout_weight="0.47" />
+
+            <TextView
+                android:onClick="irTerminos"
+                android:text="Términos y condiciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:id="@+id/TermC"
+                android:textColor="@color/com_facebook_messenger_blue"
+                android:textAlignment="center" />
 
         </LinearLayout>
 

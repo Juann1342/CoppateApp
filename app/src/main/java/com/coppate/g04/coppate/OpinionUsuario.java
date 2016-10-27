@@ -33,6 +33,7 @@ public class OpinionUsuario extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_opinion_usuario);
 
         funciones  = new Funciones(getApplicationContext());

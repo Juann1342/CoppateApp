@@ -56,9 +56,7 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onSuccess(LoginResult loginResult) { //Si el inicio de sesion es exitoso
-
                 goMainScreen();
-
             }
 
             @Override

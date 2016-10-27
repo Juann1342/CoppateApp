@@ -39,26 +39,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/colorPrimary"
-                    >
+                    android:weightSum="1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="1"
-                        android:background="#ffff">
+                        android:background="#ffff"
+                        android:layout_weight="0.06">
 
                         <Button
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="crear evento"
+                            android:layout_width="72dp"
+                            android:layout_height="63dp"
+                            android:text="+"
+                            android:textSize="50px"
                             android:id="@+id/ma_crear_evento"
-                            android:background="@color/colorBotones"
                             android:layout_marginLeft="30dp"
                             android:layout_marginRight="30dp"
                             android:layout_marginTop="10dp"
                             android:textColor="@color/colorPrimary"
-                            android:layout_marginBottom="10dp" />
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/boton_redondo" />
 
 
                     </LinearLayout>
