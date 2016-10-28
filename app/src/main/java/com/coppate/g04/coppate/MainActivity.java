@@ -129,6 +129,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }  //dirige a la pantalla perfil
 
+    public void irPrueba(View view) {
+        goPrueba();
+    }
+
+    private void goPrueba() {
+        Intent intent = new Intent(this, PruebaActivity.class);
+        startActivity(intent);
+    }  //dirige a la pantalla prueba
+
 
 }
 

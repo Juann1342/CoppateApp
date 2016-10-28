@@ -1,8 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
+
     compileSdkVersion 24
     buildToolsVersion '24.0.2'
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId 'com.coppate.g04.coppate'
         minSdkVersion 16
@@ -42,4 +44,5 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:9.6.1'
     compile 'com.google.android.gms:play-services-appindexing:9.6.1'
     testCompile 'junit:junit:4.12'
+    compile 'com.loopj.android:android-async-http:1.4.5'
 }

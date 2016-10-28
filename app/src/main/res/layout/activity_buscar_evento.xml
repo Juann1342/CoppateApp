@@ -14,7 +14,7 @@
     <TextView
         android:text="Buscar Evento"
         android:layout_width="202dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/activity_vertical_margin"
         android:id="@+id/buscar_evento"
         android:layout_marginLeft="54dp"
         android:layout_marginStart="54dp"
@@ -23,89 +23,19 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <Button
-        android:text="Buscar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/buscar_evento"
-        android:layout_alignEnd="@+id/buscar_evento"
-        android:layout_marginBottom="26dp"
-        android:id="@+id/buscar" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text=""
-        android:ems="10"
-        android:id="@+id/edad_hasta"
-        android:layout_marginBottom="29dp"
-        android:layout_alignBottom="@+id/textView8"
-        android:layout_alignRight="@+id/buscar"
-        android:layout_alignEnd="@+id/buscar"
-        android:layout_alignLeft="@+id/spinner_sexo"
-        android:layout_alignStart="@+id/spinner_sexo" />
-
     <TextView
-        android:text="Edad desde"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView8"
-        android:layout_marginBottom="25dp"
-        android:layout_above="@+id/buscar"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text=""
-        android:ems="10"
-        android:id="@+id/edad_desde"
-        android:layout_alignBaseline="@+id/edad_hasta"
-        android:layout_alignBottom="@+id/edad_hasta"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/spinner_tipo"
-        android:layout_alignRight="@+id/textView9"
-        android:layout_alignEnd="@+id/textView9" />
-
-    <TextView
-        android:text="edad desde"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView8"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"
-        android:id="@+id/textView6" />
-
-    <TextView
-        android:text="Fecha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView7"
-        android:layout_alignBaseline="@+id/fecha"
-        android:layout_alignBottom="@+id/fecha"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text=""
-        android:hint="dd/mm/aa"
-        android:ems="10"
-        android:id="@+id/fecha"
-        android:layout_above="@+id/edad_hasta"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="21dp" />
+        android:text="Sexo"
+        android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_normal"
+        android:layout_height="@dimen/activity_vertical_margin"
+        android:layout_alignBottom="@+id/spinner_sexo"
+        android:id="@+id/textView10"
+        android:layout_alignLeft="@+id/textView9"
+        android:layout_alignStart="@+id/textView9"
+        android:layout_alignRight="@+id/textView6"
+        android:layout_alignEnd="@+id/textView6" />
 
     <Spinner
-        android:layout_width="match_parent"
+        android:layout_width="@android:dimen/notification_large_icon_height"
         android:layout_height="wrap_content"
         android:id="@+id/spinner_sexo"
         android:layout_above="@+id/fecha"
@@ -115,34 +45,110 @@
         android:layout_alignRight="@+id/spinner_tipo"
         android:layout_alignEnd="@+id/spinner_tipo" />
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner_tipo"
-        android:layout_above="@+id/spinner_sexo"
+    <TextView
+        android:text="Fecha"
+        android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_normal"
+        android:layout_height="@dimen/activity_vertical_margin"
+        android:id="@+id/textView7"
+        android:layout_alignBaseline="@+id/fecha"
+        android:layout_alignBottom="@+id/fecha"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_normal"
+        android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_small"
+        android:inputType="textPersonName"
+        android:text=""
+        android:ems="10"
+        android:id="@+id/edad_desde"
+        android:layout_alignBaseline="@+id/edad_hasta"
+        android:layout_alignBottom="@+id/edad_hasta"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/spinner_tipo"
+        android:layout_alignRight="@+id/textView7"
+        android:layout_alignEnd="@+id/textView7" />
+
+    <EditText
+        android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_normal"
+        android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_small"
+        android:inputType="textPersonName"
+        android:text=""
+        android:ems="10"
+        android:id="@+id/edad_hasta"
+        android:layout_marginBottom="29dp"
+        android:layout_alignBottom="@+id/textView8"
+        android:layout_alignRight="@+id/buscar"
+        android:layout_alignEnd="@+id/buscar"
         android:layout_alignLeft="@+id/textView8"
-        android:layout_alignStart="@+id/textView8"
-        android:layout_marginBottom="23dp"
+        android:layout_alignStart="@+id/textView8" />
+
+    <TextView
+        android:text="edad desde"
+        android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_normal"
+        android:layout_height="@dimen/activity_vertical_margin"
+        android:layout_alignTop="@+id/textView8"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:id="@+id/textView6" />
+
+    <Button
+        android:text="Buscar"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/buscar_evento"
-        android:layout_alignEnd="@+id/buscar_evento" />
+        android:layout_alignEnd="@+id/buscar_evento"
+        android:layout_marginBottom="26dp"
+        android:id="@+id/buscar"
+        android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_small" />
+
+    <TextView
+        android:text="Edad hasta"
+        android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_normal"
+        android:layout_height="@dimen/activity_vertical_margin"
+        android:id="@+id/textView8"
+        android:layout_marginBottom="23dp"
+        android:layout_above="@+id/buscar"
+        android:layout_alignRight="@+id/buscar"
+        android:layout_alignEnd="@+id/buscar" />
 
     <TextView
         android:text="Tipo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/spinner_tipo"
-        android:layout_toRightOf="@+id/textView7"
-        android:layout_toEndOf="@+id/textView7"
-        android:id="@+id/textView9" />
+        android:layout_height="@dimen/activity_vertical_margin"
+        android:id="@+id/textView9"
+        android:layout_above="@+id/spinner_sexo"
+        android:layout_marginBottom="22dp"
+        android:layout_alignRight="@+id/textView6"
+        android:layout_alignEnd="@+id/textView6"
+        android:layout_alignLeft="@+id/buscar_evento"
+        android:layout_alignStart="@+id/buscar_evento"
+        android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_normal" />
 
-    <TextView
-        android:text="Sexo"
-        android:layout_width="wrap_content"
+    <Spinner
+        android:layout_width="@android:dimen/notification_large_icon_height"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/spinner_sexo"
-        android:layout_alignRight="@+id/textView9"
-        android:layout_alignEnd="@+id/textView9"
-        android:id="@+id/textView10" />
+        android:id="@+id/spinner_tipo"
+        android:layout_alignTop="@+id/textView9"
+        android:layout_toRightOf="@+id/textView9"
+        android:layout_toEndOf="@+id/textView9"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp" />
+
+    <EditText
+        android:layout_width="@android:dimen/thumbnail_height"
+        android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_small"
+        android:inputType="textPersonName"
+        android:text=""
+        android:hint="dd/mm/aa"
+        android:ems="10"
+        android:id="@+id/fecha"
+        android:layout_marginBottom="21dp"
+        android:layout_above="@+id/edad_hasta"
+        android:layout_alignRight="@+id/edad_hasta"
+        android:layout_alignEnd="@+id/edad_hasta" />
 
 
 </RelativeLayout>

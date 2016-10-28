@@ -61,6 +61,7 @@
                             android:layout_marginBottom="10dp" />
 
 
+
                     </LinearLayout>
 
 
@@ -68,6 +69,14 @@
                         android:text="Listar mis eventos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+
+                    <Button
+
+                        android:onClick="irPrueba"
+                        android:text="Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/button2" />
 
 
                 </LinearLayout>
