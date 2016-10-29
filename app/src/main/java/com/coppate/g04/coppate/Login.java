@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.coppate.g04.coppate.R;
@@ -17,21 +18,45 @@ public class Login extends AppCompatActivity {
     private LoginButton loginButton;        //Botón y volver atrás como atributos
     private CallbackManager callbackManager;
 
+    // checkbox para terminos y condiciones
+    private Boolean acepta_terminos;
+    private CheckBox ckb_term;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // se inicializa en false
+        acepta_terminos = false;
+
+        ckb_term = (CheckBox) findViewById(R.id.al_acepta_terminos);
         callbackManager = CallbackManager.Factory.create();
 
         loginButton = (LoginButton) findViewById(R.id.loginButton);
+        loginButton.setEnabled(false);
+
+        // se agrega la validacion de terminos y condiciones
+        // si el usuario acepta los terminos, se le habilita la opcion de logeo
+        ckb_term.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(acepta_terminos == false){
+                    acepta_terminos = true;
+                    loginButton.setEnabled(acepta_terminos);
+                }
+                else if(acepta_terminos == true){
+                    acepta_terminos = false;
+                    loginButton.setEnabled(acepta_terminos);
+                }
+            }
+        });
+
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
             @Override
             public void onSuccess(LoginResult loginResult) { //Si el inicio de sesion es exitoso
                 goMainScreen();
-
             }
 
             @Override

@@ -28,12 +28,15 @@ public class OpinionUsuario extends Activity {
     ArrayList<String> coments_list = new ArrayList<String>();
     ArrayList<Integer> punt_list = new ArrayList<Integer>();
 
-    Funciones funciones = new Funciones();
+    Funciones funciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_opinion_usuario);
+
+        funciones  = new Funciones(getApplicationContext());
 
         // esta puntuacion tiene que hacerla de un promedio de la base de datos de calificaciones de usuario
         punt = 0;

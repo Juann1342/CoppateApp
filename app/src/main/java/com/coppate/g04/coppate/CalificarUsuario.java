@@ -28,7 +28,7 @@ public class CalificarUsuario extends Activity {
     Button comentar;
     EditText comentario;
     Integer puntuacion;
-    Funciones funciones = new Funciones();
+    Funciones funciones;
     String coments;
     Bundle b;
 
@@ -37,7 +37,11 @@ public class CalificarUsuario extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_calificar_usuario);
+
+        // le seteamos el contexto a las funciones generales
+        funciones =  new Funciones(getApplicationContext());
 
         // la variable Bundle nos sirve para recuperar lo que nos mandaron desde la otra activity
         b = getIntent().getExtras();
@@ -111,7 +115,7 @@ public class CalificarUsuario extends Activity {
                 try {
                     //comentario_actual[0] = comentario.getText().toString();
                     if (puntuacion == 0) {
-                        funciones.mostrarToastCorto("No se ha seleccionado una puntuacion", getApplicationContext());
+                        funciones.mostrarToastCorto("No se ha seleccionado una puntuacion");
                     }
                     else {
                         Intent resultIntent = new Intent();
@@ -121,7 +125,7 @@ public class CalificarUsuario extends Activity {
                         finish();
                     }
                 }catch (Exception e){
-                    funciones.mostrarToastCorto("Error", getApplicationContext());
+                    funciones.mostrarToastCorto("Error");
                 }
             }
         });

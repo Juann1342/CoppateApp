@@ -10,8 +10,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.coppate.g04.coppate.Constantes;
+import com.coppate.g04.coppate.VolleySingleton;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import java.util.ArrayList;
 
@@ -36,7 +53,7 @@ public class CrearEvento extends Activity {
     Button mapaCrear;
 
     // estos strings los tenemos que tomar de la BD, son solo de pruebas
-    String[] opciones_sexo = {"Masculino", "Femenino"};
+    String[] opciones_sexo = {"Masculino", "Femenino", "Indiferente"};
     String[] opciones_tipo = {"Social", "Privado"};
     String[] contacts_selected = {""};
     //ArrayList<String> arrayContact = new ArrayList<String>();
@@ -67,12 +84,16 @@ public class CrearEvento extends Activity {
      */
     //private GoogleApiClient client;
 
-    Funciones funciones = new Funciones();
+    Funciones funciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /* tratando de darle movimiento entre las pantallas
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);*/
         setContentView(R.layout.activity_crear_evento);
+
+        funciones = new Funciones(getApplicationContext());
 
         textView1 = (TextView) findViewById(R.id.ce_lista_coppados);
         textView2 = (TextView) findViewById(R.id.ce_lista_coppados2);
@@ -157,7 +178,6 @@ public class CrearEvento extends Activity {
             }
         });
 
-
         //Direcciona al mapa
         mapaCrear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,14 +194,17 @@ public class CrearEvento extends Activity {
             public void onClick(View arg0) {
                 if (getActualListContact().size() > 0) {
                     // para mostrarlo en pantalla tipo mensaje se usa Toast
-                    funciones.mostrarToastLargo(("Se ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo + " y se ha enviado una notificacion a los contactos seleccionados.."), getApplicationContext());
+                    funciones.mostrarToastLargo(("Se ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo + " y se ha enviado una notificacion a los contactos seleccionados.."));
                 } else {
-                    funciones.mostrarToastCorto(("Se ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo), getApplicationContext());
+                    funciones.mostrarToastCorto(("Se ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo));
+                    funciones.playSoundGotaAgua(arg0);
                 }
+                guardarEvento(); // Crucen los dedos
                 // con la funcion FINISH cerramos la activity actual y volvemos a la activity que nos llamo
                 finish();
             }
         });
+
 
         btn_invitar_contactos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,14 +215,133 @@ public class CrearEvento extends Activity {
                     pantalla.putExtra("Contactos", contactos);
                     setResult(RESULT_OK, pantalla);
                     CrearEvento.this.startActivityForResult(pantalla, CONTACT_PICK_REQUEST);
+
+                    /* Apply our splash exit (fade out) and main
+                        entry (fade in) animation transitions. */
+                    //overridePendingTransition(R.anim.mainfadein,R.anim.splashfadeout);
                 } catch (Exception e) {
-                    funciones.mostrarToastCorto(e.toString(), getApplicationContext());
+                    funciones.mostrarToastCorto(e.toString());
                 }
             }
         });
 
 
     }
+
+    /**
+     * Guarda un evento en la DB
+     * Acá puede empezar a romper.
+     * Comienza zona de rotura.
+     */
+    public void guardarEvento() {
+
+        HashMap<String, String> map = new HashMap<>();// Mapeo previo
+
+        map.put("id_owner", "1");
+        map.put("edad_min", edad_desde.getText().toString());
+        map.put("edad_max", edad_hasta.getText().toString());
+        map.put("cupo_min", cupo_min.getText().toString());
+        map.put("cupo_max", cupo_max.getText().toString());
+        map.put("fecha", "2016-10-17"); //Solo para probar.
+        map.put("foto", "NULL");
+        map.put("ubicacion", lugar_evento.getText().toString());
+        map.put("latitud", "166.123");
+        map.put("longitud", "99.333");
+        map.put("id_categoria", "1");
+        map.put("desc_evento", "Prueba conexión con DB");
+        map.put("id_sexo", "1");
+
+        // Crear nuevo objeto Json basado en el mapa
+        JSONObject jobject = new JSONObject(map);
+
+
+        // Actualizar datos en el servidor
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(
+                new JsonObjectRequest(
+                        Request.Method.POST,
+                        Constantes.INSERT,
+                        jobject,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                // Procesar la respuesta del servidor
+                                procesarRespuesta(response);
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                funciones.mostrarToastCorto(("Error Volley: " + error.getMessage()));
+                            }
+                        }
+
+                ) {
+                    @Override
+                    public Map<String, String> getHeaders() {
+                        Map<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json; charset=utf-8");
+                        headers.put("Accept", "application/json");
+                        return headers;
+                    }
+
+                    @Override
+                    public String getBodyContentType() {
+                        return "application/json; charset=utf-8" + getParamsEncoding();
+                    }
+                }
+        );
+
+    }
+
+    /**
+     * Procesa la respuesta obtenida desde el sevidor
+     *
+     * @param response Objeto Json
+     */
+    private void procesarRespuesta(JSONObject response) {
+
+        try {
+            // Obtener estado
+            String estado = response.getString("estado");
+            // Obtener mensaje
+            String mensaje = response.getString("mensaje");
+
+            switch (estado) {
+                case "1":
+                    // Mostrar mensaje
+                    Toast.makeText(
+                            getApplicationContext(),
+                            mensaje,
+                            Toast.LENGTH_LONG).show();
+                    // Enviar código de éxito
+                    //getApplicationContext().setResult(Activity.RESULT_OK);
+                    // Terminar actividad
+                    //getApplicationContext().finish();
+                    break;
+
+                case "2":
+                    // Mostrar mensaje
+                    Toast.makeText(
+                            getApplicationContext(),
+                            mensaje,
+                            Toast.LENGTH_LONG).show();
+                    // Enviar código de falla
+                    //getApplicationContext().setResult(Activity.RESULT_CANCELED);
+                    // Terminar actividad
+                    //View.getContext().finish();
+                    break;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Guarda un evento en la DB
+     * Fin de la zona de rotura.
+     */
+
 
     /* ##############################################
 
@@ -226,10 +368,10 @@ public class CrearEvento extends Activity {
                     //mostrarToast("AL menos algo");
                     String display = "";
                     if (selectedContacts.isEmpty()) {
-                        funciones.mostrarToastCorto("No se han seleccionado contactos", getApplicationContext());
+                        funciones.mostrarToastCorto("No se han seleccionado contactos");
                     }
                     Integer tama = selectedContacts.size();
-                    funciones.mostrarToastCorto("El tamaño total de los contactos seleccionados es: " + tama.toString(), getApplicationContext());
+                    funciones.mostrarToastCorto("El tamaño total de los contactos seleccionados es: " + tama.toString());
                     for (int i = 0; i < selectedContacts.size(); i++) {
 
                         display += (i + 1) + ". " + selectedContacts.get(i).toString() + "\n";
@@ -237,11 +379,11 @@ public class CrearEvento extends Activity {
                     }
                     guardarContactosEnVariable(selectedContacts);
                 } catch (Exception e) {
-                    funciones.mostrarToastCorto("Casi.", getApplicationContext());
+                    funciones.mostrarToastCorto("Casi.");
                 }
                 //mostrarToast(selectedContacts.get(1).toString());
             } catch (Exception e) {
-                funciones.mostrarToastCorto("No, no funciona", getApplicationContext());
+                funciones.mostrarToastCorto("No, no funciona");
             }
             //contactsDisplay.setText("Selected Contacts : \n\n"+display);
 
@@ -299,15 +441,42 @@ public class CrearEvento extends Activity {
             pantalla.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(pantalla);
         } catch (Exception e) {
-            funciones.mostrarToastCorto("Error, algo paso y ni idea que", getApplicationContext());
+            funciones.mostrarToastCorto("Error, algo paso y ni idea que");
         }
 
     }
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
+    public void obtenerDatos() {
+        AsyncHttpClient client = new AsyncHttpClient();
+        // este es la url del server que no puede ser localhost porque se usa en el emulador de la app
+        String url = "http://192.168.1.1/GetData.php";
+
+        RequestParams parametros = new RequestParams();
+        parametros.put("Edad", 18);
+
+        /* ################################################################
+        corregir el error de header para pasar los parametros
+        ################################################################
+         */
+
+        /*
+        client.post(url, parametros, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });*/
+    }
+
+        /**
+         * ATTENTION: This was auto-generated to implement the App Indexing API.
+         * See https://g.co/AppIndexing/AndroidStudio for more information.
+         */
     /*public Action getIndexApiAction() {
         Thing object = new Thing.Builder()
                 .setName("CrearEvento Page") // TODO: Define a title for the content shown.

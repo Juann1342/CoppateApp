@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Estado normal-->
+    <item android:drawable="@color/colorBotones" />
+
+    <!-- Estado pulsado-->
+    <item android:drawable="@color/naranja" android:state_pressed="true" />
+
+    <!-- en cada boton hay que agregar la propiedad 'android:backgroud=@drawable/boton_pulsado-->
+</selector>

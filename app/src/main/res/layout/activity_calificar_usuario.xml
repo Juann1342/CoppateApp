@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary" >
 
     <RelativeLayout
         android:orientation="horizontal"
@@ -98,6 +99,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/cu_btn_comentar"
-            android:layout_weight="0.21" />
+            android:layout_weight="0.21"
+            android:background="@color/colorBotones"
+            android:textColor="@color/colorPrimary" />
     </LinearLayout>
 </LinearLayout>

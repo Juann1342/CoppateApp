@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,11 +8,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.coppate.g04.coppate.Login">
+    tools:context="com.coppate.g04.coppate.Login"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="234dp">
         <ImageView
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -23,39 +24,56 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="61dp">
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/loginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:layout_marginBottom="77dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.08"
+            android:weightSum="1"
+            android:textAlignment="center">
+
+            <CheckBox
+                android:text="Al iniciar sesión está aceptando los términos y condiciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/al_acepta_terminos"
+                android:layout_weight="0.47" />
+
+            <TextView
+                android:onClick="irTerminos"
+                android:text="Términos y condiciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:id="@+id/TermC"
+                android:textColor="@color/com_facebook_messenger_blue"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
     <!--Boton que proporciona facebook-->
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/loginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="77dp" />
 
-    <TextView
-        android:onClick="irTerminos"
-        android:text="términos y condiciones"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:id="@+id/TermC"
-        android:textColor="@color/com_facebook_messenger_blue"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Al iniciar sesión está aceptando los"
-        android:textSize="16dp"
-        android:textColor="@color/com_facebook_messenger_blue"
-        android:id="@+id/AceptarAlIniciar"
-        android:layout_above="@+id/TermC"
-        android:layout_centerHorizontal="true" />
-
-
-
-</RelativeLayout>
+</LinearLayout>
