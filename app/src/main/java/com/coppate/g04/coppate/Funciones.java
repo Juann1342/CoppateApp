@@ -40,7 +40,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static com.coppate.g04.coppate.R.raw.gotaagua;
-import static com.coppate.g04.coppate.R.raw.pajaros;
 
 /**
  * Created by Jul-note on 22/10/2016.

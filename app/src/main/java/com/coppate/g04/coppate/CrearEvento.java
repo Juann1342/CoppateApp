@@ -10,6 +10,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.coppate.g04.coppate.Constantes;
+import com.coppate.g04.coppate.VolleySingleton;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.loopj.android.http.AsyncHttpClient;
@@ -39,7 +53,7 @@ public class CrearEvento extends Activity {
     Button mapaCrear;
 
     // estos strings los tenemos que tomar de la BD, son solo de pruebas
-    String[] opciones_sexo = {"Masculino", "Femenino"};
+    String[] opciones_sexo = {"Masculino", "Femenino", "Indiferente"};
     String[] opciones_tipo = {"Social", "Privado"};
     String[] contacts_selected = {""};
     //ArrayList<String> arrayContact = new ArrayList<String>();
@@ -185,10 +199,12 @@ public class CrearEvento extends Activity {
                     funciones.mostrarToastCorto(("Se ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo));
                     funciones.playSoundGotaAgua(arg0);
                 }
+                guardarEvento(); // Crucen los dedos
                 // con la funcion FINISH cerramos la activity actual y volvemos a la activity que nos llamo
                 finish();
             }
         });
+
 
         btn_invitar_contactos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,6 +227,121 @@ public class CrearEvento extends Activity {
 
 
     }
+
+    /**
+     * Guarda un evento en la DB
+     * Acá puede empezar a romper.
+     * Comienza zona de rotura.
+     */
+    public void guardarEvento() {
+
+        HashMap<String, String> map = new HashMap<>();// Mapeo previo
+
+        map.put("id_owner", "1");
+        map.put("edad_min", edad_desde.getText().toString());
+        map.put("edad_max", edad_hasta.getText().toString());
+        map.put("cupo_min", cupo_min.getText().toString());
+        map.put("cupo_max", cupo_max.getText().toString());
+        map.put("fecha", "2016-10-17"); //Solo para probar.
+        map.put("foto", "NULL");
+        map.put("ubicacion", lugar_evento.getText().toString());
+        map.put("latitud", "166.123");
+        map.put("longitud", "99.333");
+        map.put("id_categoria", "1");
+        map.put("desc_evento", "Prueba conexión con DB");
+        map.put("id_sexo", "1");
+
+        // Crear nuevo objeto Json basado en el mapa
+        JSONObject jobject = new JSONObject(map);
+
+
+        // Actualizar datos en el servidor
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(
+                new JsonObjectRequest(
+                        Request.Method.POST,
+                        Constantes.INSERT,
+                        jobject,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                // Procesar la respuesta del servidor
+                                procesarRespuesta(response);
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                funciones.mostrarToastCorto(("Error Volley: " + error.getMessage()));
+                            }
+                        }
+
+                ) {
+                    @Override
+                    public Map<String, String> getHeaders() {
+                        Map<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json; charset=utf-8");
+                        headers.put("Accept", "application/json");
+                        return headers;
+                    }
+
+                    @Override
+                    public String getBodyContentType() {
+                        return "application/json; charset=utf-8" + getParamsEncoding();
+                    }
+                }
+        );
+
+    }
+
+    /**
+     * Procesa la respuesta obtenida desde el sevidor
+     *
+     * @param response Objeto Json
+     */
+    private void procesarRespuesta(JSONObject response) {
+
+        try {
+            // Obtener estado
+            String estado = response.getString("estado");
+            // Obtener mensaje
+            String mensaje = response.getString("mensaje");
+
+            switch (estado) {
+                case "1":
+                    // Mostrar mensaje
+                    Toast.makeText(
+                            getApplicationContext(),
+                            mensaje,
+                            Toast.LENGTH_LONG).show();
+                    // Enviar código de éxito
+                    //getApplicationContext().setResult(Activity.RESULT_OK);
+                    // Terminar actividad
+                    //getApplicationContext().finish();
+                    break;
+
+                case "2":
+                    // Mostrar mensaje
+                    Toast.makeText(
+                            getApplicationContext(),
+                            mensaje,
+                            Toast.LENGTH_LONG).show();
+                    // Enviar código de falla
+                    //getApplicationContext().setResult(Activity.RESULT_CANCELED);
+                    // Terminar actividad
+                    //View.getContext().finish();
+                    break;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Guarda un evento en la DB
+     * Fin de la zona de rotura.
+     */
+
 
     /* ##############################################
 
