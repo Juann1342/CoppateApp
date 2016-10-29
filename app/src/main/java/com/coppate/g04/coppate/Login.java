@@ -17,6 +17,7 @@ import com.facebook.login.widget.LoginButton;
 public class Login extends AppCompatActivity {
     private LoginButton loginButton;        //Botón y volver atrás como atributos
     private CallbackManager callbackManager;
+    private String idUsuario;
 
     // checkbox para terminos y condiciones
     private Boolean acepta_terminos;
@@ -56,6 +57,10 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onSuccess(LoginResult loginResult) { //Si el inicio de sesion es exitoso
+                idUsuario=loginResult.getAccessToken().getUserId();  //obtieneIdDel usuario
+
+                Toast.makeText(Login.this,getIdUsuario(),Toast.LENGTH_LONG).show();
+
                 goMainScreen();
             }
 
@@ -98,6 +103,10 @@ public class Login extends AppCompatActivity {
         TermAndCond();
 
     }
+    public String getIdUsuario(){
+        return idUsuario;
+    }
+
 }
 
 
