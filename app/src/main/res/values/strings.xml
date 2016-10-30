@@ -5,5 +5,7 @@
     <string name="facebook_app_id">1528095683874584</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_maps_buscar">Buscar evento</string>
+    <string name="title_activity_prueba1">Prueba1Activity</string>
+
 
 </resources>

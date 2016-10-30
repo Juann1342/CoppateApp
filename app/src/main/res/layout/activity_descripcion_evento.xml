@@ -17,7 +17,8 @@
         android:layout_marginBottom="17dp"
         android:id="@+id/asistirEvento"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@color/bermellon" />
 
     <TextView
         android:text="DESCRIPCIÓN DEL EVENTO."

@@ -103,7 +103,9 @@
         android:layout_alignEnd="@+id/buscar_evento"
         android:layout_marginBottom="26dp"
         android:id="@+id/buscar"
-        android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_small" />
+        android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_small"
+        android:textColor="@color/colorPrimary"
+        android:background="@color/bermellon" />
 
     <TextView
         android:text="Edad hasta"

@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/cu_btn_comentar"
             android:layout_weight="0.21"
-            android:background="@color/colorBotones"
+            android:background="@color/bermellon"
             android:textColor="@color/colorPrimary" />
     </LinearLayout>
 </LinearLayout>

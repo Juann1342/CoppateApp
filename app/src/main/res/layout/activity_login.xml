@@ -41,7 +41,8 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
-                android:layout_marginBottom="77dp" />
+                android:layout_marginBottom="77dp"
+                android:background="@color/bermellon" />
         </LinearLayout>
 
         <LinearLayout
