@@ -80,7 +80,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/button2"
                         android:textColor="@color/colorPrimary"
-                        android:background="@color/bermellon" />
+                        android:background="@color/bermellon"
+                        style="@style/Widget.AppCompat.Button.Small" />
 
 
                 </LinearLayout>

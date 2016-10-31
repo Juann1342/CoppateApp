@@ -83,12 +83,12 @@ public class MainActivity extends AppCompatActivity {
 
         TabHost.TabSpec spec = tabs.newTabSpec("mitab1");
         spec.setContent(R.id.tab1);
-        spec.setIndicator("", getResources().getDrawable(R.drawable.miseventos));
+        spec.setIndicator("", getResources().getDrawable(R.drawable.icomisevento));
         tabs.addTab(spec);
 
         spec = tabs.newTabSpec("mitab2");
         spec.setContent(R.id.tab2);
-        spec.setIndicator("", getResources().getDrawable(R.drawable.buscar));
+        spec.setIndicator("", getResources().getDrawable(R.drawable.icobuscar));
         tabs.addTab(spec);
 
 
