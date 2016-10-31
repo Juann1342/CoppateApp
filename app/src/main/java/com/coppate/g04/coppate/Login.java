@@ -8,9 +8,11 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.coppate.g04.coppate.R;
+import com.coppate.g04.coppate.Usuario;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -18,6 +20,9 @@ public class Login extends AppCompatActivity {
     private LoginButton loginButton;        //Botón y volver atrás como atributos
     private CallbackManager callbackManager;
     private String idUsuario;
+    private String nombre;
+    private String apellido;
+
 
     // checkbox para terminos y condiciones
     private Boolean acepta_terminos;
@@ -58,9 +63,14 @@ public class Login extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) { //Si el inicio de sesion es exitoso
                 idUsuario=loginResult.getAccessToken().getUserId();  //obtieneIdDel usuario
+                nombre = Profile.getCurrentProfile().getName();
+                apellido = Profile.getCurrentProfile().getLastName();
 
-                Toast.makeText(Login.this,getIdUsuario(),Toast.LENGTH_LONG).show();
+                Usuario.getInstance().setIdUsuario(idUsuario);
+                Usuario.getInstance().setNombre(nombre);
+                Usuario.getInstance().setApellido(apellido);
 
+                Toast.makeText(Login.this,"ID: " + getIdUsuario() + " Nombre: " + getNombre(),Toast.LENGTH_LONG).show();
                 goMainScreen();
             }
 
@@ -74,8 +84,6 @@ public class Login extends AppCompatActivity {
             public void onError(FacebookException error) { //Muestra mensaje de que requiere conexion a internet si es que no hay.
                 Toast.makeText(getApplicationContext(), "Error al iniciar sesion en facebook", Toast.LENGTH_SHORT).show();
                 Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-
-
             }
         });
     }
@@ -90,8 +98,6 @@ public class Login extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
-
-
     }
 
     private void TermAndCond() {
@@ -101,12 +107,15 @@ public class Login extends AppCompatActivity {
 
     public void irTerminos(View view) {
         TermAndCond();
-
     }
+
     public String getIdUsuario(){
         return idUsuario;
     }
 
+    public String getNombre() { return nombre; }
+
+    public String getApellido() { return apellido; }
 }
 
 

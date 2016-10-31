@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.coppate.g04.coppate.Constantes;
 import com.coppate.g04.coppate.VolleySingleton;
+import com.coppate.g04.coppate.Usuario;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -194,9 +195,9 @@ public class CrearEvento extends Activity {
             public void onClick(View arg0) {
                 if (getActualListContact().size() > 0) {
                     // para mostrarlo en pantalla tipo mensaje se usa Toast
-                    funciones.mostrarToastLargo(("Se ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo + " y se ha enviado una notificacion a los contactos seleccionados.."));
+                    funciones.mostrarToastLargo((Usuario.getInstance().getNombre() + " ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo + " y se ha enviado una notificacion a los contactos seleccionados.."));
                 } else {
-                    funciones.mostrarToastCorto(("Se ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo));
+                    funciones.mostrarToastCorto((Usuario.getInstance().getNombre() + " ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo));
                     funciones.playSoundGotaAgua(arg0);
                 }
                 guardarEvento(); // Crucen los dedos
