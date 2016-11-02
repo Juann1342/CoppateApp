@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:text="Seleccionar"
             android:id="@+id/btnCrearEnUbicacion"
-            android:background="@color/colorBotones"
+            android:background="@color/violeta3"
             android:textColor="#ffff"
             android:layout_marginRight="2dp"/>
 
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:text="Cancelar"
             android:id="@+id/btnCancelarUbicacion"
-            android:background="@color/colorBotones"
+            android:background="@color/violeta3"
             android:textColor="#ffff"
             android:layout_marginLeft="2dp"/>
 

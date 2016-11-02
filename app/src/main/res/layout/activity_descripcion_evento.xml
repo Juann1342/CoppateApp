@@ -18,7 +18,7 @@
         android:id="@+id/asistirEvento"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/bermellon" />
+        android:background="@color/violeta3" />
 
     <TextView
         android:text="DESCRIPCIÓN DEL EVENTO."

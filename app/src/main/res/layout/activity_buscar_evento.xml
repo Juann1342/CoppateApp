@@ -106,7 +106,8 @@
         android:id="@+id/buscar"
         android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_small"
         android:textColor="@color/colorPrimary"
-        android:background="@color/bermellon" />
+        android:typeface="serif"
+        android:background="@color/violeta3" />
 
     <TextView
         android:text="Edad hasta"

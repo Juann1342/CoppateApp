@@ -36,7 +36,7 @@
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
                 android:layout_marginBottom="77dp"
-                android:background="@color/bermellon" />
+                android:background="@color/com_facebook_blue" />
         </LinearLayout>
 
         <LinearLayout

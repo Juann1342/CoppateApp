@@ -9,7 +9,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity"
     android:orientation="horizontal"
-    android:background="@color/bermellon">
+    android:background="@color/violeta3">
 
 
     <TabHost android:id="@android:id/tabhost"
@@ -76,12 +76,13 @@
 
                         android:onClick="irPrueba"
                         android:text="Button"
-                        android:layout_width="256dp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="160dp"
+                        android:layout_height="35dp"
                         android:id="@+id/button2"
                         android:textColor="@color/colorPrimary"
-                        android:background="@color/bermellon"
-                        style="@style/Widget.AppCompat.Button.Small" />
+                        android:background="@color/violeta3"
+                        android:typeface="serif"
+                        android:elevation="0dp" />
 
 
                 </LinearLayout>
@@ -104,7 +105,7 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:id="@+id/botonBuscar"
-                            android:background="@color/bermellon"
+                            android:background="@color/violeta3"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
@@ -118,7 +119,7 @@
                             android:layout_height="wrap_content"
                             android:text="Mapa"
                             android:id="@+id/botonMapa"
-                            android:background="@color/bermellon"
+                            android:background="@color/violeta3"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
@@ -140,7 +141,7 @@
                         android:text="Opiniones de Usuarios"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/bermellon"
+                        android:background="@color/violeta3"
                         android:textColor="@color/colorPrimary"
                         android:id="@+id/opinion" />
 
