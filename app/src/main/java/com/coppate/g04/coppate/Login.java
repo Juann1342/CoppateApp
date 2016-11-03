@@ -74,7 +74,7 @@ public class Login extends AppCompatActivity {
                 fecha_nacimiento = "2016-11-11";
                 id_sexo = 1;
                 alias = Profile.getCurrentProfile().getName();
-                foto = Profile.getCurrentProfile().getProfilePictureUri(128,128);
+                foto = Profile.getCurrentProfile().getProfilePictureUri(128,128).toString();
 
                 Usuario.getInstance().setId_usuario(id_usuario);
                 Usuario.getInstance().setNombre(nombre);
