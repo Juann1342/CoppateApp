@@ -19,9 +19,14 @@ import com.facebook.login.widget.LoginButton;
 public class Login extends AppCompatActivity {
     private LoginButton loginButton;        //Botón y volver atrás como atributos
     private CallbackManager callbackManager;
-    private String idUsuario;
+    private String id_usuario;
     private String nombre;
     private String apellido;
+    private String email;
+    private String fecha_nacimiento;
+    private int id_sexo;
+    private String alias;
+    private String foto;
 
 
     // checkbox para terminos y condiciones
@@ -62,11 +67,16 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onSuccess(LoginResult loginResult) { //Si el inicio de sesion es exitoso
-                idUsuario=loginResult.getAccessToken().getUserId();  //obtieneIdDel usuario
-                nombre = Profile.getCurrentProfile().getName();
+                id_usuario=loginResult.getAccessToken().getUserId();  //obtieneIdDel usuario
+                nombre = Profile.getCurrentProfile().getFirstName();
                 apellido = Profile.getCurrentProfile().getLastName();
+                email = Profile.getCurrentProfile().getName();
+                fecha_nacimiento = "2016-11-11";
+                id_sexo = 1;
+                alias = Profile.getCurrentProfile().getName();
+                foto = Profile.getCurrentProfile().getProfilePictureUri(128,128);
 
-                Usuario.getInstance().setIdUsuario(idUsuario);
+                Usuario.getInstance().setId_usuario(id_usuario);
                 Usuario.getInstance().setNombre(nombre);
                 Usuario.getInstance().setApellido(apellido);
 
@@ -110,7 +120,7 @@ public class Login extends AppCompatActivity {
     }
 
     public String getIdUsuario(){
-        return idUsuario;
+        return id_usuario;
     }
 
     public String getNombre() { return nombre; }

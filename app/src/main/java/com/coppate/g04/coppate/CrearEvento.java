@@ -246,7 +246,7 @@ public class CrearEvento extends Activity {
 
         HashMap<String, String> map = new HashMap<>();// Mapeo previo
 
-        map.put("id_owner", "1");
+        map.put("id_owner", Usuario.getInstance().getId_usuario());
         map.put("edad_min", edad_desde.getText().toString());
         map.put("edad_max", edad_hasta.getText().toString());
         map.put("cupo_min", cupo_min.getText().toString());
