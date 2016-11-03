@@ -19,10 +19,6 @@ import com.facebook.login.widget.LoginButton;
 public class Login extends AppCompatActivity {
     private LoginButton loginButton;        //Botón y volver atrás como atributos
     private CallbackManager callbackManager;
-    private String idUsuario;
-    private String nombre;
-    private String apellido;
-
 
     // checkbox para terminos y condiciones
     private Boolean acepta_terminos;
@@ -62,13 +58,14 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onSuccess(LoginResult loginResult) { //Si el inicio de sesion es exitoso
-                idUsuario=loginResult.getAccessToken().getUserId();  //obtieneIdDel usuario
-                nombre = Profile.getCurrentProfile().getName();
-                apellido = Profile.getCurrentProfile().getLastName();
-
-                Usuario.getInstance().setIdUsuario(idUsuario);
-                Usuario.getInstance().setNombre(nombre);
-                Usuario.getInstance().setApellido(apellido);
+                Usuario.getInstance().setId_usuario(loginResult.getAccessToken().getUserId());
+                Usuario.getInstance().setNombre(Profile.getCurrentProfile().getFirstName());
+                Usuario.getInstance().setApellido(Profile.getCurrentProfile().getLastName());
+                Usuario.getInstance().setEmail(Profile.getCurrentProfile().getName());
+                Usuario.getInstance().setFecha_nacimiento("2016-11-11");
+                Usuario.getInstance().setId_sexo(1);
+                Usuario.getInstance().setAlias(Profile.getCurrentProfile().getName());
+                Usuario.getInstance().setFoto("URI de la foto");   //Profile.getCurrentProfile().getProfilePictureUri(128,128).toString()
 
                 Toast.makeText(Login.this,"ID: " + getIdUsuario() + " Nombre: " + getNombre(),Toast.LENGTH_LONG).show();
                 goMainScreen();
@@ -109,13 +106,4 @@ public class Login extends AppCompatActivity {
         TermAndCond();
     }
 
-    public String getIdUsuario(){
-        return idUsuario;
-    }
-
-    public String getNombre() { return nombre; }
-
-    public String getApellido() { return apellido; }
 }
-
-

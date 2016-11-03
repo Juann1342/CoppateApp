@@ -3,42 +3,86 @@ package com.coppate.g04.coppate;
 /**
  * Created by guillermo.bazzi on 10/31/2016.
  */
-public class Usuario {
+class Usuario {
     private static Usuario ourInstance = new Usuario();
 
+    private String id_usuario;
     private String nombre;
     private String apellido;
-    private String idUsuario;
+    private String email;
+    private String fecha_nacimiento;
+    private int id_sexo;
+    private String alias;
+    private String foto;
 
-    public String getNombre() {
+    String getId_usuario() {
+        return id_usuario;
+    }
+
+    void setId_usuario(String id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+
+    String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public String getApellido() {
+    String getApellido() {
         return apellido;
     }
 
-    public void setApellido(String apellido) {
+    void setApellido(String apellido) {
         this.apellido = apellido;
     }
 
-    public String getIdUsuario() {
-        return idUsuario;
+    String getEmail() {
+        return email;
     }
 
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
+    void setEmail(String email) {
+        this.email = email;
     }
 
-    public static Usuario getInstance() {
+    String getFecha_nacimiento() {
+        return fecha_nacimiento;
+    }
+
+    void setFecha_nacimiento(String fecha_nacimiento) {
+        this.fecha_nacimiento = fecha_nacimiento;
+    }
+
+    int getId_sexo() {
+        return id_sexo;
+    }
+
+    void setId_sexo(int id_sexo) {
+        this.id_sexo = id_sexo;
+    }
+
+    String getAlias() {
+        return alias;
+    }
+
+    void setAlias(String alias) {
+        this.alias = alias;
+    }
+
+    String getFoto() {
+        return foto;
+    }
+
+    void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    static Usuario getInstance() {
         return ourInstance;
     }
 
     private Usuario() {
     }
-
 }
