@@ -210,7 +210,15 @@ public class CrearEvento extends Activity {
         btn_invitar_contactos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent pantalla = new Intent(getApplicationContext(), InvitarContactos.class);
+
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Te invito al evento que he organizado a través de Coppate. Introduce el siguente código en el buscador de eventos"+"(CODIGO)"+" Si aún no tienes la aplicación puedes encontrarla disponible en Play Store");
+                sendIntent.setType("text/plain");
+
+                startActivity(sendIntent);
+
+             /*   Intent pantalla = new Intent(getApplicationContext(), InvitarContactos.class);
                 //mostrarToast("Hasta aca llegamos");
                 try {
                     pantalla.putExtra("Contactos", contactos);
@@ -219,10 +227,10 @@ public class CrearEvento extends Activity {
 
                     /* Apply our splash exit (fade out) and main
                         entry (fade in) animation transitions. */
-                    //overridePendingTransition(R.anim.mainfadein,R.anim.splashfadeout);
-                } catch (Exception e) {
-                    funciones.mostrarToastCorto(e.toString());
-                }
+                    //overridePendingTransition(R.anim.mainfadein,R.anim.splashfadeout); */
+             //   } catch (Exception e) {
+             //       funciones.mostrarToastCorto(e.toString());
+             //   }
             }
         });
 
