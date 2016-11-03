@@ -8,18 +8,30 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.coppate.g04.coppate.R;
-import com.coppate.g04.coppate.Usuario;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.coppate.g04.coppate.Constantes;
+import com.coppate.g04.coppate.VolleySingleton;
+import com.coppate.g04.coppate.Usuario;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Login extends AppCompatActivity {
     private LoginButton loginButton;        //Botón y volver atrás como atributos
     private CallbackManager callbackManager;
-
+    Funciones funciones;
     // checkbox para terminos y condiciones
     private Boolean acepta_terminos;
     private CheckBox ckb_term;
@@ -31,6 +43,7 @@ public class Login extends AppCompatActivity {
 
         // se inicializa en false
         acepta_terminos = false;
+        funciones = new Funciones(getApplicationContext());
 
         ckb_term = (CheckBox) findViewById(R.id.al_acepta_terminos);
         callbackManager = CallbackManager.Factory.create();
@@ -67,7 +80,9 @@ public class Login extends AppCompatActivity {
                 Usuario.getInstance().setAlias(Profile.getCurrentProfile().getName());
                 Usuario.getInstance().setFoto("URI de la foto");   //Profile.getCurrentProfile().getProfilePictureUri(128,128).toString()
 
-                Toast.makeText(Login.this,"ID: " + getIdUsuario() + " Nombre: " + getNombre(),Toast.LENGTH_LONG).show();
+                loguearUsuario();  //Llama al webservice
+
+                Toast.makeText(Login.this,"ID: " + Usuario.getInstance().getId_usuario() + " Nombre: " + Usuario.getInstance().getAlias(),Toast.LENGTH_LONG).show();
                 goMainScreen();
             }
 
@@ -105,5 +120,106 @@ public class Login extends AppCompatActivity {
     public void irTerminos(View view) {
         TermAndCond();
     }
+
+    /**
+     * Guarda un evento en la DB
+     */
+    public void loguearUsuario() {
+
+        HashMap<String, String> map = new HashMap<>();// Mapeo previo
+
+        map.put("id_usuario", Usuario.getInstance().getId_usuario().toString());
+        map.put("nombre", Usuario.getInstance().getNombre().toString());
+        map.put("apellido", Usuario.getInstance().getApellido().toString());
+        map.put("email", Usuario.getInstance().getEmail().toString());
+        map.put("fecha_nacimiento", Usuario.getInstance().getFecha_nacimiento().toString());
+        map.put("id_sexo", Integer.toString(Usuario.getInstance().getId_sexo()));
+        map.put("alias", Usuario.getInstance().getAlias().toString());
+        map.put("foto", Usuario.getInstance().getFoto().toString());
+
+
+        // Crear nuevo objeto Json basado en el mapa
+        JSONObject jobject = new JSONObject(map);
+
+
+        // Actualizar datos en el servidor
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(
+                new JsonObjectRequest(
+                        Request.Method.POST,
+                        Constantes.LOG,
+                        jobject,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                // Procesar la respuesta del servidor
+                                //procesarRespuesta(response);
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                funciones.mostrarToastCorto(("Error Volley: " + error.getMessage()));
+                            }
+                        }
+
+                ) {
+                    @Override
+                    public Map<String, String> getHeaders() {
+                        Map<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json; charset=utf-8");
+                        headers.put("Accept", "application/json");
+                        return headers;
+                    }
+
+                    @Override
+                    public String getBodyContentType() {
+                        return "application/json; charset=utf-8" + getParamsEncoding();
+                    }
+                }
+        );
+
+    }
+
+    /**
+     * Procesa la respuesta obtenida desde el sevidor
+     *
+     * @param response Objeto Json
+     */
+/*
+    private void procesarRespuesta(JSONObject response) {
+
+        try {
+            // Obtener estado
+            String estado = response.getString("estado");
+            // Obtener mensaje
+            String mensaje = response.getString("mensaje");
+
+            switch (estado) {
+                case "1":
+                    // Mostrar mensaje
+                    Toast.makeText(
+                            getApplicationContext(),
+                            mensaje,
+                            Toast.LENGTH_LONG).show();
+                    break;
+
+                case "2":
+                    // Mostrar mensaje
+                    Toast.makeText(
+                            getApplicationContext(),
+                            mensaje,
+                            Toast.LENGTH_LONG).show();
+                    break;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+*/
+
+    /**
+     * Guarda un evento en la DB
+     */
 
 }

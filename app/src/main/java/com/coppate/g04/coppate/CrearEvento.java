@@ -239,8 +239,6 @@ public class CrearEvento extends Activity {
 
     /**
      * Guarda un evento en la DB
-     * Acá puede empezar a romper.
-     * Comienza zona de rotura.
      */
     public void guardarEvento() {
 
@@ -322,10 +320,6 @@ public class CrearEvento extends Activity {
                             getApplicationContext(),
                             mensaje,
                             Toast.LENGTH_LONG).show();
-                    // Enviar código de éxito
-                    //getApplicationContext().setResult(Activity.RESULT_OK);
-                    // Terminar actividad
-                    //getApplicationContext().finish();
                     break;
 
                 case "2":
@@ -334,10 +328,6 @@ public class CrearEvento extends Activity {
                             getApplicationContext(),
                             mensaje,
                             Toast.LENGTH_LONG).show();
-                    // Enviar código de falla
-                    //getApplicationContext().setResult(Activity.RESULT_CANCELED);
-                    // Terminar actividad
-                    //View.getContext().finish();
                     break;
             }
         } catch (JSONException e) {
@@ -348,7 +338,6 @@ public class CrearEvento extends Activity {
 
     /**
      * Guarda un evento en la DB
-     * Fin de la zona de rotura.
      */
 
 
