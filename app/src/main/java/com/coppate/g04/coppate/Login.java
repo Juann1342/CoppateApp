@@ -67,18 +67,14 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onSuccess(LoginResult loginResult) { //Si el inicio de sesion es exitoso
-                id_usuario=loginResult.getAccessToken().getUserId();  //obtieneIdDel usuario
-                nombre = Profile.getCurrentProfile().getFirstName();
-                apellido = Profile.getCurrentProfile().getLastName();
-                email = Profile.getCurrentProfile().getName();
-                fecha_nacimiento = "2016-11-11";
-                id_sexo = 1;
-                alias = Profile.getCurrentProfile().getName();
-                foto = Profile.getCurrentProfile().getProfilePictureUri(128,128).toString();
-
-                Usuario.getInstance().setId_usuario(id_usuario);
-                Usuario.getInstance().setNombre(nombre);
-                Usuario.getInstance().setApellido(apellido);
+                Usuario.getInstance().setId_usuario(loginResult.getAccessToken().getUserId());
+                Usuario.getInstance().setNombre(Profile.getCurrentProfile().getFirstName());
+                Usuario.getInstance().setApellido(Profile.getCurrentProfile().getLastName());
+                Usuario.getInstance().setEmail(Profile.getCurrentProfile().getName());
+                Usuario.getInstance().setFecha_nacimiento("2016-11-11");
+                Usuario.getInstance().setId_sexo(1);
+                Usuario.getInstance().setAlias(Profile.getCurrentProfile().getName());
+                Usuario.getInstance().setFoto("URI de la foto");   //Profile.getCurrentProfile().getProfilePictureUri(128,128).toString()
 
                 Toast.makeText(Login.this,"ID: " + getIdUsuario() + " Nombre: " + getNombre(),Toast.LENGTH_LONG).show();
                 goMainScreen();
