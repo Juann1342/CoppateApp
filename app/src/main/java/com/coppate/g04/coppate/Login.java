@@ -19,15 +19,6 @@ import com.facebook.login.widget.LoginButton;
 public class Login extends AppCompatActivity {
     private LoginButton loginButton;        //Botón y volver atrás como atributos
     private CallbackManager callbackManager;
-    private String id_usuario;
-    private String nombre;
-    private String apellido;
-    private String email;
-    private String fecha_nacimiento;
-    private int id_sexo;
-    private String alias;
-    private String foto;
-
 
     // checkbox para terminos y condiciones
     private Boolean acepta_terminos;
@@ -115,13 +106,4 @@ public class Login extends AppCompatActivity {
         TermAndCond();
     }
 
-    public String getIdUsuario(){
-        return id_usuario;
-    }
-
-    public String getNombre() { return nombre; }
-
-    public String getApellido() { return apellido; }
 }
-
-
