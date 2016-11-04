@@ -1,26 +1,56 @@
 package com.coppate.g04.coppate;
 
+import android.app.ActivityOptions;
+
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
 
+    private static final int NOTIF_ALERTA_ID = 1;
     // boton que redirige a la actitiy crear evento
     Button btn_crear_evento;
     Button comentar;
+    TextView txt_mis_eventos;
 
+
+    Funciones funciones;
+
+    ArrayAdapter<String> adaptador;
+    ArrayAdapter<String> participo;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,8 +78,31 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        if(id==R.id.mm_acerca_de){
+            goAcercaDe();
+        }
+
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void goAcercaDe(){
+        Intent acerca = new Intent(MainActivity.this, AcercaDe.class);
+        startActivity(acerca);
+    }  //dirige a la pantalla acerca de
+
+
+
+    public void pruebaDescripcion(){
+        
+        /*
+        NotificationManager notificador = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notificacion = new Notification(android.R.drawable.sym_call_missed, "Llamada perdidad", System.currentTimeMillis());
+        Intent notificacionIntent = new Intent(getApplicationContext(), DescripcionEvento.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, notificacionIntent, 0);
+        notificacion.setLatestEventInfo(getApplicationContext(), "Llamada perdida", "Tienes una llamada perdida del número 666777888.", contentIntent);
+
+        notificador.notify(NOTIF_ALERTA_ID, notificacion);*/
     }
 
     @Override
@@ -57,13 +110,110 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        funciones = new Funciones(getApplicationContext());
+
+        txt_mis_eventos = (TextView) findViewById(R.id.txtview_mis_eventos);
+
+
+
+        try {
+            // ##############################################
+            // creamos un list view para darle funcionalidad a la app
+            final ListView lista_mis_eventos;
+            lista_mis_eventos = (ListView) findViewById(R.id.ma_listar_mis_eventos);
+
+            adaptador = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
+
+            // hay que hacer que el "ARRAYADAPTER lo tome de la base de datos y luego recorrerlo, ahora esta a manopla
+
+            String objeto = "Creo Evento: ";
+            String num = "";
+            for(int i = 0;i<30;i++){
+                adaptador.add(objeto+i);
+            }
+            lista_mis_eventos.setAdapter(adaptador);
+
+
+             /* obtenemos el id del evento actual que se selecciona de la lista y lo cargamos en el activity descripcion de evento*/
+            lista_mis_eventos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    try {
+                        Integer id_evento = lista_mis_eventos.getPositionForView(view);
+                        Intent intent_descripcion = new Intent(MainActivity.this, EditarEvento.class);
+
+                        // le pasamos el parametro del ide de evento para tomarlo en la pantalla de DESCRIPCION DE EVENTO y mostrar los datos necesarios
+                        intent_descripcion.putExtra("ID_evento", id_evento);
+                        // creamos la animacion de deslizamiento
+                        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in, R.anim.left_out).toBundle();
+                        // lanzamos la actividad de DESCRIPCION y le cargamos la animacion
+                        startActivity(intent_descripcion, bndlanimation);
+                    }catch (Exception e){
+                        funciones.mostrarToastCorto("Error al cargar la siguiente pantalla");
+                    }
+                }
+            });
+
+
+            // termina el listview
+        }catch (Exception e){
+            funciones.mostrarToastCorto("No fue posible cargar la lista de eventos");
+        }
+
+
+        try {
+            // ##############################################
+            // creamos un list view para darle funcionalidad a la app
+            // en la que podamos movernos por una lista dentro de los posibles eventos y hacer click sobre alguno de ellos
+            final ListView lista_eventos_a_participar;
+            lista_eventos_a_participar = (ListView) findViewById(R.id.ma_eventos_donde_participo);
+
+            participo = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
+
+            // hay que hacer que el "ARRAYADAPTER lo tome de la base de datos y luego recorrerlo, ahora esta a manopla
+
+            String objeto = "Participo en Evento: ";
+            String num = "";
+            for(int i = 4;i>0;i--){
+                participo.add(objeto+i);
+            }
+            lista_eventos_a_participar.setAdapter(participo);
+
+
+             /* obtenemos el id del evento actual que se selecciona de la lista y lo cargamos en el activity descripcion de evento*/
+            lista_eventos_a_participar.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    try {
+                        Integer id_evento = lista_eventos_a_participar.getPositionForView(view);
+                        Intent intent_descripcion = new Intent(MainActivity.this, DescripcionEvento.class);
+
+                        // le pasamos el parametro del ide de evento para tomarlo en la pantalla de DESCRIPCION DE EVENTO y mostrar los datos necesarios
+                        intent_descripcion.putExtra("ID_evento", id_evento);
+                        // creamos la animacion de deslizamiento
+                        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in, R.anim.left_out).toBundle();
+                        // lanzamos la actividad de DESCRIPCION y le cargamos la animacion
+                        startActivity(intent_descripcion, bndlanimation);
+                    }catch (Exception e){
+                        funciones.mostrarToastCorto("Error al cargar la siguiente pantalla");
+                    }
+                }
+            });
+
+
+            // termina el listview
+        }catch (Exception e){
+            funciones.mostrarToastCorto("No fue posible cargar la lista de eventos");
+        }
 
         btn_crear_evento = (Button) findViewById(R.id.ma_crear_evento);
         btn_crear_evento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CrearEvento.class);
-                startActivity(intent);  //pasa a pantalla de Crear Evento
+                Bundle bndlanimation =
+                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+                startActivity(intent,bndlanimation);//pasa a pantalla de Crear Evento
             }
         });
         comentar = (Button) findViewById(R.id.opinion);
@@ -98,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
         if (AccessToken.getCurrentAccessToken() == null) {  //si no hay sesion iniciada pasa a la pantalla de login
             goLoginScreen();
         }
+        listarEvento();
     }
 
     private void goLoginScreen() {
@@ -128,6 +279,115 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, perfil.class);
         startActivity(intent);
     }  //dirige a la pantalla perfil
+
+    public void listarEvento() {
+
+        // Actualizar datos en el servidor
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(
+                // creo una nueva instancia del singleton de volley
+                // y le asigno a la constante getbyowner (dentro obtenereventoporowner) y le paso en el archivo ese
+                // el parametro que espera (dentro de la funcion isset()
+
+                // despues le paso en el singleton de usuario get instance get idusuario
+                // por ahora se puede hardcodear el id de usuario para hacer las pruebas
+                new JsonObjectRequest(
+                        Request.Method.GET,
+                        /* asi es la consulta real, yo lo modifico para hacer la prueba - Constantes.GET_BY_OWNER + "?idOwner="+ Usuario.getInstance().getIdUsuario()*/
+                        Constantes.GET_BY_OWNER + "?idOwner=1", /*esto deberia traer el usuario 1 que yo cree*/
+
+                        null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                // Procesar la respuesta del servidor
+
+                                procesarRespuesta(response);
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                funciones.mostrarToastCorto(("Se ha producido un Error Volley: " + error.getMessage()));
+                            }
+                        }
+
+                ) {
+                    @Override
+                    public Map<String, String> getHeaders() {
+                        Map<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json; charset=utf-8");
+                        headers.put("Accept", "application/json");
+                        return headers;
+                    }
+
+                    @Override
+                    public String getBodyContentType() {
+                        return "application/json; charset=utf-8" + getParamsEncoding();
+                    }
+                }
+        );
+
+    }
+
+    /**
+     * Procesa la respuesta obtenida desde el sevidor
+     *
+     * @param response Objeto Json
+     */
+    private void procesarRespuesta(JSONObject response) {
+
+        try {
+            // Obtener estado
+            String estado = response.getString("estado");
+            // Obtener mensaje
+            String nombre = response.getString("mensaje");
+
+            funciones.mostrarToastCorto("estado: "+estado);
+
+            switch (estado) {
+                case "1":
+                    // Mostrar mensaje
+                    funciones.mostrarToastLargo("Estado: "+estado + " - Mensaje: "+ nombre);
+                    // esto tendria que mostrar lo que yo defino en el json con descripcion de evento
+                    txt_mis_eventos.setText(response.getString("id_owner"));
+                    /*Toast.makeText(
+                            getApplicationContext(),
+                            mensaje,
+                            Toast.LENGTH_LONG).show();*/
+                    // Enviar código de éxito
+                    //getApplicationContext().setResult(Activity.RESULT_OK);
+                    // Terminar actividad
+                    //getApplicationContext().finish();
+                    break;
+
+                case "2":
+                    // Mostrar mensaje
+                    funciones.mostrarToastLargo("Estado: "+estado + " - Mensaje: "+ nombre);
+                    /*Toast.makeText(
+                            getApplicationContext(),
+                            mensaje,
+                            Toast.LENGTH_LONG).show();*/
+                    // Enviar código de falla
+                    //getApplicationContext().setResult(Activity.RESULT_CANCELED);
+                    // Terminar actividad
+                    //View.getContext().finish();
+                    break;
+                case "3":
+                    // Mostrar mensaje
+                    // esta siempre devolviendo el codigo 3 de estado y no tengo idea de por que
+
+                    funciones.mostrarToastLargo("Estado: "+estado + " - Mensaje: "+ nombre);
+                    // esto tendria que mostrar lo que yo defino en el json con descripcion de evento
+                    txt_mis_eventos.setText(response.getString("id_owner"));
+                    break;
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            funciones.mostrarToastCorto("Se ha producido un error");
+        }
+
+    }
 
 
 }

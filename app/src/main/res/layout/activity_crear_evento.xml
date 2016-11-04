@@ -110,7 +110,7 @@
         android:layout_alignEnd="@+id/ce_spnSexoEvento"
         android:layout_toEndOf="@+id/ce_edadDesde"
         android:layout_toRightOf="@+id/ce_edadDesde"
-        android:background="@color/violeta3"
+        android:background="@drawable/boton_pulsado"
         android:textColor="@color/colorPrimary" />
 
     <Spinner
@@ -141,7 +141,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:background="@color/violeta3"
+        android:background="@drawable/boton_pulsado"
         android:textColor="@color/colorPrimary" />
 
     <EditText
@@ -237,7 +237,7 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ce_spn_contactos_activos"
         android:layout_toEndOf="@+id/ce_spn_contactos_activos"
-        android:background="@color/violeta3"
+        android:background="@drawable/boton_pulsado"
         android:textColor="@color/colorPrimary" />
 
 </RelativeLayout>

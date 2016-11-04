@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="3dp" >
+
+    <ImageView
+        android:id="@+id/dp_img_alert"
+        android:layout_width="75dp"
+        android:layout_height="59dp"
+        android:src="@drawable/information" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="3dp">
+
+        <TextView
+            android:id="@+id/dp_txv_prueba1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Probando1" />
+
+        <TextView
+            android:id="@+id/dp_txv_prueba2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Probando2" />
+
+    </LinearLayout>
+
+</LinearLayout>

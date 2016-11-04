@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
@@ -27,9 +28,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.UserHandle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
+import android.text.Layout;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -40,6 +46,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static com.coppate.g04.coppate.R.raw.gotaagua;
+
 
 /**
  * Created by Jul-note on 22/10/2016.
@@ -120,4 +127,5 @@ public class Funciones implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
     }
+
 }

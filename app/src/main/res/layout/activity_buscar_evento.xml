@@ -107,7 +107,7 @@
         android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_small"
         android:textColor="@color/colorPrimary"
         android:typeface="serif"
-        android:background="@color/violeta3" />
+        android:background="@drawable/boton_pulsado" />
 
     <TextView
         android:text="Edad hasta"

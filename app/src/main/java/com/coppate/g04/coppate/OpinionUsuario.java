@@ -1,6 +1,7 @@
 package com.coppate.g04.coppate;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -33,7 +34,6 @@ public class OpinionUsuario extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_opinion_usuario);
 
         funciones  = new Funciones(getApplicationContext());
@@ -57,7 +57,9 @@ public class OpinionUsuario extends Activity {
             public void onClick(View v) {
                 Intent pantalla = new Intent(getApplicationContext(), CalificarUsuario.class);
                 pantalla.putExtra("comentarios", comments);
-                startActivityForResult(pantalla, REQUEST_COMENTAR);
+                Bundle bndlanimation =
+                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+                startActivityForResult(pantalla, REQUEST_COMENTAR,bndlanimation);
             }
         });
 

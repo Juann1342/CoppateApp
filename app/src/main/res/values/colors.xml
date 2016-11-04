@@ -15,4 +15,6 @@
     <color name="violeta1">#5c3167</color>
     <color name="violeta2">#944e84</color>
     <color name="violeta3">#7f447c</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

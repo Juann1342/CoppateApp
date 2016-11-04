@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_editar_evento"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.coppate.g04.coppate.DescripcionEvento"
+    android:weightSum="1"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="117dp"
+            android:layout_weight="0.94">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:text="Descripción del evento del usuario XXX"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ee_usuario"
+                        android:layout_weight="0.07" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/ee_descripcion_evento"
+                        android:layout_weight="0.17"
+                        android:hint="Descripcion de Evento" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/ee_nombre_evento"
+                        android:layout_weight="0.15"
+                        android:hint="Nombre de Evento" />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/ee_lugar"
+                        android:hint="Lugar de Encuentro" />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:ems="10"
+                        android:id="@+id/ee_costo"
+                        android:hint="Costo" />
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:ems="10"
+                        android:id="@+id/ee_cupoMin"
+                        android:hint="Cupo Maximo"
+                        android:layout_alignTop="@+id/ee_cupoMin"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toRightOf="@+id/ee_lugarEncuentro"
+                        android:layout_toEndOf="@+id/ee_lugarEncuentro" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:ems="10"
+                        android:id="@+id/ee_cupoMax"
+                        android:hint="Cupo Minimo"
+                        android:layout_below="@+id/ee_cupoMax"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_toLeftOf="@+id/ee_cupoMax"
+                        android:layout_toStartOf="@+id/ee_cupoMax" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:ems="10"
+                        android:id="@+id/ee_edadDesde"
+                        android:hint="Edad Desde"
+                        android:layout_below="@+id/ee_cupoMax"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_toLeftOf="@+id/ee_cupoMax"
+                        android:layout_toStartOf="@+id/ee_cupoMax" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:ems="10"
+                        android:id="@+id/ee_edadHasta"
+                        android:hint="Edad Hasta"
+                        android:layout_alignTop="@+id/ee_edadDesde"
+                        android:layout_toRightOf="@+id/ee_edadDesde"
+                        android:layout_toEndOf="@+id/ee_edadDesde" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="121dp"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:text="Ubicación en el mapa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ee_ubicacion_mapa"
+                    android:layout_weight="0.04"
+                    android:background="@drawable/boton_pulsado"
+                    android:textColor="@color/colorPrimary"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="21dp"
+                    android:layout_weight="0.30">
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="101dp"
+            android:textAlignment="center"
+            android:layout_weight="0.10">
+
+            <android.support.design.widget.FloatingActionButton
+                android:text="Editar Evento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ee_editar_evento"
+                android:background="@drawable/boton_pulsado"
+                android:drawable="@drawable/lapiz2"
+                android:textColor="@color/colorPrimary"
+                android:textAllCaps="false"
+                android:textAlignment="center" />
+
+            <Button
+                android:text="Cancelar Evento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ee_cancelar_evento"
+                android:background="@drawable/boton_pulsado"
+                android:textColor="@color/colorPrimary"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/ee_editar_evento"
+                android:layout_toEndOf="@+id/ee_editar_evento"
+                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp" />
+
+            <Button
+                android:text="Guardar Cambios"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ee_guardar_cambios"
+                android:background="@drawable/boton_pulsado"
+                android:textColor="@color/colorPrimary"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:visibility="invisible"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

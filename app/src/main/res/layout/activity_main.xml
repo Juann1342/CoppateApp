@@ -66,11 +66,49 @@
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="462dp">
 
-                    <TextView android:id="@+id/textView1"
-                        android:text="Listar mis eventos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="197dp"
+                            android:layout_height="match_parent">
+
+                            <TextView android:id="@+id/txtview_mis_eventos"
+                                android:text="Eventos Propios"
+                                android:layout_width="match_parent"
+                                android:layout_height="33dp"
+                                android:paddingStart="4dp" />
+
+                            <ListView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/ma_listar_mis_eventos" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:text="Eventos en los que participo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="33dp"
+                                android:id="@+id/txtview_eventos_paticipo"
+                                android:textAlignment="viewEnd"
+                                android:paddingEnd="4dp" />
+
+                            <ListView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/ma_eventos_donde_participo" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                     <Button
 
@@ -80,7 +118,7 @@
                         android:layout_height="35dp"
                         android:id="@+id/button2"
                         android:textColor="@color/colorPrimary"
-                        android:background="@color/violeta3"
+                        android:background="@drawable/boton_pulsado"
                         android:typeface="serif"
                         android:elevation="0dp" />
 
@@ -105,7 +143,7 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:id="@+id/botonBuscar"
-                            android:background="@color/violeta3"
+                            android:background="@drawable/boton_pulsado"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
@@ -119,7 +157,7 @@
                             android:layout_height="wrap_content"
                             android:text="Mapa"
                             android:id="@+id/botonMapa"
-                            android:background="@color/violeta3"
+                            android:background="@drawable/boton_pulsado"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
@@ -130,9 +168,7 @@
                     </LinearLayout>
 
 
-
-
-                    <TextView android:id="@+id/textView2"
+                    <TextView android:id="@+id/ma_lista_eventos_cercanos"
                         android:text="Lista de eventos cercanos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -141,7 +177,7 @@
                         android:text="Opiniones de Usuarios"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/violeta3"
+                        android:background="@drawable/boton_pulsado"
                         android:textColor="@color/colorPrimary"
                         android:id="@+id/opinion" />
 

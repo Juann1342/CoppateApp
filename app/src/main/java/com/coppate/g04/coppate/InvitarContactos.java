@@ -3,6 +3,7 @@ package com.coppate.g04.coppate;
 // codigo obtenido de
 // http://www.sachinmuralig.me/2013/11/android-simple-multi-contacts-picker.html
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -85,12 +86,18 @@ public class InvitarContactos extends AppCompatActivity {
                 } else {
 
                     Intent resultIntent = new Intent();
+
                     resultIntent.putParcelableArrayListExtra("ContactosSeleccionados", contactsListAdapter.selectedContactsList.contactArrayList);
                     resultIntent.putExtra("contactos2", contactoos);
+                    Bundle bndlanimation =
+                            ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
                     setResult(RESULT_OK, resultIntent);
+
+
                     //mostrarToast("probando...");
                 }
                 finish();
+                //overridePendingTransition(R.anim.left_in, R.anim.nothing);
 
             }
         });

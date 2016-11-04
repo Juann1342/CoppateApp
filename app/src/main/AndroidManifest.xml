@@ -39,6 +39,11 @@
         <activity android:name=".MensajeDescargo" />
         <activity android:name=".CrearEvento" />
         <activity android:name=".InvitarContactos" />
+        <activity android:name=".OpinionUsuario" />
+        <activity android:name=".CalificarUsuario" />
+        <activity android:name=".MapsActivityCercanos" />
+        <activity android:name=".EditarEvento" />
+
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
@@ -57,17 +62,19 @@
         <activity android:name=".DescripcionEvento" />
         <activity android:name=".TermCond" />
         <activity
-            android:name=".MapsActivityCercanos"
-            android:label="@string/title_activity_maps_buscar" />
-        <!--
- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
-        -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
-        <activity android:name=".PruebaActivity"></activity>
+            android:name=".PruebaSlide"
+            android:label="@string/title_activity_prueba_slide"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AcercaDe"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_acerca_de"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/FullscreenTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.coppate.g04.coppate.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

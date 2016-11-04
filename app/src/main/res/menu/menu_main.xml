@@ -2,16 +2,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.coppate.g04.coppate.MainActivity">
-    <item
-
-        android:orderInCategory="100"
-        android:title="Cerrar Sesión"
-        android:id="@+id/button" />
 
     <item
         android:orderInCategory="100"
         android:title="Perfil"
         android:id="@+id/perfil" />
+
+    <item
+        android:orderInCategory="100"
+        android:title="Acerca de.."
+        android:id="@+id/mm_acerca_de" />
+
+    <item
+        android:orderInCategory="100"
+        android:title="Cerrar Sesión"
+        android:id="@+id/button" />
     <!--android:id="@+id/action_settings"
     android:orderInCategory="100"
     android:title="settings"
