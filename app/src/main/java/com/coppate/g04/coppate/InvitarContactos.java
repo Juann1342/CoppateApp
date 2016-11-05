@@ -168,4 +168,10 @@ public class InvitarContactos extends AppCompatActivity {
         }
     }
 
+    public void onBackPressed() {
+        InvitarContactos.this.finish();
+        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+
+    }
+
 }

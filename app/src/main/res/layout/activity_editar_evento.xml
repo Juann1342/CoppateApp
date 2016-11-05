@@ -53,7 +53,8 @@
                         android:ems="10"
                         android:id="@+id/ee_descripcion_evento"
                         android:layout_weight="0.17"
-                        android:hint="Descripcion de Evento" />
+                        android:hint="Descripcion de Evento"
+                        android:enabled="false" />
 
                     <EditText
                         android:layout_width="match_parent"
@@ -62,21 +63,24 @@
                         android:ems="10"
                         android:id="@+id/ee_nombre_evento"
                         android:layout_weight="0.15"
-                        android:hint="Nombre de Evento" />
+                        android:hint="Nombre de Evento"
+                        android:enabled="false" />
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
                         android:ems="10"
                         android:id="@+id/ee_lugar"
-                        android:hint="Lugar de Encuentro" />
+                        android:hint="Lugar de Encuentro"
+                        android:enabled="false" />
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
                         android:ems="10"
                         android:id="@+id/ee_costo"
-                        android:hint="Costo" />
+                        android:hint="Costo"
+                        android:enabled="false" />
                     <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -88,7 +92,8 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
                         android:layout_toRightOf="@+id/ee_lugarEncuentro"
-                        android:layout_toEndOf="@+id/ee_lugarEncuentro" />
+                        android:layout_toEndOf="@+id/ee_lugarEncuentro"
+                        android:enabled="false" />
 
                     <EditText
                         android:layout_width="wrap_content"
@@ -101,7 +106,8 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_toLeftOf="@+id/ee_cupoMax"
-                        android:layout_toStartOf="@+id/ee_cupoMax" />
+                        android:layout_toStartOf="@+id/ee_cupoMax"
+                        android:enabled="false" />
 
                     <EditText
                         android:layout_width="wrap_content"
@@ -114,7 +120,8 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_toLeftOf="@+id/ee_cupoMax"
-                        android:layout_toStartOf="@+id/ee_cupoMax" />
+                        android:layout_toStartOf="@+id/ee_cupoMax"
+                        android:enabled="false" />
 
                     <EditText
                         android:layout_width="wrap_content"
@@ -125,7 +132,8 @@
                         android:hint="Edad Hasta"
                         android:layout_alignTop="@+id/ee_edadDesde"
                         android:layout_toRightOf="@+id/ee_edadDesde"
-                        android:layout_toEndOf="@+id/ee_edadDesde" />
+                        android:layout_toEndOf="@+id/ee_edadDesde"
+                        android:enabled="false" />
 
                 </LinearLayout>
 
@@ -157,23 +165,20 @@
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:orientation="vertical"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="101dp"
+            android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:layout_weight="0.10">
+            android:layout_weight="0.10"
+            android:weightSum="1">
 
             <android.support.design.widget.FloatingActionButton
                 android:text="Editar Evento"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/ee_editar_evento"
-                android:background="@drawable/boton_pulsado"
-                android:drawable="@drawable/lapiz2"
-                android:textColor="@color/colorPrimary"
-                android:textAllCaps="false"
-                android:textAlignment="center" />
+                android:drawable="@drawable/lapiz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <Button
                 android:text="Cancelar Evento"
@@ -188,7 +193,8 @@
                 android:layout_toRightOf="@+id/ee_editar_evento"
                 android:layout_toEndOf="@+id/ee_editar_evento"
                 android:layout_marginLeft="25dp"
-                android:layout_marginStart="25dp" />
+                android:layout_marginStart="25dp"
+                android:layout_weight="0.30" />
 
             <Button
                 android:text="Guardar Cambios"
@@ -199,12 +205,12 @@
                 android:textColor="@color/colorPrimary"
                 android:textAllCaps="false"
                 android:textAlignment="center"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:visibility="invisible"/>
+                android:layout_alignParentTop="false"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentEnd="false"
+                android:visibility="invisible" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

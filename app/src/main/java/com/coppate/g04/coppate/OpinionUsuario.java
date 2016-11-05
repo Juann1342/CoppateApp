@@ -3,6 +3,7 @@ package com.coppate.g04.coppate;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -57,12 +58,17 @@ public class OpinionUsuario extends Activity {
             public void onClick(View v) {
                 Intent pantalla = new Intent(getApplicationContext(), CalificarUsuario.class);
                 pantalla.putExtra("comentarios", comments);
-                Bundle bndlanimation =
-                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
                 startActivityForResult(pantalla, REQUEST_COMENTAR,bndlanimation);
             }
         });
+    }
 
+    @Override
+    public void onBackPressed()
+    {
+        OpinionUsuario.this.finish();
+        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
     }
 
     @Override

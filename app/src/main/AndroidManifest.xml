@@ -43,7 +43,6 @@
         <activity android:name=".CalificarUsuario" />
         <activity android:name=".MapsActivityCercanos" />
         <activity android:name=".EditarEvento" />
-
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
@@ -75,6 +74,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.coppate.g04.coppate.MainActivity" />
         </activity>
+        <activity android:name=".InvitacionEvento"></activity>
     </application>
 
 </manifest>

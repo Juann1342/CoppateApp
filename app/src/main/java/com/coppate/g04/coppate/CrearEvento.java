@@ -1,6 +1,7 @@
 package com.coppate.g04.coppate;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -215,7 +216,8 @@ public class CrearEvento extends Activity {
                 try {
                     pantalla.putExtra("Contactos", contactos);
                     setResult(RESULT_OK, pantalla);
-                    CrearEvento.this.startActivityForResult(pantalla, CONTACT_PICK_REQUEST);
+                    Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+                    CrearEvento.this.startActivityForResult(pantalla, CONTACT_PICK_REQUEST,bndlanimation);
 
                     /* Apply our splash exit (fade out) and main
                         entry (fade in) animation transitions. */
@@ -509,5 +511,10 @@ public class CrearEvento extends Activity {
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
     }*/
+        public void onBackPressed() {
+            CrearEvento.this.finish();
+            overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+
+        }
 }
 

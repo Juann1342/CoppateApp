@@ -130,6 +130,13 @@ public class CalificarUsuario extends Activity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        CalificarUsuario.this.finish();
+        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+
+    }
+
     private void cambiarColor(ImageView estrella, int num) {
 
         // se que aca va un patron pero no me acuerdo bien cual puede ser

@@ -43,10 +43,15 @@ public class AcercaDe extends AppCompatActivity {
                         .setTitle("Saludos")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
+                                finish();
                             }
                         });
             }
         });
+    }
+    public void onBackPressed() {
+        AcercaDe.this.finish();
+        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+
     }
 }

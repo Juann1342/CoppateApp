@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:weightSum="1">
 
     <RelativeLayout
         android:orientation="horizontal"
@@ -23,29 +24,23 @@
             android:textSize="24sp" />
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="0dp"
         android:minWidth="0dp">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="206dp"
+        <ImageButton
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             app:srcCompat="@drawable/foto_perfil"
-            android:id="@+id/ap_perfil_pict" />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        android:layout_centerInParent="true"
-        android:elevation="0dp">
-
-
+            android:id="@+id/ap_perfil_pict"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="101dp"
+            android:layout_marginStart="101dp" />
     </RelativeLayout>
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -56,13 +51,12 @@
         <TextView
             android:text="Nombre:"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/ap_texto_Nombre"
             tools:textStyle="bold"
             android:textStyle="bold"
             android:textAlignment="viewStart"
-            android:textSize="24sp"
-            android:layout_weight="0.10" />
+            android:textSize="24sp" />
 
         <EditText
             android:layout_width="match_parent"
@@ -71,7 +65,8 @@
             android:ems="10"
             android:id="@+id/ap_txt_Mi_nombre"
             android:hint="Mi nombre"
-            android:layout_weight="0.10" />
+            android:layout_weight="0.10"
+            android:enabled="false" />
 
 
     </LinearLayout>
@@ -84,10 +79,10 @@
         android:elevation="0dp">
 
         <TextView
-            android:text="Genero:"
+            android:text="Apodo:"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/ap_texto_Genero"
+            android:id="@+id/ap_txt_apodo"
             tools:textStyle="bold"
             android:textStyle="bold"
             android:textAlignment="viewStart"
@@ -105,8 +100,9 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/cu_txt_genero"
-            android:hint="Mi genero" />
+            android:id="@+id/ap_apodo"
+            android:hint="Mi Apodo"
+            android:enabled="false" />
 
 
     </LinearLayout>
@@ -128,6 +124,7 @@
             android:textSize="24sp" />
 
     </RelativeLayout>
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -139,12 +136,17 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/ap_txt_comentario"
-            android:hint="Mi Fecha de nacimiento" />
-
+            android:id="@+id/ap_txt_birthday"
+            android:hint="Mi Fecha de nacimiento"
+            android:enabled="false" />
 
     </LinearLayout>
 
-
+    <android.support.design.widget.FloatingActionButton
+        android:text="Editar Evento"
+        android:id="@+id/ap_editar_perfil"
+        android:drawable="@drawable/lapiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

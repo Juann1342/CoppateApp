@@ -44,6 +44,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import static com.coppate.g04.coppate.R.raw.gotaagua;
 
@@ -80,7 +84,7 @@ public class Funciones implements Parcelable {
 
             toast2.show();
         } catch (Exception e) {
-            mostrarToastCorto("Error no se ha podido mostrar el texto en pantalla");
+            mostrarToastCorto("Error no se ha podido mostrar el texto en pantalla: "+getContexto().toString());
         }
     }
 
@@ -103,6 +107,23 @@ public class Funciones implements Parcelable {
         MediaPlayer mp = MediaPlayer.create(getContexto(), R.raw.gotaagua);
         mp.start();
     }
+
+    /* no funciona la gran puta
+    public void getFechaActual() {
+
+        /*DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        mostrarToastCorto(dateFormat.format(date).toString());
+        return dateFormat.format(date);
+        Calendar c = Calendar.getInstance();
+        System.out.println("Current time =&gt; "+c.getTime());
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+        // Now formattedDate have current date/time
+        Toast.makeText(contexto, formattedDate, Toast.LENGTH_SHORT).show();
+
+    } */
 
     protected Funciones(Parcel in) {
     }

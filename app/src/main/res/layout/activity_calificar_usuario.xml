@@ -99,7 +99,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/cu_btn_comentar"
-            android:layout_weight="0.21"
             android:background="@drawable/boton_pulsado"
             android:textColor="@color/colorPrimary" />
     </LinearLayout>

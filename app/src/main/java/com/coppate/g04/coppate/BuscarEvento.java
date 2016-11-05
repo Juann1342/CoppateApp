@@ -105,4 +105,10 @@ public class BuscarEvento extends AppCompatActivity {
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
     }
+
+    public void onBackPressed() {
+        BuscarEvento.this.finish();
+        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+
+    }
 }

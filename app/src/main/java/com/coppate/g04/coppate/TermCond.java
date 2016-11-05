@@ -10,4 +10,10 @@ public class TermCond extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_cond);
     }
+
+    public void onBackPressed() {
+        TermCond.this.finish();
+        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+
+    }
 }

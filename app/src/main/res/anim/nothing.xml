@@ -2,8 +2,9 @@
 
     <!-- este xml es para cuando no seleccionamos ningun boton.. y presionamos boton back pero no funciona y no se por que-->
     <translate xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="500"
-    android:fromXDelta="-100%"
-    android:toXDelta="0%" >
+    android:duration="300"
+    android:fromXDelta="0%"
+    android:toXDelta="100%"
+    android:interpolator="@android:anim/linear_interpolator" >
 
 </translate>

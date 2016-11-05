@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     Button comentar;
     TextView txt_mis_eventos;
 
-
     Funciones funciones;
 
     ArrayAdapter<String> adaptador;
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        if(id==R.id.mm_acerca_de){
+        if (id == R.id.mm_acerca_de) {
             goAcercaDe();
         }
 
@@ -86,12 +85,25 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void goAcercaDe(){
+    public void goAcercaDe() {
         Intent acerca = new Intent(MainActivity.this, AcercaDe.class);
         startActivity(acerca);
     }  //dirige a la pantalla acerca de
 
 
+    private Notification getBigTextStyle(Notification.Builder builder, Usuario user) {
+
+        Notification notif = new Notification.Builder(getApplicationContext())
+                .setContentTitle("Invitacion a Evento")
+                .setContentText(user.getNombre() + " ha creado un evento y quiere invitarte")
+                .setSmallIcon(R.drawable.icono32)
+                //.setLargeIcon(R.drawable.icono64R.drawable.icono64)
+                .setStyle(new Notification.BigTextStyle()
+                        .bigText("Haga click en esta notificacion si desea obtener mas información o participar del evento creado por " + user.getNombre()))
+                .build();
+
+        return notif;
+    }
 
     public void pruebaDescripcion(){
         
@@ -113,8 +125,6 @@ public class MainActivity extends AppCompatActivity {
         funciones = new Funciones(getApplicationContext());
 
         txt_mis_eventos = (TextView) findViewById(R.id.txtview_mis_eventos);
-
-
 
         try {
             // ##############################################
@@ -211,8 +221,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CrearEvento.class);
-                Bundle bndlanimation =
-                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
                 startActivity(intent,bndlanimation);//pasa a pantalla de Crear Evento
             }
         });
@@ -221,9 +230,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, OpinionUsuario.class);
-                startActivity(intent);
+                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+                startActivity(intent,bndlanimation);
             }
         });
+
+
 
 
         Resources res = getResources();
@@ -268,7 +280,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void goBuscar() {
         Intent intent = new Intent(this, BuscarEvento.class);
-        startActivity(intent);
+        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+        startActivity(intent,bndlanimation);
     }  //dirige a la pantalla buscar
 
     public void irBuscar(View view) {
@@ -293,7 +306,7 @@ public class MainActivity extends AppCompatActivity {
                 new JsonObjectRequest(
                         Request.Method.GET,
                         /* asi es la consulta real, yo lo modifico para hacer la prueba - Constantes.GET_BY_OWNER + "?idOwner="+ Usuario.getInstance().getIdUsuario()*/
-                        Constantes.GET_BY_OWNER + "?idOwner=1", /*esto deberia traer el usuario 1 que yo cree*/
+                        Constantes.GET_BY_OWNER + "?idOwner=" + Usuario.getInstance().getId_usuario(), /*esto deberia traer el usuario 1 que yo cree*/
 
                         null,
                         new Response.Listener<JSONObject>() {
@@ -342,7 +355,11 @@ public class MainActivity extends AppCompatActivity {
             // Obtener mensaje
             String nombre = response.getString("mensaje");
 
-            funciones.mostrarToastCorto("estado: "+estado);
+            try {
+                funciones.mostrarToastCorto(response.get("descrip_evento").toString());
+            }catch (Exception e){
+                funciones.mostrarToastCorto("Se ha producido un error al cargar la descripcion del evento");
+            }
 
             switch (estado) {
                 case "1":
