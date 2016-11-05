@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int NOTIF_ALERTA_ID = 1;
     // boton que redirige a la actitiy crear evento
     Button btn_crear_evento;
-    Button comentar;
+    Button otrosUsuarios;
     TextView txt_mis_eventos;
 
     Funciones funciones;
@@ -229,11 +229,11 @@ public class MainActivity extends AppCompatActivity {
                 funciones.playSoundPickButton(v);
             }
         });
-        comentar = (Button) findViewById(R.id.opinion);
-        comentar.setOnClickListener(new View.OnClickListener() {
+            otrosUsuarios = (Button) findViewById(R.id.btnOtrosUser);
+        otrosUsuarios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, OpinionUsuario.class);
+                Intent intent = new Intent(MainActivity.this, PerfilOtrosUser.class);
                 Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
                 startActivity(intent,bndlanimation);
             }
@@ -458,46 +458,5 @@ public class MainActivity extends AppCompatActivity {
 
 
 }
-
-
-  /*  @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-
-            Toast.makeText(this,"nuevo grupo",Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        else if(id==R.id.opcion2){
-            Toast.makeText(this,"nueva difusión",Toast.LENGTH_LONG).show();
-        }
-
-        else if(id==R.id.opcion6){
-            Toast.makeText(this,"lupa",Toast.LENGTH_LONG).show();
-        }
-        else if(id==R.id.opcion7){
-            //Toast.makeText(this,"lupa",Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(MainActivity.this,Main2Activity.class);
-            startActivity(intent);
-
-
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-*/
-
 
 
