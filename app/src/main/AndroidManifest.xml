@@ -74,7 +74,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.coppate.g04.coppate.MainActivity" />
         </activity>
-        <activity android:name=".InvitacionEvento"></activity>
+        <activity android:name=".InvitacionEvento" />
+        <activity android:name=".PerfilOtrosUser"></activity>
     </application>
 
 </manifest>
