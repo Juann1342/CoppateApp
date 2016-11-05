@@ -2,15 +2,18 @@ package com.coppate.g04.coppate;
 
 import android.app.ActivityOptions;
 
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -223,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, CrearEvento.class);
                 Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
                 startActivity(intent,bndlanimation);//pasa a pantalla de Crear Evento
+                funciones.playSoundPickButton(v);
             }
         });
         comentar = (Button) findViewById(R.id.opinion);
@@ -405,6 +409,52 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Salir")
+                    .setIcon(R.drawable.icono32)
+                    .setMessage("Estás seguro que deseas salir de la aplicación?")
+                    .setNegativeButton("No, estoy coppado", null)//sin listener
+                    .setPositiveButton("Si, muy seguro", new DialogInterface.OnClickListener() {//un listener que al pulsar, cierre la aplicacion
+                        @Override
+                        public void onClick(DialogInterface dialog, int which){
+                            //salimos de la aplicacion al pulsar en la afirmacion
+                            MainActivity.this.finish();
+                        }
+                    })
+                    .show();
+            // Si el listener devuelve true, significa que el evento esta procesado, y nadie debe hacer nada mas
+            return true;
+        }
+        //para las demas cosas, se reenvia el evento al listener habitual
+        return super.onKeyDown(keyCode, event);
+
+    }
+    /*@Override
+    public void onBackPressed() {
+        AlertDialog.Builder dialogo2 = new AlertDialog.Builder(MainActivity.this);
+        dialogo2.setTitle("Salir de la aplicacion");
+        dialogo2.setMessage("¿Esta seguro que desea salir de la aplicacion?");
+        dialogo2.setCancelable(false);
+        dialogo2.setIcon(R.drawable.icono32);
+        dialogo2.setPositiveButton("Si, muy seguro", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo2, int id) {
+                // actualizar campos de la base de datos
+                finish();
+            }
+        });
+        dialogo2.setNegativeButton("No, quiero seguir coppandome", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo2, int id) {
+
+            }
+        });
+        dialogo2.show();
+
+        MainActivity.this.finish();*/
 
 
 }

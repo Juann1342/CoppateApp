@@ -65,6 +65,8 @@ public class InvitacionEvento extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                funciones.playSoundPickButton(v);
+
                 // hay actualizar en la base de datos una persona que se ha sumado al evento.
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(InvitacionEvento.this);
                 dialogo1.setTitle("Notificacion");
@@ -89,7 +91,7 @@ public class InvitacionEvento extends AppCompatActivity {
         mostrar_ubicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                funciones.playSoundPickButton(v);
                 // hay que pasarle los datos de latitud y longitud y hacer que se muestre en el mapa
                 Intent mostrar_ubic = new Intent(InvitacionEvento.this,MapsActivityCercanos.class);
                 startActivity(mostrar_ubic);
