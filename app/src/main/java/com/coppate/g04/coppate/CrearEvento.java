@@ -212,12 +212,14 @@ public class CrearEvento extends Activity {
             @Override
             public void onClick(View v) {
                 Intent pantalla = new Intent(getApplicationContext(), InvitarContactos.class);
+
                 //mostrarToast("Hasta aca llegamos");
                 try {
                     pantalla.putExtra("Contactos", contactos);
                     setResult(RESULT_OK, pantalla);
                     Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
                     CrearEvento.this.startActivityForResult(pantalla, CONTACT_PICK_REQUEST,bndlanimation);
+                    funciones.playSoundPickButton(v);
 
                     /* Apply our splash exit (fade out) and main
                         entry (fade in) animation transitions. */

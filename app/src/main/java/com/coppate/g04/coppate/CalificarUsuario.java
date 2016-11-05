@@ -112,6 +112,7 @@ public class CalificarUsuario extends Activity {
             @Override
             public void onClick(View v) {
                 try {
+                    funciones.playSoundPickButton(v);
                     //comentario_actual[0] = comentario.getText().toString();
                     if (puntuacion == 0) {
                         funciones.mostrarToastCorto("No se ha seleccionado una puntuacion");
@@ -122,6 +123,7 @@ public class CalificarUsuario extends Activity {
                         resultIntent.putExtra("Calificacion", getPuntuacion());
                         setResult(Activity.RESULT_OK, resultIntent);
                         finish();
+                        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
                     }
                 }catch (Exception e){
                     funciones.mostrarToastCorto("Error");

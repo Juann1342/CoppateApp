@@ -108,6 +108,11 @@ public class Funciones implements Parcelable {
         mp.start();
     }
 
+    public void playSoundPickButton(View v) {
+        MediaPlayer mp = MediaPlayer.create(getContexto(), R.raw.pickbutton);
+        mp.start();
+    }
+
     /* no funciona la gran puta
     public void getFechaActual() {
 

@@ -56,6 +56,7 @@ public class OpinionUsuario extends Activity {
         btn_calificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                funciones.playSoundPickButton(v);
                 Intent pantalla = new Intent(getApplicationContext(), CalificarUsuario.class);
                 pantalla.putExtra("comentarios", comments);
                 Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
