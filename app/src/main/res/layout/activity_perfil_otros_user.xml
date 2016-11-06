@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_perfil_otros_user"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.coppate.g04.coppate.PerfilOtrosUser"
+    android:orientation="vertical">
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="250dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Acá van los datos del usuario levantados de la base de datos"
+        android:textColor="@color/bermellon"
+        android:textSize="25dp"
+        android:layout_marginTop="30dp"/>
+</LinearLayout>
+    <Button
+        android:text="Calificar usuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/boton_pulsado"
+        android:textColor="@color/colorPrimary"
+        android:id="@+id/opinion" />
+
+</LinearLayout>

@@ -40,5 +40,5 @@ dependencies {
     compile 'com.google.android.gms:play-services-appindexing:9.6.1'
     compile 'com.loopj.android:android-async-http:1.4.5'
     testCompile 'junit:junit:4.12'
-    compile 'com.loopj.android:android-async-http:1.4.5'
+    compile 'com.android.support:design:24.2.1'   // compile 'com.loopj.android:android-async-http:1.4.5'
 }
