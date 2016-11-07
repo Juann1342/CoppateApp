@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -26,24 +27,40 @@ public class perfil extends Activity {
     EditText nombre;
     EditText fecha_nac;
     EditText apodo;
-    FloatingActionButton editar_perfil;
+    Button editar_perfil;
+    String fecha_actual = "";
 
     Funciones funciones;
 
     private static int TAKE_PICTURE = 1;
     private static int SELECT_PICTURE = 2;
-    private String name = "";
+    private Boolean activo = false;
 
+    private static String NOMBRE_FOTO = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
+
+        funciones = new Funciones(getApplicationContext());
+
         foto_perfil = (ImageButton) findViewById(R.id.ap_perfil_pict);
         nombre = (EditText) findViewById(R.id.ap_txt_Mi_nombre);
         fecha_nac = (EditText) findViewById(R.id.ap_txt_birthday);
         apodo = (EditText) findViewById(R.id.ap_apodo);
-        editar_perfil = (FloatingActionButton) findViewById(R.id.ap_editar_perfil);
+        editar_perfil = (Button) findViewById(R.id.ap_editar_perfil);
+
+        try {
+            fecha_nac.setText(Usuario.getInstance().getFecha_nacimiento());
+            apodo.setText(Usuario.getInstance().getAlias());
+            nombre.setText(Usuario.getInstance().getNombre());
+        }catch (Exception e){
+            funciones.mostrarToastCorto("se ha producido un error al cargar los datos de usuario");
+        }
+        /* tomar datos del perfil de usuario y cargarlos en los campos
+            foto_perfil.setImageBitmap(Usuario.getInstance().getFoto());
+         */
 
         editar_perfil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,49 +68,58 @@ public class perfil extends Activity {
                 nombre.setEnabled(true);
                 fecha_nac.setEnabled(true);
                 apodo.setEnabled(true);
-                foto_perfil.setEnabled(true);
+                activo = true;
             }
         });
 
         foto_perfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-
-                    //Creamos el Intent para llamar a la Camara
-                    Intent camaraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    //Creamos una carpeta en la memoria del terminal
-                    File carpetaImagenes = new File(Environment.getExternalStorageDirectory(), "CoppateImages");
-                    carpetaImagenes.mkdirs();
-                    //ponemos el nombre de la imagen
-                    File imagen = new File(carpetaImagenes, "foto.jpg");
-                    Uri uriSavedImage = Uri.fromFile(imagen);
-                    //Le decimos al Intent que queremos grabar la imagen
-                    camaraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
-                    //Lanzamos la aplicacion de la camara con retorno (forResult)
-                    startActivityForResult(camaraIntent, 1);
-                } catch (Exception e) {
-                    funciones.mostrarToastCorto("Se ha producido un error al querer utilizar la camara");
+                if (activo) {
+                    tomarFoto();
                 }
             }
         });
-
-                /*int code = TAKE_PICTURE;
-                Intent tomar_foto =  new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(tomar_foto,code);*/
     }
 
-    /* hay que hacer que tome la foto.*/
+    /* toma la foto y la asigna pero solo de la camara frontal (debe ser por el tamanio de la camara trasera) */
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (requestCode == 1 && resultCode == RESULT_OK) {
             //Creamos un bitmap con la imagen recientemente
             //almacenada en la memoria
-            Bitmap bMap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/CoppateImages/" + "foto.jpg");
+            Bitmap bMap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/CoppateImages/" + NOMBRE_FOTO);
+            /*Integer ancho = bMap.getWidth();
+            Integer alto = bMap.getHeight();
+            funciones.mostrarToastCorto("ancho:" +ancho.toString());
+            funciones.mostrarToastCorto("alto"+alto.toString());*/
             //Añadimos el bitmap al imageView para
             //mostrarlo por pantalla
             foto_perfil.setImageBitmap(bMap);
+
         }
 
+    }
+
+    public void tomarFoto(){
+        try {
+            fecha_actual = funciones.getFechaActual();
+            NOMBRE_FOTO = "coppate"+fecha_actual+".jpg";
+            //Creamos el Intent para llamar a la Camara
+            Intent camaraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            //Creamos una carpeta en la memoria del terminal
+            File carpetaImagenes = new File(Environment.getExternalStorageDirectory(), "CoppateImages");
+            carpetaImagenes.mkdirs();
+            //ponemos el nombre de la imagen
+            File imagen = new File(carpetaImagenes, NOMBRE_FOTO);
+            Uri uriSavedImage = Uri.fromFile(imagen);
+            //Le decimos al Intent que queremos grabar la imagen
+            camaraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+            //Lanzamos la aplicacion de la camara con retorno (forResult)
+            startActivityForResult(camaraIntent, 1);
+        } catch (Exception e) {
+            funciones.mostrarToastCorto("Se ha producido un error al querer utilizar la camara");
+        }
     }
 
     public void onBackPressed() {

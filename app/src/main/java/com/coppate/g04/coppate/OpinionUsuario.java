@@ -7,8 +7,10 @@ import android.graphics.Path;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,7 +25,12 @@ public class OpinionUsuario extends Activity {
     ImageView estrella;
     Button btn_calificar;
     TextView comentarios;
+    TextView txt_puntuacion;
     Integer punt;
+
+    ListView lista_comentarios = null;
+
+    ArrayAdapter<String> adapter;
 
     public static String comments;
     //creamos una lista con los comentarios de otros usuarios y las puntuaciones (tienen que ser de la base de datos
@@ -32,6 +39,7 @@ public class OpinionUsuario extends Activity {
 
     Funciones funciones;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,13 +47,18 @@ public class OpinionUsuario extends Activity {
 
         funciones  = new Funciones(getApplicationContext());
 
+        lista_comentarios = (ListView) findViewById(R.id.ou_lista_comentarios);
+
         // esta puntuacion tiene que hacerla de un promedio de la base de datos de calificaciones de usuario
         punt = 0;
+
+        funciones.mostrarFecha();
 
         btn_calificar = (Button) findViewById(R.id.ou_btn_calificar);
         foto_perfil = (ImageView) findViewById(R.id.ou_perfil_pict);
         estrella = (ImageView) findViewById(R.id.ou_calif_total);
         comentarios = (TextView) findViewById(R.id.ou_comentarios);
+        txt_puntuacion = (TextView)findViewById(R.id.ou_txt_puntuacion);
 
         estrella.setImageResource(R.drawable.estrella_vacia);
         foto_perfil.setImageResource(R.drawable.foto_perfil);
@@ -56,13 +69,18 @@ public class OpinionUsuario extends Activity {
         btn_calificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                funciones.playSoundPickButton(v);
-                Intent pantalla = new Intent(getApplicationContext(), CalificarUsuario.class);
-                pantalla.putExtra("comentarios", comments);
-                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
-                startActivityForResult(pantalla, REQUEST_COMENTAR,bndlanimation);
+                goCalificar(v);
             }
         });
+    }
+
+    //funcion que pasa a pantalla de calificacion de usuario
+    private void goCalificar(View v){
+        funciones.playSoundPickButton(v);
+        Intent pantalla = new Intent(getApplicationContext(), CalificarUsuario.class);
+        pantalla.putExtra("comentarios", comments);
+        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+        startActivityForResult(pantalla, REQUEST_COMENTAR,bndlanimation);
     }
 
     @Override
@@ -98,6 +116,7 @@ public class OpinionUsuario extends Activity {
 
                         // actualizamos todos los valores
                         actualizarComentarios(coments_list);
+                        mostrarListaComentarios(coments_list);
                         actualizarPuntuacion(calificacion);
                         float promedio = promedioPuntuacion(punt_list);
                         cambiarColor(estrella,promedio);
@@ -111,6 +130,19 @@ public class OpinionUsuario extends Activity {
 
     }
 
+    private void mostrarListaComentarios(ArrayList<String> lista){
+        try {
+            adapter = new ArrayAdapter<String>(OpinionUsuario.this, android.R.layout.simple_list_item_1);
+            for(int i = 0;i<lista.size();i++){
+                this.adapter.add(lista.get(i));
+            }
+            funciones.mostrarToastCorto("Paso el for");
+            lista_comentarios.setAdapter(adapter);
+    }catch (Exception e){
+       funciones.mostrarToastCorto("Se ha producido un error");
+        }
+    }
+
     private void actualizarPuntuacion(Integer puntuacion){
         this.punt += puntuacion;
     }
@@ -118,6 +150,11 @@ public class OpinionUsuario extends Activity {
     private float promedioPuntuacion(ArrayList<Integer> lista){
         float promedio = (float) 0.0;
         int total = lista.size();
+        // si no hay al menos 10 calificaciones de usuario, se retorna un valor inferior a 1.0
+        if(total < 10){
+            return (float) 0.5;
+        }
+
         float suma = (float) 0.0;
 
         for (int i = 0;i<lista.size();i++){
@@ -144,6 +181,15 @@ public class OpinionUsuario extends Activity {
             estrella.setImageResource(R.drawable.estrella4);
         } else if (num >= 4.5 && num <= 5.0) {
             estrella.setImageResource(R.drawable.estrella5);
+        }
+        setTextoPuntuacion(num);
+    }
+
+    private void setTextoPuntuacion(float num){
+        if(num < 1.0){
+            txt_puntuacion.setText("Este usuario aun no tiene suficientes calificaciones");
+        }else{
+            txt_puntuacion.setText("Puntuacion del usuario: '"+(String.valueOf(num))+ "' de un total de: 5.0");
         }
     }
 

@@ -113,8 +113,24 @@ public class Funciones implements Parcelable {
         mp.start();
     }
 
-    /* no funciona la gran puta
-    public void getFechaActual() {
+    public void mostrarFecha(){
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+        String formattedDate = df.format(c.getTime());
+        // formattedDate have current date/time
+        Toast.makeText(contexto, formattedDate, Toast.LENGTH_SHORT).show();
+
+    }
+
+    public String getFechaActual() {
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+        String formattedDate = df.format(c.getTime());
+
+        return formattedDate;
+    }
 
         /*DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();

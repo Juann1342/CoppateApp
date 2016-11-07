@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int NOTIF_ALERTA_ID = 1;
     // boton que redirige a la actitiy crear evento
+    Button probando;
     Button btn_crear_evento;
     Button otrosUsuarios;
     TextView txt_mis_eventos;
@@ -128,6 +129,14 @@ public class MainActivity extends AppCompatActivity {
         funciones = new Funciones(getApplicationContext());
 
         txt_mis_eventos = (TextView) findViewById(R.id.txtview_mis_eventos);
+        probando = (Button)findViewById(R.id.probando);
+
+        probando.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goPerfil();
+            }
+        });
 
         try {
             // ##############################################
@@ -223,23 +232,22 @@ public class MainActivity extends AppCompatActivity {
         btn_crear_evento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CrearEvento.class);
-                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
-                startActivity(intent,bndlanimation);//pasa a pantalla de Crear Evento
-                funciones.playSoundPickButton(v);
+                goCrearEvento(v);
             }
         });
-            otrosUsuarios = (Button) findViewById(R.id.btnOtrosUser);
+
+        /*comentar = (Button) findViewById(R.id.opinion);
+        comentar.setOnClickListener(new View.OnClickListener() {*/
+        otrosUsuarios = (Button) findViewById(R.id.btnOtrosUser);
         otrosUsuarios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                goComentar(v);
                 Intent intent = new Intent(MainActivity.this, PerfilOtrosUser.class);
                 Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
                 startActivity(intent,bndlanimation);
             }
         });
-
-
 
 
         Resources res = getResources();
@@ -271,6 +279,19 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Login.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);  //dirige a la pantalla de login y ejecuta solo esa
+    }
+
+    private void goCrearEvento(View v){
+        Intent intent = new Intent(MainActivity.this, CrearEvento.class);
+        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+        startActivity(intent,bndlanimation);//pasa a pantalla de Crear Evento
+        funciones.playSoundPickButton(v);
+    }
+
+    private void goComentar(View v){
+        Intent intent = new Intent(MainActivity.this, OpinionUsuario.class);
+        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+        startActivity(intent,bndlanimation);
     }
 
     private void goMapa() {

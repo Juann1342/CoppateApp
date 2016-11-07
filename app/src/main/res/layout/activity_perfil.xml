@@ -24,25 +24,24 @@
             android:textSize="24sp" />
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="421dp"
         android:minHeight="0dp"
         android:minWidth="0dp">
 
         <ImageButton
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/foto_perfil"
             android:id="@+id/ap_perfil_pict"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="101dp"
-            android:layout_marginStart="101dp" />
-    </RelativeLayout>
+            android:rotation="270" />
+    </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -50,7 +49,7 @@
 
         <TextView
             android:text="Nombre:"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ap_texto_Nombre"
             tools:textStyle="bold"
@@ -71,29 +70,21 @@
 
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        android:layout_centerInParent="true"
-        android:elevation="0dp">
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:textAlignment="center">
 
         <TextView
             android:text="Apodo:"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/ap_txt_apodo"
             tools:textStyle="bold"
             android:textStyle="bold"
             android:textAlignment="viewStart"
             android:textSize="24sp" />
-
-    </RelativeLayout>
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="39dp"
-        android:textAlignment="center">
 
         <EditText
             android:layout_width="match_parent"
@@ -106,30 +97,22 @@
 
 
     </LinearLayout>
-    <RelativeLayout
+
+    <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        android:layout_centerInParent="true"
-        android:elevation="0dp">
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:textAlignment="center">
 
         <TextView
             android:text="Fecha de Nacimiento:"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/ap_texto_Fecha_de_Nacimiento"
             tools:textStyle="bold"
             android:textStyle="bold"
             android:textAlignment="viewStart"
             android:textSize="24sp" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="39dp"
-        android:textAlignment="center">
 
         <EditText
             android:layout_width="match_parent"
@@ -141,12 +124,19 @@
             android:enabled="false" />
 
     </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <android.support.design.widget.FloatingActionButton
-        android:text="Editar Evento"
-        android:id="@+id/ap_editar_perfil"
-        android:drawable="@drawable/lapiz"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <Button
+            android:text="Editar Perfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ap_editar_perfil"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/boton_pulsado"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 </LinearLayout>

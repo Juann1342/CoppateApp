@@ -52,11 +52,23 @@
             app:srcCompat="@drawable/foto_perfil"
             android:id="@+id/ou_perfil_pict" />
 
-        <ImageView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/estrella_vacia"
-            android:id="@+id/ou_calif_total" />
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="164dp"
+                app:srcCompat="@drawable/estrella_vacia"
+                android:id="@+id/ou_calif_total" />
+
+            <TextView
+                android:text="Puntuacion total:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ou_txt_puntuacion" />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -73,6 +85,11 @@
             android:id="@+id/ou_coment_usuarios"
             android:layout_weight="0.04" />
 
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="165dp"
+            android:id="@+id/ou_lista_comentarios" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,5 +103,6 @@
             android:id="@+id/ou_btn_calificar"
             android:background="@drawable/btncambia"
             android:textColor="@color/colorPrimary" />
+
     </LinearLayout>
 </LinearLayout>
