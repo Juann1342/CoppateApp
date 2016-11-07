@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class PerfilOtrosUser extends AppCompatActivity {
 
-   private Button comentar;
+    private Button comentar;
 
 
     @Override
@@ -18,13 +18,21 @@ public class PerfilOtrosUser extends AppCompatActivity {
         setContentView(R.layout.activity_perfil_otros_user);
 
 
-    comentar = (Button) findViewById(R.id.opinion);
-    comentar.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(PerfilOtrosUser.this, OpinionUsuario.class);
-            Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
-            startActivity(intent,bndlanimation);
-        }
-    });
-}}
+        comentar = (Button) findViewById(R.id.opinion);
+        comentar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PerfilOtrosUser.this, OpinionUsuario.class);
+                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in, R.anim.left_out).toBundle();
+                startActivity(intent, bndlanimation);
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        PerfilOtrosUser.this.finish();
+        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+    }
+}

@@ -242,10 +242,7 @@ public class MainActivity extends AppCompatActivity {
         otrosUsuarios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goComentar(v);
-                Intent intent = new Intent(MainActivity.this, PerfilOtrosUser.class);
-                Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
-                startActivity(intent,bndlanimation);
+                goPerfilOtrosUsuarios(v);
             }
         });
 
@@ -288,8 +285,11 @@ public class MainActivity extends AppCompatActivity {
         funciones.playSoundPickButton(v);
     }
 
-    private void goComentar(View v){
-        Intent intent = new Intent(MainActivity.this, OpinionUsuario.class);
+    private void goPerfilOtrosUsuarios(View v){
+        /*Intent intent = new Intent(MainActivity.this, OpinionUsuario.class);
+        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+        startActivity(intent,bndlanimation);*/
+        Intent intent = new Intent(MainActivity.this, PerfilOtrosUser.class);
         Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
         startActivity(intent,bndlanimation);
     }
