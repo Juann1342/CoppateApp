@@ -135,7 +135,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/ap_editar_perfil"
             android:textColor="@color/colorPrimary"
-            android:background="@drawable/boton_pulsado"
+            android:background="@drawable/btncambia"
             android:layout_weight="1" />
     </LinearLayout>
 

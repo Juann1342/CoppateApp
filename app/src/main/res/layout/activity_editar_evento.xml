@@ -150,7 +150,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/ee_ubicacion_mapa"
                     android:layout_weight="0.04"
-                    android:background="@drawable/boton_pulsado"
+                    android:background="@drawable/btncambia"
                     android:textColor="@color/colorPrimary"/>
 
                 <LinearLayout
@@ -185,7 +185,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/ee_cancelar_evento"
-                android:background="@drawable/boton_pulsado"
+                android:background="@drawable/btncambia"
                 android:textColor="@color/colorPrimary"
                 android:textAllCaps="false"
                 android:textAlignment="center"
@@ -201,7 +201,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/ee_guardar_cambios"
-                android:background="@drawable/boton_pulsado"
+                android:background="@drawable/btncambia"
                 android:textColor="@color/colorPrimary"
                 android:textAllCaps="false"
                 android:textAlignment="center"
