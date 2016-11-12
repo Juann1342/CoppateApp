@@ -31,6 +31,7 @@ public class BuscarEvento extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buscar_evento);
+        getSupportActionBar().hide();
 
         //HttpClient httpClient = new DefaultHttpClient();
        // HttpPost

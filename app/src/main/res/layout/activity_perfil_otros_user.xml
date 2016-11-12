@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_perfil_otros_user"
     android:layout_width="match_parent"
@@ -14,22 +15,45 @@
 
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="250dp">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Acá van los datos del usuario levantados de la base de datos"
-        android:textColor="@color/bermellon"
-        android:textSize="25dp"
-        android:layout_marginTop="30dp"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="183dp"
+        app:srcCompat="@drawable/foto_perfil"
+        android:id="@+id/fotoperfilOtrosUser" />
 </LinearLayout>
     <Button
-        android:text="Calificar usuario"
+        android:text="Calificacion del usuario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/btncambia"
         android:textColor="@color/colorPrimary"
         android:id="@+id/opinion" />
+
+    <TextView
+        android:text="Nombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/nombreOtrosUser"
+        android:textSize="22dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:text="Edad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edadOtrosUser"
+        android:textSize="22dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:text="Sexo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sexoOtrosUser"
+        android:textSize="22dp"
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>

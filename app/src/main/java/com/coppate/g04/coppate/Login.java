@@ -41,6 +41,8 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        getSupportActionBar().hide();
+
         // se inicializa en false
         acepta_terminos = false;
         funciones = new Funciones(getApplicationContext());

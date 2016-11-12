@@ -16,6 +16,7 @@ public class PerfilOtrosUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_otros_user);
+        getSupportActionBar().hide();
 
 
         comentar = (Button) findViewById(R.id.opinion);
