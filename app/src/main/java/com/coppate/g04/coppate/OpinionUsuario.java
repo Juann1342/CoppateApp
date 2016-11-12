@@ -57,7 +57,7 @@ public class OpinionUsuario extends Activity {
         btn_calificar = (Button) findViewById(R.id.ou_btn_calificar);
         foto_perfil = (ImageView) findViewById(R.id.ou_perfil_pict);
         estrella = (ImageView) findViewById(R.id.ou_calif_total);
-        comentarios = (TextView) findViewById(R.id.ou_comentarios);
+        //comentarios = (TextView) findViewById(R.id.ou_comentarios);
         txt_puntuacion = (TextView)findViewById(R.id.ou_txt_puntuacion);
 
         estrella.setImageResource(R.drawable.estrella_vacia);
@@ -69,6 +69,17 @@ public class OpinionUsuario extends Activity {
         btn_calificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
+                * aca iria:
+                *
+                * if(UsuarioNotCalificaAOtroUsuario){
+                *   goCalificar(v);
+                * }else{
+                *   funciones.mostrarToastCorto("Ya has calificado a este usuario");
+                * }
+                *
+                 */
+
                 goCalificar(v);
             }
         });
@@ -115,7 +126,7 @@ public class OpinionUsuario extends Activity {
                         }
 
                         // actualizamos todos los valores
-                        actualizarComentarios(coments_list);
+                        //actualizarComentarios(coments_list);
                         mostrarListaComentarios(coments_list);
                         actualizarPuntuacion(calificacion);
                         float promedio = promedioPuntuacion(punt_list);
@@ -132,14 +143,18 @@ public class OpinionUsuario extends Activity {
 
     private void mostrarListaComentarios(ArrayList<String> lista){
         try {
+            // seteamos un adaptador para la lista de comentarios
             adapter = new ArrayAdapter<String>(OpinionUsuario.this, android.R.layout.simple_list_item_1);
+
+            //recorremos la lista total de comentarios y los asignamos al adaptador anterior
             for(int i = 0;i<lista.size();i++){
                 this.adapter.add(lista.get(i));
             }
-            funciones.mostrarToastCorto("Paso el for");
+
+            // seteamos el adaptador en la lista
             lista_comentarios.setAdapter(adapter);
-    }catch (Exception e){
-       funciones.mostrarToastCorto("Se ha producido un error");
+        }catch (Exception e){
+           funciones.mostrarToastCorto("Se ha producido un error");
         }
     }
 
@@ -193,7 +208,7 @@ public class OpinionUsuario extends Activity {
         }
     }
 
-    private void actualizarComentarios(ArrayList<String> comentario){
+    /*private void actualizarComentarios(ArrayList<String> comentario){
         String temp = "";
 
         for(int i=0;i<comentario.size();i++){
@@ -201,5 +216,5 @@ public class OpinionUsuario extends Activity {
 
         }
         this.comentarios.setText(temp);
-    }
+    }*/
 }

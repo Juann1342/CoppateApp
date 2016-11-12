@@ -10,7 +10,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -21,6 +23,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -34,6 +37,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
     Button btn_crear_evento;
     Button otrosUsuarios;
     TextView txt_mis_eventos;
+
+    GridView gridview;
+    static final String[] listItems = new String[] { "name","qty","p1","p2","itemname","5","100","1" };
 
     Funciones funciones;
 
@@ -126,6 +133,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        try {
+            // probando el gridview
+            gridview = (GridView)findViewById(R.id.ma_gridv_eventos_cercanos);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listItems);
+            gridview.setAdapter(adapter);
+
+            gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+            {
+                public void onItemClick(AdapterView<?> parent, View v,int position, long id)
+                {
+                    Toast.makeText(getApplicationContext(),
+                            ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }catch (Exception e){
+            funciones.mostrarToastCorto("Error en el gridview");
+        }
+        // fin de la prueba de gridview
+
         funciones = new Funciones(getApplicationContext());
 
         txt_mis_eventos = (TextView) findViewById(R.id.txtview_mis_eventos);
@@ -134,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         probando.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goPerfil();
+                goAcercaDe();
             }
         });
 
@@ -269,7 +295,9 @@ public class MainActivity extends AppCompatActivity {
         if (AccessToken.getCurrentAccessToken() == null) {  //si no hay sesion iniciada pasa a la pantalla de login
             goLoginScreen();
         }
-        listarEvento();
+
+        // hacemos que tome los eventos de la base de datos
+        listarEventoPorOwner();
     }
 
     private void goLoginScreen() {
@@ -318,52 +346,96 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }  //dirige a la pantalla perfil
 
-    public void listarEvento() {
+    public void getUsuarioPorID(String id_user){
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(new JsonObjectRequest(
+                    Request.Method.GET,
+                    Constantes.GET_USER_BY_ID+"id_usuario="+id_user,
+                    null,
+                    new Response.Listener<JSONObject>(){
 
-        // Actualizar datos en el servidor
-        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(
-                // creo una nueva instancia del singleton de volley
-                // y le asigno a la constante getbyowner (dentro obtenereventoporowner) y le paso en el archivo ese
-                // el parametro que espera (dentro de la funcion isset()
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            respuestaGetUsuarioPorID(response);
+                        }
+                    }
+                ,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    funciones.mostrarToastCorto(("Se ha producido un Error Volley: " + error.getMessage()));
+                        }
+                }
+                ) {
+                @Override
+               public Map<String, String> getHeaders() {
+                    Map<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/json; charset=utf-8");
+                    headers.put("Accept", "application/json");
+                    return headers;
+                }
+                @Override
+                public String getBodyContentType() {
+                    return "application/json; charset=utf-8" + getParamsEncoding();
+                }
+        });
 
-                // despues le paso en el singleton de usuario get instance get idusuario
-                // por ahora se puede hardcodear el id de usuario para hacer las pruebas
-                new JsonObjectRequest(
-                        Request.Method.GET,
+    }
+
+    private void respuestaGetUsuarioPorID(JSONObject response){
+        // y ahora??
+    }
+
+
+    public void listarEventoPorOwner() {
+
+        try {
+            // Actualizar datos en el servidor
+            VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(
+                    // creo una nueva instancia del singleton de volley
+                    // y le asigno a la constante getbyowner (dentro obtenereventoporowner) y le paso en el archivo ese
+                    // el parametro que espera (dentro de la funcion isset()
+
+                    // despues le paso en el singleton de usuario get instance get idusuario
+                    // por ahora se puede hardcodear el id de usuario para hacer las pruebas
+                    new JsonObjectRequest(
+                            Request.Method.GET,
                         /* asi es la consulta real, yo lo modifico para hacer la prueba - Constantes.GET_BY_OWNER + "?idOwner="+ Usuario.getInstance().getIdUsuario()*/
-                        Constantes.GET_BY_OWNER + "?idOwner=" + Usuario.getInstance().getId_usuario(), /*esto deberia traer el usuario 1 que yo cree*/
+                            Constantes.GET_BY_OWNER + "?id_usuario=" + Usuario.getInstance().getId_usuario(), /*esto deberia traer el usuario 1 que yo cree*/
 
-                        null,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                // Procesar la respuesta del servidor
+                            null,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    // Procesar la respuesta del servidor
 
-                                procesarRespuesta(response);
+                                    procesarRespuesta(response);
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    funciones.mostrarToastCorto(("Se ha producido un Error Volley: " + error.getMessage()));
+                                }
                             }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                funciones.mostrarToastCorto(("Se ha producido un Error Volley: " + error.getMessage()));
-                            }
+
+                    ) {
+                        @Override
+                        public Map<String, String> getHeaders() {
+                            Map<String, String> headers = new HashMap<String, String>();
+                            headers.put("Content-Type", "application/json; charset=utf-8");
+                            headers.put("Accept", "application/json");
+                            return headers;
                         }
 
-                ) {
-                    @Override
-                    public Map<String, String> getHeaders() {
-                        Map<String, String> headers = new HashMap<String, String>();
-                        headers.put("Content-Type", "application/json; charset=utf-8");
-                        headers.put("Accept", "application/json");
-                        return headers;
+                        @Override
+                        public String getBodyContentType() {
+                            return "application/json; charset=utf-8" + getParamsEncoding();
+                        }
                     }
-
-                    @Override
-                    public String getBodyContentType() {
-                        return "application/json; charset=utf-8" + getParamsEncoding();
-                    }
-                }
-        );
+            );
+        }catch (Exception e){
+            funciones.mostrarToastCorto("Error al captar los datos");
+        }
 
     }
 
@@ -372,6 +444,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param response Objeto Json
      */
+
     private void procesarRespuesta(JSONObject response) {
 
         try {
@@ -380,11 +453,16 @@ public class MainActivity extends AppCompatActivity {
             // Obtener mensaje
             String nombre = response.getString("mensaje");
 
-            try {
-                funciones.mostrarToastCorto(response.get("descrip_evento").toString());
+
+            /*try {
+                funciones.mostrarToastCorto("Hasta aca funca.. se rompe en el getJSONObject");
+
+                funciones.mostrarToastCorto(Usuario.getInstance().getId_usuario().toString());
+                funciones.mostrarToastCorto(response.getJSONObject("descrip_evento").toString());
             }catch (Exception e){
                 funciones.mostrarToastCorto("Se ha producido un error al cargar la descripcion del evento");
-            }
+                funciones.mostrarToastCorto(response.toString()+" :siempre me da codigo 2");
+            }*/
 
             switch (estado) {
                 case "1":
@@ -434,6 +512,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            DialogoPersonalizado dp = new DialogoPersonalizado();
             new AlertDialog.Builder(this)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setTitle("Salir")

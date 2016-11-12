@@ -168,46 +168,45 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="58dp"
             android:textAlignment="center"
-            android:layout_weight="0.10"
             android:weightSum="1">
 
-            <android.support.design.widget.FloatingActionButton
+            <Button
                 android:text="Editar Evento"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/ee_editar_evento"
+                android:background="@drawable/btncambia"
                 android:drawable="@drawable/lapiz"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textColor="@color/colorPrimary"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"/>
+
 
             <Button
                 android:text="Cancelar Evento"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/ee_cancelar_evento"
                 android:background="@drawable/btncambia"
                 android:textColor="@color/colorPrimary"
                 android:textAllCaps="false"
                 android:textAlignment="center"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/ee_editar_evento"
-                android:layout_toEndOf="@+id/ee_editar_evento"
                 android:layout_marginLeft="25dp"
-                android:layout_marginStart="25dp"
-                android:layout_weight="0.30" />
+                android:layout_marginStart="25dp"/>
 
             <Button
                 android:text="Guardar Cambios"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/ee_guardar_cambios"
                 android:background="@drawable/btncambia"
                 android:textColor="@color/colorPrimary"
                 android:textAllCaps="false"
                 android:textAlignment="center"
-                android:layout_alignParentTop="false"
-                android:layout_alignParentRight="false"
-                android:layout_alignParentEnd="false"
                 android:visibility="invisible" />
 
         </LinearLayout>

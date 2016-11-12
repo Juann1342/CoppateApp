@@ -120,8 +120,24 @@ public class Funciones implements Parcelable {
         String formattedDate = df.format(c.getTime());
         // formattedDate have current date/time
         Toast.makeText(contexto, formattedDate, Toast.LENGTH_SHORT).show();
-
     }
+
+    /*public void mostrarDialogoPregunta(){
+        new android.app.AlertDialog.Builder(getContexto())
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Salir")
+                .setIcon(R.drawable.icono32)
+                .setMessage("Estás seguro que deseas salir de la aplicación?")
+                .setNegativeButton("No, estoy coppado", null)//sin listener
+                .setPositiveButton("Si, muy seguro", new DialogInterface.OnClickListener() {//un listener que al pulsar, cierre la aplicacion
+                    @Override
+                    public void onClick(DialogInterface dialog, int which){
+                        //salimos de la aplicacion al pulsar en la afirmacion
+                        Funciones.this.finish();
+                    }
+                })
+                .show();
+    }*/
 
     public String getFechaActual() {
         Calendar c = Calendar.getInstance();

@@ -87,14 +87,8 @@
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="165dp"
+            android:layout_height="146dp"
             android:id="@+id/ou_lista_comentarios" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/ou_comentarios"
-            android:layout_weight="1.29" />
 
         <Button
             android:text="Calificar"

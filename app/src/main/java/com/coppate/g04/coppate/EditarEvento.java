@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class EditarEvento extends Activity {
 
     Button ubicacion;
-    FloatingActionButton editar_evento;
+    Button editar_evento;
     Button cancelar_evento;
     Button guardar_cambios;
     EditText descripcion_evento;
@@ -33,7 +33,7 @@ public class EditarEvento extends Activity {
     Funciones funciones;
 
     Integer id_evento;
-    Boolean guardado = null;
+    Boolean cambios = null;
 
     AlertDialog.Builder dialogo;
 
@@ -46,7 +46,7 @@ public class EditarEvento extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_evento);
 
-        guardado = false;
+        cambios = false;
 
         dialogo = new AlertDialog.Builder(getApplicationContext());
 
@@ -74,7 +74,7 @@ public class EditarEvento extends Activity {
         funciones = new Funciones(getApplicationContext());
 
         ubicacion = (Button)findViewById(R.id.ee_ubicacion_mapa);
-        editar_evento = (FloatingActionButton)findViewById(R.id.ee_editar_evento);
+        editar_evento = (Button) findViewById(R.id.ee_editar_evento);
         cancelar_evento = (Button)findViewById(R.id.ee_cancelar_evento);
         guardar_cambios = (Button)findViewById(R.id.ee_guardar_cambios);
         descripcion_evento = (EditText) findViewById(R.id.ee_descripcion_evento);
@@ -100,6 +100,7 @@ public class EditarEvento extends Activity {
                 cupo_max.setEnabled(true);
                 edad_hasta.setEnabled(true);
                 edad_desde.setEnabled(true);
+                cambios = true;
                 //guardar_cambios.setEnabled(true);
             }
         });
@@ -116,7 +117,6 @@ public class EditarEvento extends Activity {
         cancelar_evento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(EditarEvento.this);
                 dialogo1.setTitle("Cancelar Evento");
@@ -164,7 +164,28 @@ public class EditarEvento extends Activity {
     }
 
     public void onBackPressed() {
-        EditarEvento.this.finish();
+        if(cambios){
+            AlertDialog.Builder dialogo2 = new AlertDialog.Builder(EditarEvento.this);
+            dialogo2.setTitle("Cambios en el Evento");
+            dialogo2.setMessage("¿Esta seguro que desea salir sin actualizar los valores del evento?");
+            dialogo2.setCancelable(false);
+            dialogo2.setIcon(R.drawable.icono32);
+            dialogo2.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialogo2, int id) {
+
+                }
+            });
+            dialogo2.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialogo2, int id) {
+                    // actualizar campos de la base de datos
+                    EditarEvento.this.finish();
+                    //finish();
+                }
+            });
+            dialogo2.show();
+        }else{
+            EditarEvento.this.finish();
+        }
         overridePendingTransition(R.anim.reingreso, R.anim.nothing);
 
     }

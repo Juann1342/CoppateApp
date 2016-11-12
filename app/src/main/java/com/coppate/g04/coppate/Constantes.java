@@ -32,6 +32,7 @@ public class Constantes {
     public static final String DELETE = "http://" + URL + "/TBD.php";
     public static final String INSERT = "http://" + URL + "/insertar_evento.php";
     public static final String LOG = "http://" + URL + "/loguear_usuario.php";
+    public static final String GET_USER_BY_ID = "http://" + URL + "/obtener_usuario_por_id.php";
 
     /**
      * Clave para el valor extra que representa al identificador de una evento

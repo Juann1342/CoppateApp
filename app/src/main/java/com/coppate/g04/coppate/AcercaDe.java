@@ -21,23 +21,35 @@ public class AcercaDe extends AppCompatActivity {
         acerca = (TextView)findViewById(R.id.ad_acerca);
         volver = (Button)findViewById(R.id.ad_volver);
 
-        acerca.setText("Aplicacion desarrollada por \n" +
-                "los alumnos de la universidad de Ezeiza\n" +
-                "Juan Nuñez\n" +
-                "Guillermo Bazzi\n" +
-                "Luis Cikotik\n" +
-                "Daniel Enciso\n" +
-                "Gabriel Cordova\n" +
-                "Rosario Barrientos\n" +
-                "Julian Arsuaga\n" +
-                "para la materia Desarrollo de Software dictada por los profesores\n" +
-                "Ing. Sebastian Ramirez\n" +
+        acerca.setText("Aplicacion desarrollada por los alumnos de la universidad de Ezeiza\n\n" +
+                "Juan Nuñez\n\n" +
+                "Guillermo Bazzi\n\n" +
+                "Luis Cikotik\n\n" +
+                "Daniel Enciso\n\n" +
+                "Gabriel Cordova\n\n" +
+                "Rosario Barrientos\n\n" +
+                "Julian Arsuaga\n\n" +
+                "para la materia Desarrollo de Software dictada por los profesores\n\n" +
+                "Ing. Sebastian Ramirez\n\n" +
                 "Ing. Federico Brucchieri");
 
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                new android.app.AlertDialog.Builder(AcercaDe.this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Agradecidos")
+                        .setIcon(R.drawable.icono32)
+                        .setMessage("Muchas Gracias por Conocernos. Hasta luego")
+                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {//un listener que al pulsar, cierre la aplicacion
+                            @Override
+                            public void onClick(DialogInterface dialog, int which){
+                                //salimos de la aplicacion al pulsar en la afirmacion
+                                AcercaDe.this.finish();
+                            }
+                        })
+                        .show();
+                /*AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
 
                 builder.setMessage("Muchas Gracias por Conocernos. Hasta luego")
                         .setTitle("Saludos")
@@ -45,7 +57,7 @@ public class AcercaDe extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 finish();
                             }
-                        });
+                        });*/
             }
         });
     }

@@ -95,11 +95,11 @@
             android:hint="Agregar Comentario" />
 
         <Button
-            android:text="Agregar Comentario"
+            android:text="Comentar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/cu_btn_comentar"
-            android:background="@drawable/btncambia"
+            android:background="@drawable/boton_pulsado"
             android:textColor="@color/colorPrimary" />
     </LinearLayout>
 </LinearLayout>

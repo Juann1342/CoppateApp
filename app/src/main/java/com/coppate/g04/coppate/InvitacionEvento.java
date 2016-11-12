@@ -22,6 +22,7 @@ public class InvitacionEvento extends AppCompatActivity {
     TextView usuario_creador;
     Button copparse;
     Button mostrar_ubicacion;
+    Button rechazar;
     Funciones funciones;
     String latitud;
     String longitud;
@@ -49,6 +50,7 @@ public class InvitacionEvento extends AppCompatActivity {
         descrip_evento = (TextView) findViewById(R.id.ie_descrip_evento);
         usuario_creador = (TextView) findViewById(R.id.ie_usuario_creador);
         copparse = (Button) findViewById(R.id.ie_copparse);
+        rechazar = (Button) findViewById(R.id.ie_rechazar);
         mostrar_ubicacion = (Button) findViewById(R.id.ie_ubicacion_mapa);
         calif_total = (ImageView) findViewById(R.id.ie_calif_total);
         puntuacion = (TextView) findViewById(R.id.ie_puntuacion);
@@ -60,6 +62,13 @@ public class InvitacionEvento extends AppCompatActivity {
         puntuacion.setText("Puntuacion total del usuario XXXX a traves del id evento: "+id_evento.toString());
 
 
+        rechazar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                funciones.mostrarToastCorto("Se ha rechazado la invitación a este Evento");
+                finish();
+            }
+        });
 
         copparse.setOnClickListener(new View.OnClickListener() {
             @Override

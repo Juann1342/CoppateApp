@@ -167,16 +167,33 @@
             android:textAlignment="center">
 
             <Button
-                android:text="Copparse"
-                android:layout_width="match_parent"
+                android:text="Rechazar"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="17dp"
-                android:id="@+id/ie_copparse"
+                android:id="@+id/ie_rechazar"
                 android:layout_weight="1"
                 android:background="@drawable/btncambia"
                 android:textColor="@color/colorPrimary"
                 android:textAllCaps="false"
                 android:textAlignment="center" />
+
+            <Button
+                android:text="Copparse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ie_copparse"
+                android:layout_weight="1"
+                android:background="@drawable/btncambia"
+                android:textColor="@color/colorPrimary"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="34dp"
+                android:layout_marginEnd="34dp"
+                android:layout_alignBottom="@+id/ie_rechazar" />
         </RelativeLayout>
 
     </LinearLayout>
