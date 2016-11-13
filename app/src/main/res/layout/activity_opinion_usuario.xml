@@ -83,12 +83,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/ou_coment_usuarios"
-            android:layout_weight="0.04" />
+            android:layout_weight="0.01" />
 
         <ListView
             android:layout_width="match_parent"
             android:layout_height="146dp"
-            android:id="@+id/ou_lista_comentarios" />
+            android:id="@+id/ou_lista_comentarios"
+            android:layout_weight="0.03" />
 
         <Button
             android:text="Calificar"

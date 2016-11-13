@@ -42,6 +42,7 @@
         <activity android:name=".OpinionUsuario" />
         <activity android:name=".CalificarUsuario" />
         <activity android:name=".MapsActivityCercanos" />
+        <activity android:name=".InvitacionEvento" />
         <activity android:name=".EditarEvento" />
         <activity
             android:name=".MapsActivity"

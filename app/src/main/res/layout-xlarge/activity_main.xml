@@ -96,6 +96,11 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/probando" />
 
+                    <ListView
+                        android:id="@+id/ma_lv_eventos_cercanos"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
 
                 </LinearLayout>
 

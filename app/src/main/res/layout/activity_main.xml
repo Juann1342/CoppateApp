@@ -96,19 +96,10 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/probando" />
 
-                    <GridView
-                        android:id="@+id/ma_gridv_eventos_cercanos"
+                    <ListView
+                        android:id="@+id/ma_lv_eventos_cercanos"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentLeft="true"
-                        android:layout_below="@+id/spnShopCharacters"
-                        android:layout_above="@+id/linerBuyBtns"
-                        android:horizontalSpacing="15dp"
-                        android:columnWidth="120dp"
-                        android:numColumns="auto_fit"
-                        android:fastScrollEnabled="true"
-                        android:scrollbarStyle="insideOverlay">
-                    </GridView>
+                        android:layout_height="match_parent" />
 
 
                 </LinearLayout>

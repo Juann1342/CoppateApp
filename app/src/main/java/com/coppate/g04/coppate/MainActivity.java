@@ -41,6 +41,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,13 +56,104 @@ public class MainActivity extends AppCompatActivity {
     Button otrosUsuarios;
     TextView txt_mis_eventos;
 
-    GridView gridview;
-    static final String[] listItems = new String[] { "name","qty","p1","p2","itemname","5","100","1" };
+    // tomamos los ListView para mostrar los eventos cercanos, de otros y propios
+    ListView eventos_de_otros;
+    ListView lista_mis_eventos;
+    ListView lista_eventos_a_participar;
+
+    // generamos las listas para los eventos de otros (el listview que muestra)
+    ArrayList<String> lista_eventos_mios = new ArrayList<String>();
+    ArrayList<String> lista_eventos_cercanos = new ArrayList<String>();
+    ArrayList<String> lista_eventos_otros_participo = new ArrayList<String>();
 
     Funciones funciones;
 
+    // creamos los adaptadores para los listview
     ArrayAdapter<String> adaptador;
     ArrayAdapter<String> participo;
+    ArrayAdapter<String> adapt_eventos_otros;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        funciones = new Funciones(getApplicationContext());
+
+        // cargamos los datos en pantalla de los textview,listview,y botones
+        // los textos
+        txt_mis_eventos = (TextView) findViewById(R.id.txtview_mis_eventos);
+        // los botones
+        btn_crear_evento = (Button) findViewById(R.id.ma_crear_evento);
+        otrosUsuarios = (Button) findViewById(R.id.btnOtrosUser);
+        probando = (Button)findViewById(R.id.probando);
+        //los listview
+        lista_mis_eventos = (ListView) findViewById(R.id.ma_listar_mis_eventos);
+        lista_eventos_a_participar = (ListView) findViewById(R.id.ma_eventos_donde_participo);
+        eventos_de_otros = (ListView) findViewById(R.id.ma_lv_eventos_cercanos);
+
+        if (AccessToken.getCurrentAccessToken() == null) {  //si no hay sesion iniciada pasa a la pantalla de login
+            goLoginScreen();
+        }
+
+        Resources res = getResources();
+
+        TabHost tabs = (TabHost) findViewById(android.R.id.tabhost);
+        tabs.setup();
+
+        TabHost.TabSpec spec = tabs.newTabSpec("mitab1");
+        spec.setContent(R.id.tab1);
+        spec.setIndicator("", getResources().getDrawable(R.drawable.icomis));
+        tabs.addTab(spec);
+
+        spec = tabs.newTabSpec("mitab2");
+        spec.setContent(R.id.tab2);
+        spec.setIndicator("", getResources().getDrawable(R.drawable.icobuscarr));
+        tabs.addTab(spec);
+
+
+        tabs.setCurrentTab(2);
+
+        // inicializamos los arraylist que nos serviran para cargar los datos de los adaptadores para los listview
+        lista_eventos_mios = new ArrayList<String>();
+        lista_eventos_cercanos = new ArrayList<String>();
+        lista_eventos_otros_participo = new ArrayList<String>();
+
+        // cargamos datos de prueba que tienen que venir de la BD, tanto los propios como los otros
+        lista_eventos_cercanos.add("Evento cercano: 1");
+        lista_eventos_mios.add("Eventos mios: 1");
+        lista_eventos_otros_participo.add("Eventos participo: 1");
+
+        // llamammos a las funciones que listan los eventos cercanos, de otros y mios
+        mostrarEventosCercanos(lista_eventos_cercanos);
+        mostrarMisEventos(lista_eventos_mios);
+        mostrarEventosEnQueParticipo(lista_eventos_otros_participo);
+
+
+        btn_crear_evento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goCrearEvento(v);
+            }
+        });
+
+        otrosUsuarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goPerfilOtrosUsuarios(v);
+            }
+        });
+
+        probando.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goAcercaDe();
+            }
+        });
+
+        // hacemos que tome los eventos de la base de datos
+        listarEventoPorOwner();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -116,188 +209,121 @@ public class MainActivity extends AppCompatActivity {
         return notif;
     }
 
-    public void pruebaDescripcion(){
-        
-        /*
-        NotificationManager notificador = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification notificacion = new Notification(android.R.drawable.sym_call_missed, "Llamada perdidad", System.currentTimeMillis());
-        Intent notificacionIntent = new Intent(getApplicationContext(), DescripcionEvento.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, notificacionIntent, 0);
-        notificacion.setLatestEventInfo(getApplicationContext(), "Llamada perdida", "Tienes una llamada perdida del número 666777888.", contentIntent);
-
-        notificador.notify(NOTIF_ALERTA_ID, notificacion);*/
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+    private void mostrarMisEventos(ArrayList<String> array_mis_eventos){
         try {
-            // probando el gridview
-            gridview = (GridView)findViewById(R.id.ma_gridv_eventos_cercanos);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listItems);
-            gridview.setAdapter(adapter);
-
-            gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
-            {
-                public void onItemClick(AdapterView<?> parent, View v,int position, long id)
-                {
-                    Toast.makeText(getApplicationContext(),
-                            ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        }catch (Exception e){
-            funciones.mostrarToastCorto("Error en el gridview");
-        }
-        // fin de la prueba de gridview
-
-        funciones = new Funciones(getApplicationContext());
-
-        txt_mis_eventos = (TextView) findViewById(R.id.txtview_mis_eventos);
-        probando = (Button)findViewById(R.id.probando);
-
-        probando.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goAcercaDe();
-            }
-        });
-
-        try {
-            // ##############################################
-            // creamos un list view para darle funcionalidad a la app
-            final ListView lista_mis_eventos;
-            lista_mis_eventos = (ListView) findViewById(R.id.ma_listar_mis_eventos);
-
             adaptador = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
-
             // hay que hacer que el "ARRAYADAPTER lo tome de la base de datos y luego recorrerlo, ahora esta a manopla
-
-            String objeto = "Creo Evento: ";
+            /*String objeto = "Creo Evento: ";
             String num = "";
             for(int i = 0;i<30;i++){
                 adaptador.add(objeto+i);
+            }*/
+            // recorremos la lista de los eventos que trae de la base de datos y los cargamos en el adaptadorde mis eventos
+            for (int i = 0;i<array_mis_eventos.size();i++){
+                adaptador.add(array_mis_eventos.get(i));
             }
             lista_mis_eventos.setAdapter(adaptador);
-
-
              /* obtenemos el id del evento actual que se selecciona de la lista y lo cargamos en el activity descripcion de evento*/
             lista_mis_eventos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    try {
-                        Integer id_evento = lista_mis_eventos.getPositionForView(view);
-                        Intent intent_descripcion = new Intent(MainActivity.this, EditarEvento.class);
-
-                        // le pasamos el parametro del ide de evento para tomarlo en la pantalla de DESCRIPCION DE EVENTO y mostrar los datos necesarios
-                        intent_descripcion.putExtra("ID_evento", id_evento);
-                        // creamos la animacion de deslizamiento
-                        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in, R.anim.left_out).toBundle();
-                        // lanzamos la actividad de DESCRIPCION y le cargamos la animacion
-                        startActivity(intent_descripcion, bndlanimation);
-                    }catch (Exception e){
-                        funciones.mostrarToastCorto("Error al cargar la siguiente pantalla");
-                    }
+                    entrarAMiEvento(view);
                 }
             });
-
-
             // termina el listview
         }catch (Exception e){
             funciones.mostrarToastCorto("No fue posible cargar la lista de eventos");
         }
+    }
 
-
+    private void entrarAMiEvento(View v){
         try {
-            // ##############################################
-            // creamos un list view para darle funcionalidad a la app
-            // en la que podamos movernos por una lista dentro de los posibles eventos y hacer click sobre alguno de ellos
-            final ListView lista_eventos_a_participar;
-            lista_eventos_a_participar = (ListView) findViewById(R.id.ma_eventos_donde_participo);
+            Integer id_evento = lista_mis_eventos.getPositionForView(v);
+            Intent intent_descripcion = new Intent(MainActivity.this, EditarEvento.class);
+            // le pasamos el parametro del ide de evento para tomarlo en la pantalla de DESCRIPCION DE EVENTO y mostrar los datos necesarios
+            intent_descripcion.putExtra("ID_evento", id_evento);
+            // creamos la animacion de deslizamiento
+            Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in, R.anim.left_out).toBundle();
+            // lanzamos la actividad de DESCRIPCION y le cargamos la animacion
+            startActivity(intent_descripcion, bndlanimation);
+        }catch (Exception e){
+            funciones.mostrarToastCorto("Error al cargar la siguiente pantalla");
+        }
+    }
 
+    private void mostrarEventosEnQueParticipo(ArrayList<String> array_eventos_participo){
+        try {
             participo = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
-
             // hay que hacer que el "ARRAYADAPTER lo tome de la base de datos y luego recorrerlo, ahora esta a manopla
-
-            String objeto = "Participo en Evento: ";
+            /*String objeto = "Participo en Evento: ";
             String num = "";
             for(int i = 4;i>0;i--){
                 participo.add(objeto+i);
+            }*/
+            for (int i = 0;i<array_eventos_participo.size();i++){
+                participo.add(array_eventos_participo.get(i));
             }
+
             lista_eventos_a_participar.setAdapter(participo);
-
-
-             /* obtenemos el id del evento actual que se selecciona de la lista y lo cargamos en el activity descripcion de evento*/
+             // obtenemos el id del evento actual que se selecciona de la lista y lo cargamos en el activity descripcion de evento
             lista_eventos_a_participar.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    try {
-                        Integer id_evento = lista_eventos_a_participar.getPositionForView(view);
-                        Intent intent_descripcion = new Intent(MainActivity.this, DescripcionEvento.class);
-
-                        // le pasamos el parametro del ide de evento para tomarlo en la pantalla de DESCRIPCION DE EVENTO y mostrar los datos necesarios
-                        intent_descripcion.putExtra("ID_evento", id_evento);
-                        // creamos la animacion de deslizamiento
-                        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in, R.anim.left_out).toBundle();
-                        // lanzamos la actividad de DESCRIPCION y le cargamos la animacion
-                        startActivity(intent_descripcion, bndlanimation);
-                    }catch (Exception e){
-                        funciones.mostrarToastCorto("Error al cargar la siguiente pantalla");
-                    }
+                    entrarADescripcionEvento(view);
                 }
             });
-
-
             // termina el listview
         }catch (Exception e){
             funciones.mostrarToastCorto("No fue posible cargar la lista de eventos");
         }
+    }
 
-        btn_crear_evento = (Button) findViewById(R.id.ma_crear_evento);
-        btn_crear_evento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goCrearEvento(v);
-            }
-        });
-
-        /*comentar = (Button) findViewById(R.id.opinion);
-        comentar.setOnClickListener(new View.OnClickListener() {*/
-        otrosUsuarios = (Button) findViewById(R.id.btnOtrosUser);
-        otrosUsuarios.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goPerfilOtrosUsuarios(v);
-            }
-        });
-
-
-        Resources res = getResources();
-
-        TabHost tabs = (TabHost) findViewById(android.R.id.tabhost);
-        tabs.setup();
-
-        TabHost.TabSpec spec = tabs.newTabSpec("mitab1");
-        spec.setContent(R.id.tab1);
-        spec.setIndicator("", getResources().getDrawable(R.drawable.icomis));
-        tabs.addTab(spec);
-
-        spec = tabs.newTabSpec("mitab2");
-        spec.setContent(R.id.tab2);
-        spec.setIndicator("", getResources().getDrawable(R.drawable.icobuscarr));
-        tabs.addTab(spec);
-
-
-        tabs.setCurrentTab(1);
-
-
-        if (AccessToken.getCurrentAccessToken() == null) {  //si no hay sesion iniciada pasa a la pantalla de login
-            goLoginScreen();
+    private void entrarADescripcionEvento(View v){
+        try {
+            Integer id_evento = lista_eventos_a_participar.getPositionForView(v);
+            Intent intent_descripcion = new Intent(MainActivity.this, DescripcionEvento.class);
+            // le pasamos el parametro del ide de evento para tomarlo en la pantalla de DESCRIPCION DE EVENTO y mostrar los datos necesarios
+            intent_descripcion.putExtra("ID_evento", id_evento);
+            // creamos la animacion de deslizamiento
+            Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in, R.anim.left_out).toBundle();
+            // lanzamos la actividad de DESCRIPCION y le cargamos la animacion
+            startActivity(intent_descripcion, bndlanimation);
+        }catch (Exception e){
+            funciones.mostrarToastCorto("Error al cargar la siguiente pantalla");
         }
+    }
 
-        // hacemos que tome los eventos de la base de datos
-        listarEventoPorOwner();
+    private void mostrarEventosCercanos(ArrayList<String> array_eventos_cercanos){
+
+        try {
+            // inicializamos el adapter para mostrar los eventos cercanos
+            adapt_eventos_otros = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
+            // le cargamos los datos que deben traerlos de la base de datos.
+            for (int i = 0; i<array_eventos_cercanos.size(); i++){
+                adapt_eventos_otros.add(array_eventos_cercanos.get(i));
+            }
+            eventos_de_otros.setAdapter(adapt_eventos_otros);
+            // hacemos que el listview tome el item que seleccionamos
+            eventos_de_otros.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    entrarAEvento(view);
+                }
+            });
+        }catch (Exception e){
+            funciones.mostrarToastCorto("Se ha producido un error al cargar los eventos cercanos");
+        }
+    }
+
+    private void entrarAEvento(View v){
+        Integer id_evento_cercano = eventos_de_otros.getPositionForView(v);
+        Intent intent_entrar_a_evento = new Intent(MainActivity.this, InvitacionEvento.class);
+        // le pasamos el parametro del id de evento para tomarlo en la pantalla de INVITACION A EVENTO y mostrar los datos necesarios
+        intent_entrar_a_evento.putExtra("ID_evento", id_evento_cercano);
+        // creamos la animacion de deslizamiento
+        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in, R.anim.left_out).toBundle();
+        // lanzamos la actividad de DESCRIPCION y le cargamos la animacion
+        startActivity(intent_entrar_a_evento, bndlanimation);
     }
 
     private void goLoginScreen() {
@@ -400,7 +426,7 @@ public class MainActivity extends AppCompatActivity {
                     new JsonObjectRequest(
                             Request.Method.GET,
                         /* asi es la consulta real, yo lo modifico para hacer la prueba - Constantes.GET_BY_OWNER + "?idOwner="+ Usuario.getInstance().getIdUsuario()*/
-                            Constantes.GET_BY_OWNER + "?id_usuario=" + Usuario.getInstance().getId_usuario(), /*esto deberia traer el usuario 1 que yo cree*/
+                            Constantes.GET_BY_OWNER + "?idOwner=" + Usuario.getInstance().getId_usuario(), /*esto deberia traer el usuario 1 que yo cree*/
 
                             null,
                             new Response.Listener<JSONObject>() {

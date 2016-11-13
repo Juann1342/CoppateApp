@@ -122,21 +122,39 @@ public class Funciones implements Parcelable {
         Toast.makeText(contexto, formattedDate, Toast.LENGTH_SHORT).show();
     }
 
-    /*public void mostrarDialogoPregunta(){
+    // por ahora no funcionan los dialogos
+
+    /*public int mostrarDialogoPregunta(String titulo,String mensaje, String no, String si){
+        final int[] ok = {0};
         new android.app.AlertDialog.Builder(getContexto())
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("Salir")
+                .setTitle(titulo)
                 .setIcon(R.drawable.icono32)
-                .setMessage("Estás seguro que deseas salir de la aplicación?")
-                .setNegativeButton("No, estoy coppado", null)//sin listener
-                .setPositiveButton("Si, muy seguro", new DialogInterface.OnClickListener() {//un listener que al pulsar, cierre la aplicacion
+                .setMessage(mensaje)
+                .setNegativeButton(no, null)//sin listener
+                .setPositiveButton(si, new DialogInterface.OnClickListener() {//un listener que al pulsar, cierre la aplicacion
                     @Override
                     public void onClick(DialogInterface dialog, int which){
                         //salimos de la aplicacion al pulsar en la afirmacion
-                        Funciones.this.finish();
+                        ok[0] = 1;
                     }
                 })
                 .show();
+        return ok[0];
+    }
+
+    public void mostrarDialogoAdvertencia(String titulo,String mensaje, String aceptar){
+        android.app.AlertDialog.Builder dialogo1 = new android.app.AlertDialog.Builder(getContexto());
+        dialogo1.setTitle(titulo);
+        dialogo1.setMessage(mensaje);
+        dialogo1.setCancelable(false);
+        dialogo1.setIcon(R.drawable.icono32);
+        dialogo1.setPositiveButton(aceptar, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+
+            }
+        });
+        dialogo1.show();
     }*/
 
     public String getFechaActual() {

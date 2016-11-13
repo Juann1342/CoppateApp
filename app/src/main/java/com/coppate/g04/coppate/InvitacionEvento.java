@@ -65,8 +65,9 @@ public class InvitacionEvento extends AppCompatActivity {
         rechazar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                funciones.mostrarToastCorto("Se ha rechazado la invitación a este Evento");
+                //funciones.mostrarToastCorto("Se ha rechazado la invitación a este Evento");
                 finish();
+                overridePendingTransition(R.anim.reingreso, R.anim.nothing);
             }
         });
 
@@ -86,6 +87,7 @@ public class InvitacionEvento extends AppCompatActivity {
                     public void onClick(DialogInterface dialogo1, int id) {
                         // actualizar campos de la base de datos de fecha y cancelar asistencia (dar de baja al usuario en el evento)
                         finish();
+                        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
                     }
                 });
                 /*dialogo1.setNegativeButton("No", new DialogInterface.OnClickListener() {
