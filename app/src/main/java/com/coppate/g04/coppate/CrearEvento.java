@@ -1,38 +1,40 @@
 package com.coppate.g04.coppate;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.coppate.g04.coppate.Constantes;
-import com.coppate.g04.coppate.VolleySingleton;
-import com.coppate.g04.coppate.Usuario;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
-import java.util.ArrayList;
 
 
 public class CrearEvento extends Activity {
@@ -41,7 +43,7 @@ public class CrearEvento extends Activity {
     //definimos los componenetes que va a tener la clase y que despues pueden llamarse para operar
     EditText nombre_evento;
     EditText lugar_evento;
-    EditText fecha_evento;
+    Button fecha_evento;
     EditText cupo_min;
     EditText cupo_max;
     EditText edad_desde;
@@ -53,6 +55,10 @@ public class CrearEvento extends Activity {
     Spinner spn_sexo;
     Spinner spn_contactos;
     Button mapaCrear;
+
+    Button btnDatePicker, btnTimePicker;
+    EditText txtDate, txtTime;
+    private int mYear, mMonth, mDay, mHour, mMinute;
 
     // estos strings los tenemos que tomar de la BD, son solo de pruebas
     String[] opciones_sexo = {"Masculino", "Femenino", "Indiferente"};
@@ -87,6 +93,11 @@ public class CrearEvento extends Activity {
     //private GoogleApiClient client;
 
     Funciones funciones;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +109,7 @@ public class CrearEvento extends Activity {
         funciones = new Funciones(getApplicationContext());
 
         textView1 = (TextView) findViewById(R.id.ce_lista_coppados);
-        textView2 = (TextView) findViewById(R.id.ce_lista_coppados2);
+     //   textView2 = (TextView) findViewById(R.id.ce_lista_coppados2);
 
         //defino las posibles opciones que pueden tener los desplegables (esto despues lo tengo que reemplazar con lo que traigo
         // de la base de datos)
@@ -109,7 +120,7 @@ public class CrearEvento extends Activity {
 
         nombre_evento = (EditText) findViewById(R.id.ce_nameEvent);
         lugar_evento = (EditText) findViewById(R.id.ce_lugarEncuentro);
-        fecha_evento = (EditText) findViewById(R.id.ce_fecha_evento);
+        fecha_evento = (Button) findViewById(R.id.ce_fecha_evento);
         cupo_min = (EditText) findViewById(R.id.ce_cupoMin);
         cupo_max = (EditText) findViewById(R.id.ce_cupoMax);
         edad_desde = (EditText) findViewById(R.id.ce_edadDesde);
@@ -120,6 +131,11 @@ public class CrearEvento extends Activity {
         btn_invitar_contactos = (Button) findViewById(R.id.ce_acceso_a_contactos);
         mapaCrear = (Button) findViewById(R.id.crearEventoMapa);
 
+
+        btnDatePicker = (Button) findViewById(R.id.ce_fecha_evento);
+        btnTimePicker = (Button) findViewById(R.id.btn_time);
+        txtDate = (EditText) findViewById(R.id.in_date);
+        txtTime = (EditText) findViewById(R.id.in_time);
 
         // creamos una variable de tipo LISTA DE CONTACTO
         //final ContactsList contacts_list = new ContactsList();
@@ -214,7 +230,7 @@ public class CrearEvento extends Activity {
 
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Te invito al evento que he organizado a través de Coppate. Introduce el siguente código en el buscador de eventos"+"(CODIGO)"+" Si aún no tienes la aplicación puedes encontrarla disponible en Play Store");
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Te invito al evento que he organizado a través de Coppate. Introduce el siguente código en el buscador de eventos" + "(CODIGO)" + " Si aún no tienes la aplicación puedes encontrarla disponible en Play Store");
                 sendIntent.setType("text/plain");
                 startActivity(sendIntent);
 
@@ -231,13 +247,78 @@ public class CrearEvento extends Activity {
 
                     /* Apply our splash exit (fade out) and main
                         entry (fade in) animation transitions. */
-                    //overridePendingTransition(R.anim.mainfadein,R.anim.splashfadeout);
-           //     } catch (Exception e) {
-            //        funciones.mostrarToastCorto(e.toString());
-               // }
+                //overridePendingTransition(R.anim.mainfadein,R.anim.splashfadeout);
+                //     } catch (Exception e) {
+                //        funciones.mostrarToastCorto(e.toString());
+                // }
             }
         });
 
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client2 = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+
+        //------------Fecha y Hora
+
+        btnDatePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+
+
+            public void onClick(View v) {
+                if (v == btnDatePicker) {
+
+                    // Get Current Date
+                    final Calendar c = Calendar.getInstance();
+                    mYear = c.get(Calendar.YEAR);
+                    mMonth = c.get(Calendar.MONTH);
+                    mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+                    DatePickerDialog datePickerDialog = new DatePickerDialog (CrearEvento.this,
+                            new DatePickerDialog.OnDateSetListener() {
+
+                                @Override
+                                public void onDateSet(DatePicker view, int year,
+                                                      int monthOfYear, int dayOfMonth) {
+
+                                    txtDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+
+                                }
+                            }, mYear, mMonth, mDay);
+                    datePickerDialog.show();
+                }
+            }
+        });
+
+        btnTimePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v == btnTimePicker) {
+
+                    // Get Current Time
+                    final Calendar c = Calendar.getInstance();
+                    mHour = c.get(Calendar.HOUR_OF_DAY);
+                    mMinute = c.get(Calendar.MINUTE);
+
+                    // Launch Time Picker Dialog
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(CrearEvento.this,
+                            new TimePickerDialog.OnTimeSetListener() {
+
+                                @Override
+                                public void onTimeSet(TimePicker view, int hourOfDay,
+                                                      int minute) {
+
+                                    txtTime.setText(hourOfDay + ":" + minute);
+                                }
+                            }, mHour, mMinute, false);
+                    timePickerDialog.show();
+                }
+
+            }
+        });
 
     }
 
@@ -251,7 +332,7 @@ public class CrearEvento extends Activity {
         HashMap<String, String> map = new HashMap<>();// Mapeo previo
 
         map.put("id_owner", Usuario.getInstance().getId_usuario());
-       // map.put("id_owner", "1");
+        // map.put("id_owner", "1");
         map.put("edad_min", edad_desde.getText().toString());
         map.put("edad_max", edad_hasta.getText().toString());
         map.put("cupo_min", cupo_min.getText().toString());
@@ -487,10 +568,10 @@ public class CrearEvento extends Activity {
         });*/
     }
 
-        /**
-         * ATTENTION: This was auto-generated to implement the App Indexing API.
-         * See https://g.co/AppIndexing/AndroidStudio for more information.
-         */
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
     /*public Action getIndexApiAction() {
         Thing object = new Thing.Builder()
                 .setName("CrearEvento Page") // TODO: Define a title for the content shown.
@@ -522,10 +603,46 @@ public class CrearEvento extends Activity {
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
     }*/
-        public void onBackPressed() {
-            CrearEvento.this.finish();
-            overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+    public void onBackPressed() {
+        CrearEvento.this.finish();
+        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
 
-        }
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("CrearEvento Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client2.connect();
+        AppIndex.AppIndexApi.start(client2, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client2, getIndexApiAction());
+        client2.disconnect();
+    }
 }
 

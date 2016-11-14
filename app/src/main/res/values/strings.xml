@@ -14,6 +14,7 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="nombre_transicion_imagen">nombre_transicion_imagen</string>
+    <string name="title01">Sexo</string>
 
 
 </resources>
