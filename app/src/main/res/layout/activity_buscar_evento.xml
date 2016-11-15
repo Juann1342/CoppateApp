@@ -1,189 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_buscar_evento"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.coppate.g04.coppate.BuscarEvento"
     android:background="@color/cardview_light_background">
 
 
     <TextView
         android:text="Buscar Evento"
-        android:layout_width="202dp"
-        android:layout_height="@dimen/activity_vertical_margin"
+        android:layout_width="60dp"
+        android:layout_height="48dp"
         android:id="@+id/buscar_evento"
-        android:layout_marginLeft="54dp"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="31dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        app:layout_constraintBottom_toTopOf="@+id/textView9"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintLeft_toLeftOf="@+id/textView9"
+        android:contentDescription="Buscar Evento" />
 
     <TextView
         android:text="Sexo"
-        android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_normal"
-        android:layout_height="@dimen/activity_vertical_margin"
-        android:layout_alignBottom="@+id/spinner_sexo"
+        android:layout_width="64dp"
+        android:layout_height="30dp"
         android:id="@+id/textView10"
-        android:layout_alignLeft="@+id/textView9"
-        android:layout_alignStart="@+id/textView9"
-        android:layout_alignRight="@+id/textView6"
-        android:layout_alignEnd="@+id/textView6" />
+        app:layout_constraintLeft_toLeftOf="@+id/textView7"
+        app:layout_constraintBottom_toTopOf="@+id/textView7"
+        android:layout_marginBottom="8dp" />
 
     <Spinner
-        android:layout_width="@android:dimen/notification_large_icon_height"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="0dp"
         android:id="@+id/spinner_sexo"
-        android:layout_above="@+id/fecha"
-        android:layout_alignLeft="@+id/spinner_tipo"
-        android:layout_alignStart="@+id/spinner_tipo"
-        android:layout_marginBottom="28dp"
-        android:layout_alignRight="@+id/spinner_tipo"
-        android:layout_alignEnd="@+id/spinner_tipo" />
+        app:layout_constraintRight_toRightOf="@+id/fecha"
+        app:layout_constraintLeft_toLeftOf="@+id/fecha"
+        app:layout_constraintBottom_toBottomOf="@+id/textView10"
+        app:layout_constraintTop_toTopOf="@+id/textView10" />
 
     <TextView
         android:text="Fecha"
-        android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_normal"
-        android:layout_height="@dimen/activity_vertical_margin"
+        android:layout_width="112dp"
+        android:layout_height="26dp"
         android:id="@+id/textView7"
-        android:layout_alignBaseline="@+id/fecha"
-        android:layout_alignBottom="@+id/fecha"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/textView6" />
 
     <EditText
-        android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_normal"
-        android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_small"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:inputType="textPersonName"
         android:text=""
         android:ems="10"
         android:id="@+id/edad_desde"
-        android:layout_alignBaseline="@+id/edad_hasta"
-        android:layout_alignBottom="@+id/edad_hasta"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/spinner_tipo"
-        android:layout_alignRight="@+id/textView7"
-        android:layout_alignEnd="@+id/textView7" />
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/edad_hasta"
+        app:layout_constraintTop_toTopOf="@+id/edad_hasta" />
 
     <EditText
-        android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_normal"
-        android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_small"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:inputType="textPersonName"
         android:text=""
         android:ems="10"
         android:id="@+id/edad_hasta"
-        android:layout_marginBottom="29dp"
-        android:layout_alignBottom="@+id/textView8"
-        android:layout_alignRight="@+id/buscar"
-        android:layout_alignEnd="@+id/buscar"
-        android:layout_alignLeft="@+id/textView8"
-        android:layout_alignStart="@+id/textView8" />
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/buscar"
+        android:layout_marginBottom="24dp" />
 
     <TextView
         android:text="edad desde"
-        android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_normal"
-        android:layout_height="@dimen/activity_vertical_margin"
-        android:layout_alignTop="@+id/textView8"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"
-        android:id="@+id/textView6" />
+        android:layout_width="112dp"
+        android:layout_height="25dp"
+        android:id="@+id/textView6"
+        app:layout_constraintBottom_toBottomOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="@+id/textView8"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp" />
 
     <Button
         android:text="Buscar"
         android:layout_width="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/buscar_evento"
-        android:layout_alignEnd="@+id/buscar_evento"
-        android:layout_marginBottom="26dp"
         android:id="@+id/buscar"
-        android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_small"
+        android:layout_height="50dp"
         android:textColor="@color/colorPrimary"
         android:typeface="serif"
         android:background="@drawable/btncambia"
-        android:layout_toRightOf="@+id/edad_desde"
-        android:layout_toEndOf="@+id/edad_desde" />
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp" />
 
     <TextView
         android:text="Edad hasta"
-        android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_normal"
-        android:layout_height="@dimen/activity_vertical_margin"
+        android:layout_width="112dp"
+        android:layout_height="25dp"
         android:id="@+id/textView8"
-        android:layout_marginBottom="23dp"
-        android:layout_above="@+id/buscar"
-        android:layout_alignRight="@+id/buscar"
-        android:layout_alignEnd="@+id/buscar" />
+        app:layout_constraintRight_toRightOf="@+id/edad_hasta"
+        app:layout_constraintBottom_toTopOf="@+id/edad_hasta"
+        android:layout_marginBottom="16dp" />
 
     <TextView
         android:text="Tipo"
-        android:layout_height="@dimen/activity_vertical_margin"
+        android:layout_height="29dp"
         android:id="@+id/textView9"
-        android:layout_above="@+id/spinner_sexo"
-        android:layout_marginBottom="22dp"
-        android:layout_alignRight="@+id/textView6"
-        android:layout_alignEnd="@+id/textView6"
-        android:layout_alignLeft="@+id/buscar_evento"
-        android:layout_alignStart="@+id/buscar_evento"
-        android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_normal" />
+        android:layout_width="64dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView10"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/textView10" />
 
     <Spinner
-        android:layout_width="@android:dimen/notification_large_icon_height"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:id="@+id/spinner_tipo"
-        android:layout_alignTop="@+id/textView9"
-        android:layout_toRightOf="@+id/textView9"
-        android:layout_toEndOf="@+id/textView9"
-        android:layout_marginLeft="26dp"
-        android:layout_marginStart="26dp" />
+        app:layout_constraintLeft_toLeftOf="@+id/spinner_sexo"
+        app:layout_constraintRight_toRightOf="@+id/spinner_sexo"
+        app:layout_constraintBottom_toBottomOf="@+id/textView9"
+        app:layout_constraintTop_toTopOf="@+id/textView9"
+        app:layout_constraintHorizontal_bias="0.43"
+        app:layout_constraintVertical_bias="0.25" />
 
     <EditText
-        android:layout_width="@android:dimen/thumbnail_height"
-        android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_small"
+        android:layout_height="0dp"
         android:inputType="textPersonName"
         android:text=""
         android:hint="dd/mm/aa"
         android:ems="10"
         android:id="@+id/fecha"
-        android:layout_marginBottom="21dp"
-        android:layout_above="@+id/edad_hasta"
-        android:layout_alignRight="@+id/edad_hasta"
-        android:layout_alignEnd="@+id/edad_hasta" />
+        app:layout_constraintBottom_toBottomOf="@+id/textView7"
+        app:layout_constraintTop_toTopOf="@+id/textView7"
+        app:layout_constraintVertical_bias="1.0"
+        android:layout_width="150dp"
+        app:layout_constraintRight_toRightOf="@+id/textView8" />
 
     <Button
         android:text="Ingresar Codigo"
         android:layout_width="wrap_content"
         android:id="@+id/be_ingresar_codigo"
-        android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_small"
+        android:layout_height="wrap_content"
         android:textColor="@color/colorPrimary"
         android:typeface="serif"
         android:background="@drawable/btncambia"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="11dp"
-        android:layout_marginEnd="11dp" />
+        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="163dp" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="199dp"
+        android:layout_height="match_parent"
         android:inputType="textPersonName"
         android:hint="Ingrese aqui el codigo"
         android:ems="10"
         android:id="@+id/be_txt_ingresar_codigo"
         android:visibility="invisible"
-        android:layout_below="@+id/be_ingresar_codigo"
-        android:layout_alignLeft="@+id/fecha"
-        android:layout_alignStart="@+id/fecha"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/buscar_evento"
+        app:layout_constraintTop_toTopOf="@+id/buscar_evento"
+        app:layout_constraintRight_toRightOf="@+id/spinner_tipo" />
 
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
 
