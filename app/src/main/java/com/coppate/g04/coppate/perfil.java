@@ -10,19 +10,26 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.facebook.Profile;
+
 import java.io.File;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class perfil extends Activity {
 
+    private static final String TAG = "";
     ImageButton foto_perfil;
     EditText nombre;
     EditText fecha_nac;
@@ -50,6 +57,9 @@ public class perfil extends Activity {
         fecha_nac = (EditText) findViewById(R.id.ap_txt_birthday);
         apodo = (EditText) findViewById(R.id.ap_apodo);
         editar_perfil = (Button) findViewById(R.id.ap_editar_perfil);
+
+        //foto_perfil.setImageResource(Profile.getCurrentProfile().getProfilePictureUri(320,320));
+        foto_perfil.setImageBitmap(getUserPic(Usuario.getInstance().getId_usuario()));
 
         try {
             fecha_nac.setText(Usuario.getInstance().getFecha_nacimiento());
@@ -99,6 +109,37 @@ public class perfil extends Activity {
 
         }
 
+    }
+
+    // funcion para cargar imagen de perfil de facebook
+    public Bitmap getUserPic(String userID) {
+        URL imageURL = null;
+        Bitmap bitmap = null;
+        //Log.d(TAG, "Loading Picture");
+        try{
+            imageURL = new URL("http://graph.facebook.com/"+userID+"/picture?type=normal");
+        }catch (Exception e){
+            funciones.mostrarToastCorto("Se ha producido un error al cargar la URL");
+        }
+        try {
+            bitmap = BitmapFactory.decodeStream(imageURL.openConnection().getInputStream());
+            //bitmap = BitmapFactory.decodeStream((InputStream)new URL(imageURL).getContent());
+        } catch (Exception e) {
+            //Log.d("TAG", "Loading Picture FAILED");
+            funciones.mostrarToastCorto(imageURL.toString());
+            funciones.mostrarToastLargo("Error: "+e.toString());
+        }
+        return bitmap;
+        /*String urldisplay = "http://graph.facebook.com/"+userID+"/picture?type=normal";
+        Bitmap mIcon11 = null;
+        try {
+            InputStream in = new java.net.URL(urldisplay).openStream();
+            mIcon11 = BitmapFactory.decodeStream(in);
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
+            e.printStackTrace();
+        }
+        return mIcon11;*/
     }
 
     public void tomarFoto(){

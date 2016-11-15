@@ -35,7 +35,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.AccessToken;
+import com.facebook.FacebookCallback;
+import com.facebook.Profile;
 import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -94,6 +97,21 @@ public class MainActivity extends AppCompatActivity {
 
         if (AccessToken.getCurrentAccessToken() == null) {  //si no hay sesion iniciada pasa a la pantalla de login
             goLoginScreen();
+        }else{
+            try {
+                Usuario.getInstance().setId_usuario(Profile.getCurrentProfile().getId());
+
+                Usuario.getInstance().setNombre(Profile.getCurrentProfile().getFirstName());
+                Usuario.getInstance().setApellido(Profile.getCurrentProfile().getLastName());
+                Usuario.getInstance().setEmail(Profile.getCurrentProfile().getName());
+                Usuario.getInstance().setFecha_nacimiento("2016-11-11");
+                Usuario.getInstance().setId_sexo(1);
+                Usuario.getInstance().setAlias(Profile.getCurrentProfile().getName());
+                Usuario.getInstance().setFoto("URI de la foto");   //Profile.getCurrentProfile().getProfilePictureUri(128,128).toString()
+                funciones.mostrarToastLargo("Hola :" + Usuario.getInstance().getNombre() + " " + Usuario.getInstance().getApellido());
+            }catch (Exception e){
+                funciones.mostrarToastCorto(e.toString());
+            }
         }
 
         Resources res = getResources();
@@ -147,7 +165,8 @@ public class MainActivity extends AppCompatActivity {
         probando.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goAcercaDe();
+                goPerfil();
+                //goAcercaDe();
             }
         });
 
@@ -325,6 +344,12 @@ public class MainActivity extends AppCompatActivity {
         // lanzamos la actividad de DESCRIPCION y le cargamos la animacion
         startActivity(intent_entrar_a_evento, bndlanimation);
     }
+
+    /*@Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }*/
 
     private void goLoginScreen() {
         Intent intent = new Intent(this, Login.class);

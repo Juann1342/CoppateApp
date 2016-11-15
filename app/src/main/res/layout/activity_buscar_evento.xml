@@ -156,6 +156,34 @@
         android:layout_alignRight="@+id/edad_hasta"
         android:layout_alignEnd="@+id/edad_hasta" />
 
+    <Button
+        android:text="Ingresar Codigo"
+        android:layout_width="wrap_content"
+        android:id="@+id/be_ingresar_codigo"
+        android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_small"
+        android:textColor="@color/colorPrimary"
+        android:typeface="serif"
+        android:background="@drawable/btncambia"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="11dp"
+        android:layout_marginEnd="11dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Ingrese aqui el codigo"
+        android:ems="10"
+        android:id="@+id/be_txt_ingresar_codigo"
+        android:visibility="invisible"
+        android:layout_below="@+id/be_ingresar_codigo"
+        android:layout_alignLeft="@+id/fecha"
+        android:layout_alignStart="@+id/fecha"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
+
 
 </RelativeLayout>
 

@@ -80,7 +80,7 @@ public class Funciones implements Parcelable {
                             str.toString(), Toast.LENGTH_LONG);
 
 
-            toast2.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);
+            toast2.setGravity(Gravity.CENTER | Gravity.BOTTOM, 0, 0);
 
             toast2.show();
         } catch (Exception e) {
@@ -95,7 +95,7 @@ public class Funciones implements Parcelable {
                             str.toString(), Toast.LENGTH_SHORT);
 
 
-            toast2.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);
+            toast2.setGravity(Gravity.CENTER | Gravity.BOTTOM, 0, 0);
 
             toast2.show();
         } catch (Exception e) {
