@@ -3,6 +3,7 @@ package com.coppate.g04.coppate;
 import android.app.ActivityOptions;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -19,6 +20,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -563,7 +565,72 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            DialogoPersonalizado dp = new DialogoPersonalizado();
+
+            // no me funciona el codigo generico aun
+            //funciones.mostrarDialogoPregunta("Salir","Estas seguro capo?","Si, pa", "no, pa");
+
+
+            // creamos un nuevo dialogo de alerta y lo seteamos en transparente
+            Dialog customDialog = null;
+            customDialog = new Dialog(this,R.style.Theme_Dialog_Translucent);
+            // con este tema personalizado evitamos los bordes por defecto
+            //customDialog = new Dialog(this,R.style.AppTheme);
+            //deshabilitamos el título por defecto
+            customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            //obligamos al usuario a pulsar los botones para cerrarlo
+            customDialog.setCancelable(false);
+            //establecemos el contenido de nuestro dialog para poder visualizarlo en pantalla
+            customDialog.setContentView(R.layout.dialog);
+
+            // creamos y mostramos el titulo en pantalla
+            TextView titulo = (TextView) customDialog.findViewById(R.id.titulo);
+            titulo.setText("Salir de la aplicación");
+
+            // creamos y mostramos el mensaje que deseamos visualizar
+            TextView contenido = (TextView) customDialog.findViewById(R.id.contenido);
+            contenido.setText("Estás seguro que deseas salir de la aplicación?");
+
+            // seteamos el texto del boton afirmativo como el texto del propio boton
+            Button aceptar = (Button) customDialog.findViewById(R.id.aceptar);
+            aceptar.setText("Si, muy seguro");
+            aceptar.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view)
+                {
+                    // si el usuario presiona en aceptar, se cierra la aplicación
+                    MainActivity.this.finish();
+
+                }
+            });
+
+            // seteamos el texto del boton negativo como el texto del propio boton
+            Button cancelar = (Button) customDialog.findViewById(R.id.cancelar);
+            cancelar.setText("No, estoy Coppado");
+            final Dialog finalCustomDialog1 = customDialog;
+            cancelar.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view)
+                {
+                    // si el usuario presiona en aceptar, se cierra el cuadro y vuele al activity que lo llamo.
+                    finalCustomDialog1.dismiss();
+                }
+            });
+            customDialog.show();
+
+            /*final Dialog finalCustomDialog = customDialog;
+            ((Button) customDialog.findViewById(R.id.cancelar)).setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view)
+                {
+                    finalCustomDialog.dismiss();
+                }
+            });*/
+
+
+            /*DialogoPersonalizado dp = new DialogoPersonalizado();
             new AlertDialog.Builder(this)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setTitle("Salir")
@@ -577,7 +644,7 @@ public class MainActivity extends AppCompatActivity {
                             MainActivity.this.finish();
                         }
                     })
-                    .show();
+                    .show();*/
             // Si el listener devuelve true, significa que el evento esta procesado, y nadie debe hacer nada mas
             return true;
         }
