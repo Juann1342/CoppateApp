@@ -1,5 +1,6 @@
 package com.coppate.g04.coppate;
 
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentResolver;
@@ -35,6 +36,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,7 +83,7 @@ public class Funciones implements Parcelable {
                             str.toString(), Toast.LENGTH_LONG);
 
 
-            toast2.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);
+            toast2.setGravity(Gravity.CENTER | Gravity.BOTTOM, 0, 0);
 
             toast2.show();
         } catch (Exception e) {
@@ -95,7 +98,7 @@ public class Funciones implements Parcelable {
                             str.toString(), Toast.LENGTH_SHORT);
 
 
-            toast2.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);
+            toast2.setGravity(Gravity.CENTER | Gravity.BOTTOM, 0, 0);
 
             toast2.show();
         } catch (Exception e) {
@@ -164,6 +167,60 @@ public class Funciones implements Parcelable {
         String formattedDate = df.format(c.getTime());
 
         return formattedDate;
+    }
+
+    public Boolean mostrarDialogoPregunta(String titulo,String pregunta,String si, String no){
+        // creamos una variable final con el resulta a retornar
+        final Boolean[] retorno = {null};
+
+        // creamos un nuevo dialogo de alerta y lo seteamos en transparente
+        Dialog customDialog = null;
+        customDialog = new Dialog(getContexto(),R.style.Theme_Dialog_Translucent);
+        // con este tema personalizado evitamos los bordes por defecto
+        //customDialog = new Dialog(this,R.style.AppTheme);
+        //deshabilitamos el título por defecto
+        customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //obligamos al usuario a pulsar los botones para cerrarlo
+        customDialog.setCancelable(false);
+        //establecemos el contenido de nuestro dialog
+        customDialog.setContentView(R.layout.dialog);
+
+        // creamos y mostramos el titulo en pantalla
+        TextView title = (TextView) customDialog.findViewById(R.id.titulo);
+        title.setText(titulo);
+
+        // creamos y mostramos el mensaje que deseamos visualizar
+        TextView contenido = (TextView) customDialog.findViewById(R.id.contenido);
+        contenido.setText(pregunta);
+
+        // seteamos el texto del boton afirmativo como el texto del propio boton
+        Button aceptar = (Button) customDialog.findViewById(R.id.aceptar);
+        aceptar.setText(si);
+        aceptar.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view)
+            {
+                // si el usuario presiona en aceptar, se reemplaza la variable por aceptar
+                retorno[0] = true;
+            }
+        });
+
+        // seteamos el texto del boton negativo como el texto del propio boton
+        Button cancelar = (Button) customDialog.findViewById(R.id.cancelar);
+        cancelar.setText("Nope");
+        final Dialog finalCustomDialog1 = customDialog;
+        cancelar.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view)
+            {
+                // mismo anterior pero en negativo
+                retorno[0] = false;
+            }
+        });
+        customDialog.show();
+        return retorno[0];
     }
 
         /*DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");

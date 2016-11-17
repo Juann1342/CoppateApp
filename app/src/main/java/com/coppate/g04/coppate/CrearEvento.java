@@ -1,12 +1,17 @@
 package com.coppate.g04.coppate;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,7 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class CrearEvento extends Activity {
+public class CrearEvento extends AppCompatActivity {
 
     private static final int CONTACT_PICKER_RESULT = 1000;
     //definimos los componenetes que va a tener la clase y que despues pueden llamarse para operar
@@ -50,7 +55,7 @@ public class CrearEvento extends Activity {
     EditText edad_hasta;
     EditText costo;
     Button btn_crear;
-    Button btn_invitar_contactos;
+    //Button btn_invitar_contactos;
     Spinner spn_tipo_evento;
     Spinner spn_sexo;
     Spinner spn_contactos;
@@ -72,6 +77,8 @@ public class CrearEvento extends Activity {
     final int CONTACT_PICK_REQUEST = 1000;
     private TextView textView1;
     private TextView textView2;
+    private Boolean invita_contactos;
+    private Boolean guarda_evento;
 
     //Creamos la lista para tomar los contactos
     ContactsListAdapter contactsListAdapter;
@@ -107,6 +114,8 @@ public class CrearEvento extends Activity {
         setContentView(R.layout.activity_crear_evento);
 
         funciones = new Funciones(getApplicationContext());
+        invita_contactos = false;
+        guarda_evento = false;
 
         textView1 = (TextView) findViewById(R.id.ce_lista_coppados);
      //   textView2 = (TextView) findViewById(R.id.ce_lista_coppados2);
@@ -128,7 +137,7 @@ public class CrearEvento extends Activity {
         costo = (EditText) findViewById(R.id.ce_costo_evento);
 
         btn_crear = (Button) findViewById(R.id.ce_btnCrearEvento);
-        btn_invitar_contactos = (Button) findViewById(R.id.ce_acceso_a_contactos);
+        //btn_invitar_contactos = (Button) findViewById(R.id.ce_acceso_a_contactos);
         mapaCrear = (Button) findViewById(R.id.crearEventoMapa);
 
 
@@ -136,6 +145,9 @@ public class CrearEvento extends Activity {
         btnTimePicker = (Button) findViewById(R.id.btn_time);
         txtDate = (EditText) findViewById(R.id.in_date);
         txtTime = (EditText) findViewById(R.id.in_time);
+
+        // inicializamos el boton que invita contactos en falso para que no se puedan invitar contactos sin haber creado el evento
+        //btn_invitar_contactos.setEnabled(invita_contactos);
 
         // creamos una variable de tipo LISTA DE CONTACTO
         //final ContactsList contacts_list = new ContactsList();
@@ -210,47 +222,123 @@ public class CrearEvento extends Activity {
         btn_crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if (getActualListContact().size() > 0) {
+                /*if (getActualListContact().size() > 0) {
                     // para mostrarlo en pantalla tipo mensaje se usa Toast
                     funciones.mostrarToastLargo((Usuario.getInstance().getNombre() + " ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo + " y se ha enviado una notificacion a los contactos seleccionados.."));
                 } else {
                     funciones.mostrarToastCorto((Usuario.getInstance().getNombre() + " ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo));
                     funciones.playSoundGotaAgua(arg0);
+                }*/
+                if(!invita_contactos){
+
+                    Dialog customDialog = null;
+                    customDialog = new Dialog(CrearEvento.this,R.style.Theme_Dialog_Translucent);
+                    // con este tema personalizado evitamos los bordes por defecto
+                    //customDialog = new Dialog(this,R.style.AppTheme);
+                    //deshabilitamos el título por defecto
+                    customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    //obligamos al usuario a pulsar los botones para cerrarlo
+                    customDialog.setCancelable(false);
+                    //establecemos el contenido de nuestro dialog para poder visualizarlo en pantalla
+                    customDialog.setContentView(R.layout.dialog);
+
+                    // creamos y mostramos el titulo en pantalla
+                    TextView titulo = (TextView) customDialog.findViewById(R.id.titulo);
+                    titulo.setText("Invitar Contactos");
+
+                    // creamos y mostramos el mensaje que deseamos visualizar
+                    TextView contenido = (TextView) customDialog.findViewById(R.id.contenido);
+                    contenido.setText("¿Deseas invitar Contactos al evento?");
+
+                    // seteamos el texto del boton afirmativo como el texto del propio boton
+                    Button aceptar = (Button) customDialog.findViewById(R.id.aceptar);
+                    aceptar.setText("Si, invitar");
+                    aceptar.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view)
+                        {
+                            try{
+                                guardarEvento();
+                                /* if(ok en la base de datos al guardar el evento) hace lo que sigue*/
+                                guarda_evento = true;
+                                invita_contactos = true;
+                                /* hay que hacer una funcion que tome el codigo del evento ese para pasarlo
+                                a goInvitarContactos()*/
+                                goInvitarContactos("Evento de Prueba", invita_contactos);
+                            }catch (Exception e){
+                                funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
+                            }
+
+                        }
+                    });
+
+                    // seteamos el texto del boton negativo como el texto del propio boton
+                    Button cancelar = (Button) customDialog.findViewById(R.id.cancelar);
+                    cancelar.setText("No");
+                    final Dialog finalCustomDialog1 = customDialog;
+                    cancelar.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view)
+                        {
+                            try {
+                                guardarEvento();
+                                guarda_evento = true;
+                                goInvitarContactos("nada",invita_contactos);
+                                //funciones.playSoundGotaAgua(arg0);
+                            }catch (Exception e){
+                                funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
+                            }
+                            // si el usuario presiona en aceptar, se cierra el cuadro y vuele al activity que lo llamo.
+                            //finalCustomDialog1.dismiss();
+                        }
+                    });
+                    customDialog.show();
+
+
+                    /*AlertDialog.Builder dialogo = new AlertDialog.Builder(CrearEvento.this);
+                    dialogo.setTitle("Invitar Contactos");
+                    dialogo.setMessage("¿Desea invitar Contactos al evento?");
+                    dialogo.setIcon(R.drawable.icono32);
+                    dialogo.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogo, int id) {
+                            // actualizar campos de la base de datos de fecha y cancelar asistencia (dar de baja al usuario en el evento)
+                            // y comprobar si en main se elimina el evento del listview
+
+                            try{
+                                guardarEvento();
+                                /* if(ok en la base de datos al guardar el evento) hace lo que sigue*/
+                                /*guarda_evento = true;
+                                invita_contactos = true;*/
+                                /* hay que hacer una funcion que tome el codigo del evento ese para pasarlo
+                                a goInvitarContactos()*/
+                                /*goInvitarContactos("Evento de Prueba", invita_contactos);
+                            }catch (Exception e){
+                                funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
+                            }
+                        }
+                    });
+                    dialogo.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogo, int id) {
+                            try {
+                                guardarEvento();
+                                guarda_evento = true;
+                                goInvitarContactos("nada",invita_contactos);
+                                //funciones.playSoundGotaAgua(arg0);
+                            }catch (Exception e){
+                                funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
+                            }
+                            //finish();
+                        }
+                    });
+                    dialogo.show();*/
+
+                    // al pulsar en crear evento se lanza el sonido de la gota de agua. no me es posible ahora corregirlo
+                    // para que luego de aceptar los botones SI o NO se lance el sonido...
+                    funciones.playSoundGotaAgua(arg0);
                 }
-                guardarEvento(); // Crucen los dedos
-                // con la funcion FINISH cerramos la activity actual y volvemos a la activity que nos llamo
-                finish();
-            }
-        });
 
-
-        btn_invitar_contactos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Te invito al evento que he organizado a través de Coppate. Introduce el siguente código en el buscador de eventos" + "(CODIGO)" + " Si aún no tienes la aplicación puedes encontrarla disponible en Play Store");
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);
-
-
-            /*    Intent pantalla = new Intent(getApplicationContext(), InvitarContactos.class);
-
-                //mostrarToast("Hasta aca llegamos");
-                try {
-                    pantalla.putExtra("Contactos", contactos);
-                    setResult(RESULT_OK, pantalla);
-                    Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
-                    CrearEvento.this.startActivityForResult(pantalla, CONTACT_PICK_REQUEST,bndlanimation);
-                    funciones.playSoundPickButton(v);
-
-                    /* Apply our splash exit (fade out) and main
-                        entry (fade in) animation transitions. */
-                //overridePendingTransition(R.anim.mainfadein,R.anim.splashfadeout);
-                //     } catch (Exception e) {
-                //        funciones.mostrarToastCorto(e.toString());
-                // }
             }
         });
 
@@ -258,14 +346,10 @@ public class CrearEvento extends Activity {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client2 = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-
-
         //------------Fecha y Hora
 
         btnDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
-
-
 
             public void onClick(View v) {
                 if (v == btnDatePicker) {
@@ -320,6 +404,20 @@ public class CrearEvento extends Activity {
             }
         });
 
+    }
+
+    private void goInvitarContactos(String codigo, Boolean invitar){
+        if(invitar){
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Te invito al evento que he organizado a través de Coppate. Introduce el siguente código en el buscador de eventos. Codigo: " + codigo + " :Si aún no tienes la aplicación puedes encontrarla disponible en Play Store");
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+            finish();
+        }else {
+            CrearEvento.this.finish();
+            overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+        }
     }
 
     /**
@@ -567,6 +665,30 @@ public class CrearEvento extends Activity {
             }
         });*/
     }
+
+
+    // este listener del boton ya no tiene utilidad
+        /*btn_invitar_contactos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            /*    Intent pantalla = new Intent(getApplicationContext(), InvitarContactos.class);
+
+                //mostrarToast("Hasta aca llegamos");
+                try {
+                    pantalla.putExtra("Contactos", contactos);
+                    setResult(RESULT_OK, pantalla);
+                    Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+                    CrearEvento.this.startActivityForResult(pantalla, CONTACT_PICK_REQUEST,bndlanimation);
+                    funciones.playSoundPickButton(v);
+
+                    /* Apply our splash exit (fade out) and main
+                        entry (fade in) animation transitions. */
+    //overridePendingTransition(R.anim.mainfadein,R.anim.splashfadeout);
+    //     } catch (Exception e) {
+    //        funciones.mostrarToastCorto(e.toString());
+    // }
+            /*}
+        });*/
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.

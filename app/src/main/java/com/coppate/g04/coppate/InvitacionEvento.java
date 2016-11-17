@@ -1,5 +1,6 @@
 package com.coppate.g04.coppate;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -117,6 +118,8 @@ public class InvitacionEvento extends AppCompatActivity {
                 ampliar.reset();
                 foto_perfil.startAnimation(ampliar);
 
+                goPerfilUsuario();
+
                 /*Intent intent_opinion = new Intent(InvitacionEvento.this,OpinionUsuario.class);
 
                 //creamos la nueva actividad de opinion y le cargamos la animacion
@@ -125,6 +128,15 @@ public class InvitacionEvento extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void goPerfilUsuario(){
+        /*Intent intent = new Intent(MainActivity.this, OpinionUsuario.class);
+        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+        startActivity(intent,bndlanimation);*/
+        Intent opiniones = new Intent(InvitacionEvento.this, OpinionUsuario.class);
+        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+        startActivity(opiniones,bndlanimation);
     }
 
     public void onBackPressed() {

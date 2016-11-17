@@ -1,5 +1,6 @@
 package com.coppate.g04.coppate;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -32,6 +33,7 @@ public class DescripcionEvento extends AppCompatActivity {
     String longitud;
 
     Integer id_evento;
+    String codigo_evento;
 
     // creamos un bundle que nos recuperara los extras que hayamos puesto en la otra actividad
     Bundle b;
@@ -42,6 +44,7 @@ public class DescripcionEvento extends AppCompatActivity {
         setContentView(R.layout.activity_descripcion_evento);
 
         b = getIntent().getExtras();
+        codigo_evento = b.getString("Codigo");
 
         id_evento = b.getInt("ID_evento");
 
@@ -79,6 +82,12 @@ public class DescripcionEvento extends AppCompatActivity {
                 dialogo1.setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
                         // actualizar campos de la base de datos de fecha y cancelar asistencia (dar de baja al usuario en el evento)
+                        // y comprobar si en main se elimina el evento del listview
+
+                        /*Intent resultIntent = new Intent();
+                        resultIntent.putExtra("Id_evento", id_evento);
+                        // seteamos un result para capturar en main como cancelado
+                        setResult(Activity.RESULT_CANCELED, resultIntent);*/
                         finish();
                     }
                 });
@@ -108,14 +117,24 @@ public class DescripcionEvento extends AppCompatActivity {
                 ampliar.reset();
                 foto_perfil.startAnimation(ampliar);
 
-                Intent intent_opinion = new Intent(DescripcionEvento.this,OpinionUsuario.class);
+                goPerfilUsuario();
+                /*Intent intent_opinion = new Intent(DescripcionEvento.this,OpinionUsuario.class);
 
                 //creamos la nueva actividad de opinion y le cargamos la animacion
                 Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in, R.anim.left_out).toBundle();
-                startActivity(intent_opinion,bndlanimation);
+                startActivity(intent_opinion,bndlanimation);*/
             }
         });
 
+    }
+
+    private void goPerfilUsuario(){
+        /*Intent intent = new Intent(MainActivity.this, OpinionUsuario.class);
+        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+        startActivity(intent,bndlanimation);*/
+        Intent opiniones = new Intent(DescripcionEvento.this, PerfilOtrosUser.class);
+        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+        startActivity(opiniones,bndlanimation);
     }
 
     public void onBackPressed() {
