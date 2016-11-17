@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.coppate.g04.coppate.Login"
     android:orientation="vertical"
-    android:background="@drawable/fondo3">
+    android:background="@drawable/fondologin2">
 
     <LinearLayout
         android:layout_width="match_parent"
