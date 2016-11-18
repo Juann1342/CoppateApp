@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -73,8 +74,46 @@ public class DescripcionEvento extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Dialog customDialog = null;
+                customDialog = new Dialog(DescripcionEvento.this,R.style.Theme_Dialog_Translucent);
+                customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                customDialog.setCancelable(false);
+                customDialog.setContentView(R.layout.dialog);
+
+                TextView titulo = (TextView) customDialog.findViewById(R.id.titulo);
+                titulo.setText("Cancelar Asistencia");
+                TextView contenido = (TextView) customDialog.findViewById(R.id.contenido);
+                contenido.setText("Estás seguro de Cancelar su Asistencia a este Evento?");
+
+                Button aceptar = (Button) customDialog.findViewById(R.id.aceptar);
+                aceptar.setText("Si, muy seguro");
+                aceptar.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view)
+                    {
+                        // aca va una funcion para actualizar los datos de asistencia de usuario en la  base de datos..
+                        DescripcionEvento.this.finish();
+                        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+
+                    }
+                });
+
+                Button cancelar = (Button) customDialog.findViewById(R.id.cancelar);
+                cancelar.setText("No, sigo coppado");
+                final Dialog finalCustomDialog1 = customDialog;
+                cancelar.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view)
+                    {
+                        // si el usuario presiona en aceptar, se cierra el cuadro y vuele al activity que lo llamo.
+                        finalCustomDialog1.dismiss();
+                    }
+                });
+                customDialog.show();
                 // hay actualizar en la base de datos una persona que se ha sumado al evento.
-                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(DescripcionEvento.this);
+                /*AlertDialog.Builder dialogo1 = new AlertDialog.Builder(DescripcionEvento.this);
                 dialogo1.setTitle("Cancelar Asistencia");
                 dialogo1.setMessage("¿Esta seguro de Cancelar su Asistencia a este Evento?");
                 dialogo1.setCancelable(false);
@@ -87,7 +126,7 @@ public class DescripcionEvento extends AppCompatActivity {
                         /*Intent resultIntent = new Intent();
                         resultIntent.putExtra("Id_evento", id_evento);
                         // seteamos un result para capturar en main como cancelado
-                        setResult(Activity.RESULT_CANCELED, resultIntent);*/
+                        setResult(Activity.RESULT_CANCELED, resultIntent);
                         finish();
                     }
                 });
@@ -96,7 +135,7 @@ public class DescripcionEvento extends AppCompatActivity {
 
                     }
                 });
-                dialogo1.show();
+                dialogo1.show();*/
             }
         });
 

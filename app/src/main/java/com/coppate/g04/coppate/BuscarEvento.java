@@ -95,12 +95,14 @@ public class BuscarEvento extends AppCompatActivity {
                 codigo = true;
                 ingreso_codigo.setEnabled(codigo);
                 ingreso_codigo.setVisibility(v.VISIBLE);
+                ingreso_codigo.requestFocus();
             }
         });
 
         buscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 // tomamos el codigo del evento (por mas que no se haya seleccionado para buscar uno
                 String str_code = ingreso_codigo.getText().toString();
                 // chequeamos que el usuario haya seleccionado para ingresar el codigo

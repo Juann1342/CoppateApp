@@ -336,7 +336,7 @@ public class CrearEvento extends AppCompatActivity {
 
                     // al pulsar en crear evento se lanza el sonido de la gota de agua. no me es posible ahora corregirlo
                     // para que luego de aceptar los botones SI o NO se lance el sonido...
-                    funciones.playSoundGotaAgua(arg0);
+
                 }
 
             }
@@ -407,6 +407,7 @@ public class CrearEvento extends AppCompatActivity {
     }
 
     private void goInvitarContactos(String codigo, Boolean invitar){
+        funciones.playSoundGotaAgua();
         if(invitar){
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);

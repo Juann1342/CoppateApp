@@ -28,22 +28,23 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:configChanges="screenSize|orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".Login" />
-        <activity android:name=".MensajeDescargo" />
-        <activity android:name=".CrearEvento" />
-        <activity android:name=".InvitarContactos" />
-        <activity android:name=".OpinionUsuario" />
-        <activity android:name=".CalificarUsuario" />
-        <activity android:name=".MapsActivityCercanos" />
-        <activity android:name=".InvitacionEvento" />
-        <activity android:name=".EditarEvento" />
+        <activity android:name=".MensajeDescargo" android:configChanges="screenSize|orientation"/>
+        <activity android:name=".CrearEvento" android:configChanges="screenSize|orientation"/>
+        <activity android:name=".InvitarContactos" android:configChanges="screenSize|orientation"/>
+        <activity android:name=".OpinionUsuario" android:configChanges="screenSize|orientation"/>
+        <activity android:name=".CalificarUsuario" android:configChanges="screenSize|orientation"/>
+        <activity android:name=".MapsActivityCercanos" android:configChanges="screenSize|orientation"/>
+        <activity android:name=".InvitacionEvento" android:configChanges="screenSize|orientation"/>
+        <activity android:name=".EditarEvento" android:configChanges="screenSize|orientation"/>
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
@@ -57,14 +58,14 @@
             android:value="@integer/google_play_services_version" />
         -->
 
-        <activity android:name=".BuscarEvento" />
-        <activity android:name=".perfil" />
-        <activity android:name=".DescripcionEvento" />
+        <activity android:name=".BuscarEvento" android:configChanges="screenSize|orientation"/>
+        <activity android:name=".perfil" android:configChanges="screenSize|orientation"/>
+        <activity android:name=".DescripcionEvento" android:configChanges="screenSize|orientation"/>
         <activity android:name=".TermCond" />
-        <activity
+        <!--<activity
             android:name=".PruebaSlide"
             android:label="@string/title_activity_prueba_slide"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
             android:name=".AcercaDe"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -75,7 +76,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.coppate.g04.coppate.MainActivity" />
         </activity>
-        <activity android:name=".InvitacionEvento" />
+        <!-- name duplicado <<<< <activity android:name=".InvitacionEvento" />-->
         <activity android:name=".PerfilOtrosUser"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data

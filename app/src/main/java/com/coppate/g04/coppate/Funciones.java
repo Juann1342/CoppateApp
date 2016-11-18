@@ -62,6 +62,7 @@ import static com.coppate.g04.coppate.R.raw.gotaagua;
 public class Funciones implements Parcelable {
 
     Context contexto;
+    View vista;
 
 
     public Funciones(Context context) {
@@ -75,6 +76,10 @@ public class Funciones implements Parcelable {
     private void setContexto(Context context){
         this.contexto = context;
     }
+
+    private View getVista(){ return this.vista;}
+
+    private void setVista(View v){ this.vista = v;}
 
     public void mostrarToastLargo(String str) {
         try {
@@ -106,12 +111,12 @@ public class Funciones implements Parcelable {
         }
     }
 
-    public void playSoundGotaAgua(View v) {
+    public void playSoundGotaAgua() {
         MediaPlayer mp = MediaPlayer.create(getContexto(), R.raw.gotaagua);
         mp.start();
     }
 
-    public void playSoundPickButton(View v) {
+    public void playSoundPickButton() {
         MediaPlayer mp = MediaPlayer.create(getContexto(), R.raw.pickbutton);
         mp.start();
     }
@@ -169,6 +174,7 @@ public class Funciones implements Parcelable {
         return formattedDate;
     }
 
+    // no funciona aun la funcion de mostrar dialogo pregunta.
     public Boolean mostrarDialogoPregunta(String titulo,String pregunta,String si, String no){
         // creamos una variable final con el resulta a retornar
         final Boolean[] retorno = {null};

@@ -87,7 +87,7 @@ public class OpinionUsuario extends Activity {
 
     //funcion que pasa a pantalla de calificacion de usuario
     private void goCalificar(View v){
-        funciones.playSoundPickButton(v);
+        funciones.playSoundPickButton();
         Intent pantalla = new Intent(getApplicationContext(), CalificarUsuario.class);
         pantalla.putExtra("comentarios", comments);
         Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();

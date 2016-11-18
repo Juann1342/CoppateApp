@@ -17,6 +17,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphRequestAsyncTask;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.Profile;
 
 import java.io.File;
@@ -113,6 +118,21 @@ public class perfil extends Activity {
 
     // funcion para cargar imagen de perfil de facebook
     public Bitmap getUserPic(String userID) {
+
+        /* make the API call */
+        /*GraphRequestAsyncTask gr = new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                userID,
+                null,
+                HttpMethod.GET,
+                new GraphRequest.Callback() {
+                    public void onCompleted(GraphResponse response) {
+                        /* handle the result */
+                    /*}
+                }
+        ).executeAsync();*/
+
+
         URL imageURL = null;
         Bitmap bitmap = null;
         //Log.d(TAG, "Loading Picture");

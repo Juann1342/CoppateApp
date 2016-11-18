@@ -363,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, CrearEvento.class);
         Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
         startActivity(intent,bndlanimation);//pasa a pantalla de Crear Evento
-        funciones.playSoundPickButton(v);
+        funciones.playSoundPickButton();
     }
 
     private void goPerfilOtrosUsuarios(View v){
