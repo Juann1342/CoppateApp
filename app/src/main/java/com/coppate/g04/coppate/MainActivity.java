@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     Button btn_crear_evento;
     Button otrosUsuarios;
     TextView txt_mis_eventos;
+    android.support.v7.app.AlertDialog alert;
 
     // tomamos los ListView para mostrar los eventos cercanos, de otros y propios
     ListView eventos_de_otros;
@@ -96,6 +98,13 @@ public class MainActivity extends AppCompatActivity {
         lista_mis_eventos = (ListView) findViewById(R.id.ma_listar_mis_eventos);
         lista_eventos_a_participar = (ListView) findViewById(R.id.ma_eventos_donde_participo);
         eventos_de_otros = (ListView) findViewById(R.id.ma_lv_eventos_cercanos);
+
+        final android.support.v7.app.AlertDialog alert = null;      //Comprueba si está activado el gps
+        final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+
+        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+            AlertNoGps();
+        }
 
         if (AccessToken.getCurrentAccessToken() == null) {  //si no hay sesion iniciada pasa a la pantalla de login
             goLoginScreen();
@@ -181,7 +190,9 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+
     }
+
 
 
     @Override
@@ -352,6 +363,24 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
     }*/
+
+    private void AlertNoGps() { //Funcion que da la opción de activar el gps
+        final android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+        builder.setMessage("El sistema GPS esta desactivado, ¿Desea activarlo?")
+                .setCancelable(false)
+                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.cancel();
+                    }
+                });
+        alert = builder.create();
+        alert.show();
+    }
 
     private void goLoginScreen() {
         Intent intent = new Intent(this, Login.class);

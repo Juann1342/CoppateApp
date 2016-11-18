@@ -1,7 +1,11 @@
 package com.coppate.g04.coppate;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
@@ -36,12 +40,16 @@ public class Login extends AppCompatActivity {
     private Boolean acepta_terminos;
     private CheckBox ckb_term;
 
+    private AlertDialog alert;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         getSupportActionBar().hide();
+
+
 
         // se inicializa en false
         acepta_terminos = false;
@@ -101,6 +109,8 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void goMainScreen() {
         Intent intent = new Intent(this, MainActivity.class);

@@ -109,6 +109,10 @@ public class CrearEvento extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().hide();
+
+
         /* tratando de darle movimiento entre las pantallas
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);*/
         setContentView(R.layout.activity_crear_evento);
