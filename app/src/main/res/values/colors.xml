@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#f4f3f3</color>
+    <color name="colorAccent">#2c0b4b</color>
     <color name="colorBotones">#3a0273</color>
     <color name="naranja">#f66d12</color>
     <color name="verde">#009688</color>
@@ -19,7 +19,6 @@
 
     <color name="black_overlay">#66000000</color>
     <color name="transparent">#00000000 </color>
-    <color name="rosafuxia">@color/rosafuxia</color>
     <color name="rosafuxia1">#dd137b</color>
     <color name="violetadiseno">#c95da4</color>
     <color name="violetadiseno1">#914276</color>

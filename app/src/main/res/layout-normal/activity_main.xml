@@ -170,7 +170,8 @@
                                 android:layout_height="33dp"
                                 android:id="@+id/txtview_eventos_paticipo"
                                 android:textAlignment="viewEnd"
-                                android:paddingEnd="4dp" />
+                                android:paddingEnd="4dp"
+                                tools:ignore="RtlCompat" />
 
                             <ListView
                                 android:layout_width="match_parent"

@@ -60,9 +60,9 @@ public class BuscarEvento extends AppCompatActivity {
         // esta lista es provisional los datos lo tenemos que sacar de la BD
 
         List lista = new ArrayList();
-        lista.add("Deporte");
-        lista.add("Viaje");
-        lista.add("Fiesta");
+        lista.add("Social");
+        lista.add("Privado");
+       
 
         ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, lista);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -75,10 +75,9 @@ public class BuscarEvento extends AppCompatActivity {
         // esta lista es provisional los datos lo tenemos que sacar de la BD
 
         List lista1 = new ArrayList();
-        lista1.add("Mascolino");
+        lista1.add("Masculino");
         lista1.add("Femenino");
         lista1.add("Mixto");
-        lista1.add("Transexual");
 
         ArrayAdapter arrayAdapter1 = new ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, lista1);
         arrayAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

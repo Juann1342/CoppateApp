@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
         TabHost tabs = (TabHost) findViewById(android.R.id.tabhost);
         tabs.setup();
 
+
         TabHost.TabSpec spec = tabs.newTabSpec("mitab1");
         spec.setContent(R.id.tab1);
         spec.setIndicator("", getResources().getDrawable(R.drawable.tab1));

@@ -137,7 +137,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //metodo para agregar el marcador, con camera update centro el mapa en mi posicion
 
-    public void agregarMarcador(double lat, double lon) {
+    /*public void agregarMarcador(double lat, double lon) {
         LatLng coordenadas = new LatLng(lat, lon);
         CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas,14);
 
@@ -148,14 +148,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .title("Aquí te encuentras")
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.man)));
         mMap.animateCamera(miUbicacion);
-    }
+    }*/
 
     //metodo para obtener la ubicación, se comprueba si es null para que la app no se cierre si sucede
     public void actualizarUbicacion(Location location) {
         if (location != null) {
             lat = location.getLatitude();
             lon = location.getLongitude();
-            agregarMarcador(lat, lon);
+          //  agregarMarcador(lat, lon);
+            LatLng coordenadas = new LatLng(lat, lon);
+            CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas,14);
+            mMap.animateCamera(miUbicacion);
+
         }
     }
 
