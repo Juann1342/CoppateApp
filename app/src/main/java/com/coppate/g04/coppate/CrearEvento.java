@@ -45,10 +45,17 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.R.attr.data;
+
 
 public class CrearEvento extends AppCompatActivity {
 
     private static final int CONTACT_PICKER_RESULT = 1000;
+
+    private static final Double PUBLIC_STATIC_DOUBLE_LATITUD = 0.0;
+    private static final Double PUBLIC_STATIC_DOUBLE_LONGITUD = 0.0;
+
+    private static final int REQUEST_MAPA= 1;
     //definimos los componenetes que va a tener la clase y que despues pueden llamarse para operar
     EditText nombre_evento;
     EditText lugar_evento;
@@ -65,6 +72,8 @@ public class CrearEvento extends AppCompatActivity {
     Spinner spn_contactos;
     Button mapaCrear;
 
+    Bundle bundle;
+
     Button btnDatePicker, btnTimePicker;
     EditText txtDate, txtTime;
     private int mYear, mMonth, mDay, mHour, mMinute;
@@ -76,6 +85,10 @@ public class CrearEvento extends AppCompatActivity {
     //ArrayList<String> arrayContact = new ArrayList<String>();
     String sexo = "";
     String tipo = "";
+
+
+    Double latitud;
+    Double longitud;
 
     private static final int RESULT_PICK_CONTACT = 85500;
     final int CONTACT_PICK_REQUEST = 1000;
@@ -154,6 +167,7 @@ public class CrearEvento extends AppCompatActivity {
         txtDate = (EditText) findViewById(R.id.in_date);
         txtTime = (EditText) findViewById(R.id.in_time);
 
+
         // inicializamos el boton que invita contactos en falso para que no se puedan invitar contactos sin haber creado el evento
         //btn_invitar_contactos.setEnabled(invita_contactos);
 
@@ -216,14 +230,20 @@ public class CrearEvento extends AppCompatActivity {
             }
         });
 
+
+
+
         //Direcciona al mapa
         mapaCrear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CrearEvento.this, MapsActivity.class);
-                startActivity(intent);  //pasa a pantalla de Crear Evento
+                startActivityForResult(intent,REQUEST_MAPA);  //pasa a pantalla de Crear Evento
             }
         });
+
+
+
 
         //al hacer click en el boton, nos mostrara el texto en pantalla que se ha creado un evento
         // con el nombre que hemos ingresado
@@ -449,8 +469,8 @@ public class CrearEvento extends AppCompatActivity {
         map.put("fecha_fin", "2016-10-17"); //Solo para probar.
         map.put("foto", "NULL");
         map.put("ubicacion", lugar_evento.getText().toString());
-        map.put("latitud", "166.123");
-        map.put("longitud", "99.333");
+        map.put("latitud", latitud.toString());
+        map.put("longitud", longitud.toString());
         map.put("id_categoria", "1");
         map.put("desc_evento", "Prueba conexión con DB");
         map.put("id_sexo", "1");
@@ -592,7 +612,16 @@ public class CrearEvento extends AppCompatActivity {
                 funciones.mostrarToastCorto("No, no funciona");
             }
             //contactsDisplay.setText("Selected Contacts : \n\n"+display);
+            }
+        if (requestCode == REQUEST_MAPA && resultCode == RESULT_OK){
+            try {
+                latitud = data.getDoubleExtra("latitud",PUBLIC_STATIC_DOUBLE_LATITUD);
+                longitud= data.getDoubleExtra("longitud",PUBLIC_STATIC_DOUBLE_LONGITUD);
 
+                funciones.mostrarToastLargo("latitud"+latitud.toString()+"\n"+"longitud"+longitud.toString());
+            }catch (Exception e) {
+                funciones.mostrarToastCorto("ALGO PASÓ");
+            }
         }
         /*mostrarToast("Probando..");
         if (resultCode == RESULT_OK) {

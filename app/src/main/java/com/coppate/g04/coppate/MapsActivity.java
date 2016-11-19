@@ -3,6 +3,7 @@ package com.coppate.g04.coppate;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.location.Location;
@@ -129,6 +130,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 "Coordenadas\n"+"Latitud:"+latLng.latitude+"\n"+
                                         "Longitud:"+latLng.longitude+"\n",
                                 Toast.LENGTH_SHORT).show();
+
+                        Intent intent=new Intent();
+
+                        intent.putExtra("latitud",latLng.latitude);
+                        intent.putExtra("longitud",latLng.longitude);
+                        setResult(RESULT_OK,intent);
+
+
                         finish();    }
                 });
             }
