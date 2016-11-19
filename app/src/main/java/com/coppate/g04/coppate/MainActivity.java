@@ -14,6 +14,7 @@ import android.content.res.Resources;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -43,6 +44,11 @@ import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,6 +57,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -74,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> lista_eventos_otros_participo = new ArrayList<String>();
 
     Funciones funciones;
+    Evento[] eventos;
+    private Gson gson = new Gson();
 
     // creamos los adaptadores para los listview
     ArrayAdapter<String> adaptador;
@@ -86,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         funciones = new Funciones(getApplicationContext());
+
 
         // cargamos los datos en pantalla de los textview,listview,y botones
         // los textos
@@ -111,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
         }else{
             try {
                 Usuario.getInstance().setId_usuario(Profile.getCurrentProfile().getId());
-
                 Usuario.getInstance().setNombre(Profile.getCurrentProfile().getFirstName());
                 Usuario.getInstance().setApellido(Profile.getCurrentProfile().getLastName());
                 Usuario.getInstance().setEmail(Profile.getCurrentProfile().getName());
@@ -143,11 +152,20 @@ public class MainActivity extends AppCompatActivity {
 
         tabs.setCurrentTab(2);
 
+        // hacemos que tome los eventos de la base de datos
+        listarEventoPorOwner();
+
         // inicializamos los arraylist que nos serviran para cargar los datos de los adaptadores para los listview
         lista_eventos_mios = new ArrayList<String>();
-        lista_eventos_cercanos = new ArrayList<String>();
-        lista_eventos_otros_participo = new ArrayList<String>();
 
+        try {
+            lista_eventos_mios.add(eventos[0].getNombre());
+            lista_eventos_cercanos = new ArrayList<String>();
+            lista_eventos_otros_participo = new ArrayList<String>();
+        }
+        catch (Exception e) {
+            funciones.mostrarToastCorto("flasheo el add");
+        }
         // cargamos datos de prueba que tienen que venir de la BD, tanto los propios como los otros
         lista_eventos_cercanos.add("Evento cercano: 1");
         lista_eventos_mios.add("Eventos mios: 1");
@@ -181,8 +199,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // hacemos que tome los eventos de la base de datos
-        listarEventoPorOwner();
     }
 
     @Override
@@ -467,126 +483,65 @@ public class MainActivity extends AppCompatActivity {
         // y ahora??
     }
 
-
+    /**
+     * Carga el adaptador con las metas obtenidas
+     * en la respuesta
+     */
     public void listarEventoPorOwner() {
+        // Petición GET
+        VolleySingleton.
+                getInstance(getApplicationContext()).
+                addToRequestQueue(
+                        new JsonObjectRequest(
+                                Request.Method.GET,
+                                Constantes.GET_BY_OWNER + "?idOwner=" + Usuario.getInstance().getId_usuario(),
+                                null,
+                                new Response.Listener<JSONObject>() {
 
-        try {
-            // Actualizar datos en el servidor
-            VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(
-                    // creo una nueva instancia del singleton de volley
-                    // y le asigno a la constante getbyowner (dentro obtenereventoporowner) y le paso en el archivo ese
-                    // el parametro que espera (dentro de la funcion isset()
-
-                    // despues le paso en el singleton de usuario get instance get idusuario
-                    // por ahora se puede hardcodear el id de usuario para hacer las pruebas
-                    new JsonObjectRequest(
-                            Request.Method.GET,
-                        /* asi es la consulta real, yo lo modifico para hacer la prueba - Constantes.GET_BY_OWNER + "?idOwner="+ Usuario.getInstance().getIdUsuario()*/
-                            Constantes.GET_BY_OWNER + "?idOwner=" + Usuario.getInstance().getId_usuario(), /*esto deberia traer el usuario 1 que yo cree*/
-
-                            null,
-                            new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    // Procesar la respuesta del servidor
-
-                                    procesarRespuesta(response);
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        // Procesar la respuesta Json
+                                        procesarRespuesta(response);
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        funciones.mostrarToastCorto("Debug1: Error en listarEventoPorOwner");
+                                    }
                                 }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    funciones.mostrarToastCorto(("Se ha producido un Error Volley: " + error.getMessage()));
-                                }
-                            }
 
-                    ) {
-                        @Override
-                        public Map<String, String> getHeaders() {
-                            Map<String, String> headers = new HashMap<String, String>();
-                            headers.put("Content-Type", "application/json; charset=utf-8");
-                            headers.put("Accept", "application/json");
-                            return headers;
-                        }
-
-                        @Override
-                        public String getBodyContentType() {
-                            return "application/json; charset=utf-8" + getParamsEncoding();
-                        }
-                    }
-            );
-        }catch (Exception e){
-            funciones.mostrarToastCorto("Error al captar los datos");
-        }
-
+                        )
+                );
     }
 
     /**
-     * Procesa la respuesta obtenida desde el sevidor
+     * Interpreta los resultados de la respuesta y así
+     * realizar las operaciones correspondientes
      *
-     * @param response Objeto Json
+     * @param response Objeto Json con la respuesta
      */
-
     private void procesarRespuesta(JSONObject response) {
-
         try {
-            // Obtener estado
+            // Obtener atributo "estado"
             String estado = response.getString("estado");
-            // Obtener mensaje
-            String nombre = response.getString("mensaje");
-
-
-            /*try {
-                funciones.mostrarToastCorto("Hasta aca funca.. se rompe en el getJSONObject");
-
-                funciones.mostrarToastCorto(Usuario.getInstance().getId_usuario().toString());
-                funciones.mostrarToastCorto(response.getJSONObject("descrip_evento").toString());
-            }catch (Exception e){
-                funciones.mostrarToastCorto("Se ha producido un error al cargar la descripcion del evento");
-                funciones.mostrarToastCorto(response.toString()+" :siempre me da codigo 2");
-            }*/
 
             switch (estado) {
-                case "1":
-                    // Mostrar mensaje
-                    funciones.mostrarToastLargo("Estado: "+estado + " - Mensaje: "+ nombre);
-                    // esto tendria que mostrar lo que yo defino en el json con descripcion de evento
-                    txt_mis_eventos.setText(response.getString("id_owner"));
-                    /*Toast.makeText(
-                            getApplicationContext(),
-                            mensaje,
-                            Toast.LENGTH_LONG).show();*/
-                    // Enviar código de éxito
-                    //getApplicationContext().setResult(Activity.RESULT_OK);
-                    // Terminar actividad
-                    //getApplicationContext().finish();
+                case "1": // EXITO
+                    // Obtener array "metas" Json
+                    JSONArray mensaje = response.getJSONArray("eventos");
+                    // Parsear con Gson
+                    this.eventos = gson.fromJson(mensaje.toString(), Evento[].class);
+                    funciones.mostrarToastLargo("Toast procesarResp: " + String.valueOf(eventos.length));
+                    funciones.mostrarToastLargo(eventos[0].getNombre());
                     break;
-
-                case "2":
-                    // Mostrar mensaje
-                    funciones.mostrarToastLargo("Estado: "+estado + " - Mensaje: "+ nombre);
-                    /*Toast.makeText(
-                            getApplicationContext(),
-                            mensaje,
-                            Toast.LENGTH_LONG).show();*/
-                    // Enviar código de falla
-                    //getApplicationContext().setResult(Activity.RESULT_CANCELED);
-                    // Terminar actividad
-                    //View.getContext().finish();
+                case "2": // FALLIDO
+                    funciones.mostrarToastCorto("Debug2: Error en procesarRespuesta");;
                     break;
-                case "3":
-                    // Mostrar mensaje
-                    // esta siempre devolviendo el codigo 3 de estado y no tengo idea de por que
-
-                    funciones.mostrarToastLargo("Estado: "+estado + " - Mensaje: "+ nombre);
-                    // esto tendria que mostrar lo que yo defino en el json con descripcion de evento
-                    txt_mis_eventos.setText(response.getString("id_owner"));
-                    break;
-
             }
+
         } catch (JSONException e) {
-            e.printStackTrace();
-            funciones.mostrarToastCorto("Se ha producido un error");
+            //Log.d(TAG, e.getMessage());
         }
 
     }
