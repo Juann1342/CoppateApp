@@ -112,7 +112,7 @@ public class CalificarUsuario extends Activity {
             @Override
             public void onClick(View v) {
                 try {
-                    funciones.playSoundPickButton(v);
+                    funciones.playSoundPickButton();
                     //comentario_actual[0] = comentario.getText().toString();
                     if (puntuacion == 0) {
                         funciones.mostrarToastCorto("No se ha seleccionado una puntuacion");

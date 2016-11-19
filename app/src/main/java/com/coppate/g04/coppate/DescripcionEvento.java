@@ -1,5 +1,6 @@
 package com.coppate.g04.coppate;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -32,6 +34,7 @@ public class DescripcionEvento extends AppCompatActivity {
     String longitud;
 
     Integer id_evento;
+    String codigo_evento;
 
     // creamos un bundle que nos recuperara los extras que hayamos puesto en la otra actividad
     Bundle b;
@@ -42,6 +45,7 @@ public class DescripcionEvento extends AppCompatActivity {
         setContentView(R.layout.activity_descripcion_evento);
 
         b = getIntent().getExtras();
+        codigo_evento = b.getString("Codigo");
 
         id_evento = b.getInt("ID_evento");
 
@@ -70,8 +74,46 @@ public class DescripcionEvento extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Dialog customDialog = null;
+                customDialog = new Dialog(DescripcionEvento.this,R.style.Theme_Dialog_Translucent);
+                customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                customDialog.setCancelable(false);
+                customDialog.setContentView(R.layout.dialog);
+
+                TextView titulo = (TextView) customDialog.findViewById(R.id.titulo);
+                titulo.setText("Cancelar Asistencia");
+                TextView contenido = (TextView) customDialog.findViewById(R.id.contenido);
+                contenido.setText("Estás seguro de Cancelar su Asistencia a este Evento?");
+
+                Button aceptar = (Button) customDialog.findViewById(R.id.aceptar);
+                aceptar.setText("Si, muy seguro");
+                aceptar.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view)
+                    {
+                        // aca va una funcion para actualizar los datos de asistencia de usuario en la  base de datos..
+                        DescripcionEvento.this.finish();
+                        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+
+                    }
+                });
+
+                Button cancelar = (Button) customDialog.findViewById(R.id.cancelar);
+                cancelar.setText("No, sigo coppado");
+                final Dialog finalCustomDialog1 = customDialog;
+                cancelar.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view)
+                    {
+                        // si el usuario presiona en aceptar, se cierra el cuadro y vuele al activity que lo llamo.
+                        finalCustomDialog1.dismiss();
+                    }
+                });
+                customDialog.show();
                 // hay actualizar en la base de datos una persona que se ha sumado al evento.
-                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(DescripcionEvento.this);
+                /*AlertDialog.Builder dialogo1 = new AlertDialog.Builder(DescripcionEvento.this);
                 dialogo1.setTitle("Cancelar Asistencia");
                 dialogo1.setMessage("¿Esta seguro de Cancelar su Asistencia a este Evento?");
                 dialogo1.setCancelable(false);
@@ -79,6 +121,12 @@ public class DescripcionEvento extends AppCompatActivity {
                 dialogo1.setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
                         // actualizar campos de la base de datos de fecha y cancelar asistencia (dar de baja al usuario en el evento)
+                        // y comprobar si en main se elimina el evento del listview
+
+                        /*Intent resultIntent = new Intent();
+                        resultIntent.putExtra("Id_evento", id_evento);
+                        // seteamos un result para capturar en main como cancelado
+                        setResult(Activity.RESULT_CANCELED, resultIntent);
                         finish();
                     }
                 });
@@ -87,7 +135,7 @@ public class DescripcionEvento extends AppCompatActivity {
 
                     }
                 });
-                dialogo1.show();
+                dialogo1.show();*/
             }
         });
 
@@ -108,14 +156,24 @@ public class DescripcionEvento extends AppCompatActivity {
                 ampliar.reset();
                 foto_perfil.startAnimation(ampliar);
 
-                Intent intent_opinion = new Intent(DescripcionEvento.this,OpinionUsuario.class);
+                goPerfilUsuario();
+                /*Intent intent_opinion = new Intent(DescripcionEvento.this,OpinionUsuario.class);
 
                 //creamos la nueva actividad de opinion y le cargamos la animacion
                 Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in, R.anim.left_out).toBundle();
-                startActivity(intent_opinion,bndlanimation);
+                startActivity(intent_opinion,bndlanimation);*/
             }
         });
 
+    }
+
+    private void goPerfilUsuario(){
+        /*Intent intent = new Intent(MainActivity.this, OpinionUsuario.class);
+        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+        startActivity(intent,bndlanimation);*/
+        Intent opiniones = new Intent(DescripcionEvento.this, PerfilOtrosUser.class);
+        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+        startActivity(opiniones,bndlanimation);
     }
 
     public void onBackPressed() {

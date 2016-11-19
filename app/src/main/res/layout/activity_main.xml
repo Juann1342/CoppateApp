@@ -122,7 +122,7 @@
                         <Button
                             android:layout_width="72dp"
                             android:layout_height="63dp"
-                            android:text="+"
+                            android:text=""
                             android:textSize="50px"
                             android:id="@+id/ma_crear_evento"
                             android:layout_marginLeft="30dp"
@@ -130,7 +130,7 @@
                             android:layout_marginTop="10dp"
                             android:textColor="@color/colorPrimary"
                             android:layout_marginBottom="10dp"
-                            android:background="@drawable/boton_redondo" />
+                            android:background="@drawable/crear" />
 
 
 

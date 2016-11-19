@@ -6,18 +6,17 @@
     <item
         android:orderInCategory="100"
         android:title="Perfil"
-        android:id="@+id/perfil"
-        app:showAsAction="never" />
+        android:id="@+id/perfil" />
 
     <item
         android:orderInCategory="100"
         android:title="Acerca de.."
         android:id="@+id/mm_acerca_de" />
-
     <item
         android:orderInCategory="100"
         android:title="Cerrar Sesión"
         android:id="@+id/button" />
+
     <!--android:id="@+id/action_settings"
     android:orderInCategory="100"
     android:title="settings"

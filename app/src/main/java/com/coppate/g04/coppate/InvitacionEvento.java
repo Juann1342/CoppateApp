@@ -1,12 +1,15 @@
 package com.coppate.g04.coppate;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -75,10 +78,37 @@ public class InvitacionEvento extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                funciones.playSoundPickButton(v);
+                funciones.playSoundPickButton();
 
                 // hay actualizar en la base de datos una persona que se ha sumado al evento.
-                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(InvitacionEvento.this);
+                Dialog customDialog = null;
+                customDialog = new Dialog(InvitacionEvento.this,R.style.Theme_Dialog_Translucent);
+                customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                customDialog.setCancelable(false);
+                customDialog.setContentView(R.layout.message);
+                TextView titulo = (TextView) customDialog.findViewById(R.id.message_titulo);
+                titulo.setText("Asistencia a Evento");
+
+                // creamos y mostramos el mensaje que deseamos visualizar
+                TextView contenido = (TextView) customDialog.findViewById(R.id.message_contenido);
+                contenido.setText("Te has sumado a este evento");
+
+                // seteamos el texto del boton afirmativo como el texto del propio boton
+                Button aceptar = (Button) customDialog.findViewById(R.id.message_aceptar);
+                aceptar.setText("Coppado");
+                aceptar.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view)
+                    {
+                        InvitacionEvento.this.finish();
+                        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+
+                    }
+                });
+                customDialog.show();
+
+                /*AlertDialog.Builder dialogo1 = new AlertDialog.Builder(InvitacionEvento.this);
                 dialogo1.setTitle("Notificacion");
                 dialogo1.setMessage("Se ha sumado al evento");
                 dialogo1.setCancelable(false);
@@ -95,14 +125,14 @@ public class InvitacionEvento extends AppCompatActivity {
 
                     }
                 });*/
-                dialogo1.show();
+                /*dialogo1.show();*/
             }
         });
 
         mostrar_ubicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                funciones.playSoundPickButton(v);
+                funciones.playSoundPickButton();
                 // hay que pasarle los datos de latitud y longitud y hacer que se muestre en el mapa
                 Intent mostrar_ubic = new Intent(InvitacionEvento.this,MapsActivityCercanos.class);
                 startActivity(mostrar_ubic);
@@ -117,6 +147,8 @@ public class InvitacionEvento extends AppCompatActivity {
                 ampliar.reset();
                 foto_perfil.startAnimation(ampliar);
 
+                goPerfilUsuario();
+
                 /*Intent intent_opinion = new Intent(InvitacionEvento.this,OpinionUsuario.class);
 
                 //creamos la nueva actividad de opinion y le cargamos la animacion
@@ -125,6 +157,15 @@ public class InvitacionEvento extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void goPerfilUsuario(){
+        /*Intent intent = new Intent(MainActivity.this, OpinionUsuario.class);
+        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+        startActivity(intent,bndlanimation);*/
+        Intent opiniones = new Intent(InvitacionEvento.this, OpinionUsuario.class);
+        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+        startActivity(opiniones,bndlanimation);
     }
 
     public void onBackPressed() {

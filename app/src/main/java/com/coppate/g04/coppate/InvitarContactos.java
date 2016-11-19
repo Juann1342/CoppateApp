@@ -81,7 +81,7 @@ public class InvitarContactos extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                funciones.playSoundPickButton(v);
+                funciones.playSoundPickButton();
                 if (contactsListAdapter.selectedContactsList.contactArrayList.isEmpty()) {
                     setResult(RESULT_CANCELED);
                 } else {

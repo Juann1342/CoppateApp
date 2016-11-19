@@ -2,12 +2,14 @@ package com.coppate.g04.coppate;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -118,7 +120,57 @@ public class EditarEvento extends Activity {
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(EditarEvento.this);
+                Dialog customDialog = null;
+                customDialog = new Dialog(EditarEvento.this,R.style.Theme_Dialog_Translucent);
+                // con este tema personalizado evitamos los bordes por defecto
+                //customDialog = new Dialog(this,R.style.AppTheme);
+                //deshabilitamos el título por defecto
+                customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                //obligamos al usuario a pulsar los botones para cerrarlo
+                customDialog.setCancelable(false);
+                //establecemos el contenido de nuestro dialog para poder visualizarlo en pantalla
+                customDialog.setContentView(R.layout.dialog);
+
+                // creamos y mostramos el titulo en pantalla
+                TextView titulo = (TextView) customDialog.findViewById(R.id.titulo);
+                titulo.setText("Cambios en el Evento");
+
+                // creamos y mostramos el mensaje que deseamos visualizar
+                TextView contenido = (TextView) customDialog.findViewById(R.id.contenido);
+                contenido.setText("Estás seguro que deseas cancelar el evento?");
+
+                // seteamos el texto del boton afirmativo como el texto del propio boton
+                Button aceptar = (Button) customDialog.findViewById(R.id.aceptar);
+                aceptar.setText("Si, muy seguro");
+                aceptar.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view)
+                    {
+                        // si el usuario presiona en aceptar, se cierra la aplicación
+                        EditarEvento.this.finish();
+                        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+
+                    }
+                });
+
+                // seteamos el texto del boton negativo como el texto del propio boton
+                Button cancelar = (Button) customDialog.findViewById(R.id.cancelar);
+                cancelar.setText("No, aun no");
+                final Dialog finalCustomDialog1 = customDialog;
+                cancelar.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view)
+                    {
+                        // si el usuario presiona en aceptar, se cierra el cuadro y vuele al activity que lo llamo.
+                        finalCustomDialog1.dismiss();
+                        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+                    }
+                });
+                customDialog.show();
+
+                /*AlertDialog.Builder dialogo1 = new AlertDialog.Builder(EditarEvento.this);
                 dialogo1.setTitle("Cancelar Evento");
                 dialogo1.setMessage("¿Esta seguro de Cancelar el Evento?");
                 dialogo1.setCancelable(false);
@@ -134,14 +186,56 @@ public class EditarEvento extends Activity {
 
                     }
                 });
-                dialogo1.show();
+                dialogo1.show();*/
             }
         });
 
         guardar_cambios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder dialogo2 = new AlertDialog.Builder(EditarEvento.this);
+
+                Dialog customDialog = null;
+                customDialog = new Dialog(EditarEvento.this,R.style.Theme_Dialog_Translucent);
+                customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                customDialog.setCancelable(false);
+                customDialog.setContentView(R.layout.dialog);
+
+                TextView titulo = (TextView) customDialog.findViewById(R.id.titulo);
+                titulo.setText("Guardar Datos en el Evento");
+                TextView contenido = (TextView) customDialog.findViewById(R.id.contenido);
+                contenido.setText("Estás seguro que deseas actualizar los valores del evento?");
+
+                Button aceptar = (Button) customDialog.findViewById(R.id.aceptar);
+                aceptar.setText("Si, muy seguro");
+                aceptar.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view)
+                    {
+                        // aca va una funcion para guardar datos y actualizar datos en la base de datos..
+
+                        // si el usuario presiona en aceptar, se cierra la aplicación
+                        EditarEvento.this.finish();
+                        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+
+                    }
+                });
+
+                // seteamos el texto del boton negativo como el texto del propio boton
+                Button cancelar = (Button) customDialog.findViewById(R.id.cancelar);
+                cancelar.setText("No, seguir editando");
+                final Dialog finalCustomDialog1 = customDialog;
+                cancelar.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view)
+                    {
+                        // si el usuario presiona en aceptar, se cierra el cuadro y vuele al activity que lo llamo.
+                        finalCustomDialog1.dismiss();
+                    }
+                });
+                customDialog.show();
+                /*AlertDialog.Builder dialogo2 = new AlertDialog.Builder(EditarEvento.this);
                 dialogo2.setTitle("Guardar Datos");
                 dialogo2.setMessage("¿Esta seguro que desea actualizar los valores al evento?");
                 dialogo2.setCancelable(false);
@@ -157,7 +251,7 @@ public class EditarEvento extends Activity {
 
                     }
                 });
-                dialogo2.show();
+                dialogo2.show();*/
             }
         });
 
@@ -165,7 +259,49 @@ public class EditarEvento extends Activity {
 
     public void onBackPressed() {
         if(cambios){
-            AlertDialog.Builder dialogo2 = new AlertDialog.Builder(EditarEvento.this);
+
+            Dialog customDialog = null;
+            customDialog = new Dialog(EditarEvento.this,R.style.Theme_Dialog_Translucent);
+            customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            customDialog.setCancelable(false);
+            customDialog.setContentView(R.layout.dialog);
+
+            TextView titulo = (TextView) customDialog.findViewById(R.id.titulo);
+            titulo.setText("Cambios en el Evento");
+            TextView contenido = (TextView) customDialog.findViewById(R.id.contenido);
+            contenido.setText("Estás seguro que deseas salir sin actualizar los valores del evento?");
+
+            Button aceptar = (Button) customDialog.findViewById(R.id.aceptar);
+            aceptar.setText("Si, muy seguro");
+            aceptar.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view)
+                {
+                    // aca va una funcion para guardar datos y actualizar datos en la base de datos..
+
+                    // si el usuario presiona en aceptar, se cierra la aplicación
+                    EditarEvento.this.finish();
+                    overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+
+                }
+            });
+
+            // seteamos el texto del boton negativo como el texto del propio boton
+            Button cancelar = (Button) customDialog.findViewById(R.id.cancelar);
+            cancelar.setText("No, seguir editando");
+            final Dialog finalCustomDialog1 = customDialog;
+            cancelar.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view)
+                {
+                    // si el usuario presiona en aceptar, se cierra el cuadro y vuele al activity que lo llamo.
+                    finalCustomDialog1.dismiss();
+                }
+            });
+            customDialog.show();
+            /*AlertDialog.Builder dialogo2 = new AlertDialog.Builder(EditarEvento.this);
             dialogo2.setTitle("Cambios en el Evento");
             dialogo2.setMessage("¿Esta seguro que desea salir sin actualizar los valores del evento?");
             dialogo2.setCancelable(false);
@@ -182,11 +318,11 @@ public class EditarEvento extends Activity {
                     //finish();
                 }
             });
-            dialogo2.show();
+            dialogo2.show();*/
         }else{
             EditarEvento.this.finish();
+            overridePendingTransition(R.anim.reingreso, R.anim.nothing);
         }
-        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
 
     }
 }
