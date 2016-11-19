@@ -44,6 +44,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/ee_usuario"
+                        android:textColor="@color/negro"
+                        android:textStyle="normal"
                         android:layout_weight="0.07" />
 
                     <EditText
@@ -145,13 +147,11 @@
                 android:layout_height="match_parent">
 
                 <Button
-                    android:text="Ubicación en el mapa"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="90dp"
+                    android:layout_height="115dp"
                     android:id="@+id/ee_ubicacion_mapa"
-                    android:layout_weight="0.04"
-                    android:background="@drawable/btncambia"
-                    android:textColor="@color/colorPrimary"/>
+                    android:background="@drawable/mapabuscar"
+                    android:textColor="@color/colorPrimary" />
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -168,14 +168,14 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="58dp"
+            android:layout_height="39dp"
             android:textAlignment="center"
             android:weightSum="1">
 
             <Button
                 android:text="Editar Evento"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
                 android:id="@+id/ee_editar_evento"
                 android:background="@drawable/btncambia"
                 android:drawable="@drawable/lapiz"
@@ -183,20 +183,20 @@
                 android:textAllCaps="false"
                 android:textAlignment="center"
                 android:layout_marginLeft="25dp"
-                android:layout_marginStart="25dp"/>
+                android:layout_marginStart="25dp" />
 
 
             <Button
                 android:text="Cancelar Evento"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
                 android:id="@+id/ee_cancelar_evento"
                 android:background="@drawable/btncambia"
                 android:textColor="@color/colorPrimary"
                 android:textAllCaps="false"
                 android:textAlignment="center"
                 android:layout_marginLeft="25dp"
-                android:layout_marginStart="25dp"/>
+                android:layout_marginStart="25dp" />
 
             <Button
                 android:text="Guardar Cambios"

@@ -16,10 +16,13 @@
     <color name="violeta2">#944e84</color>
     <color name="violeta3">#7f447c</color>
 
+
     <color name="black_overlay">#66000000</color>
     <color name="transparent">#00000000 </color>
     <color name="rosafuxia">@color/rosafuxia</color>
     <color name="rosafuxia1">#dd137b</color>
     <color name="violetadiseno">#c95da4</color>
     <color name="violetadiseno1">#914276</color>
+    <color name="negro">#070807</color>
+    <color name="blanco">#fdfcfc</color>
 </resources>
