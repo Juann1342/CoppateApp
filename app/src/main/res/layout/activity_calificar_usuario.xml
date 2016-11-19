@@ -18,8 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/cu_texto_calificacion"
-            tools:textStyle="bold"
-            android:textStyle="bold"
+            tools:textStyle="normal"
+            android:textStyle="italic"
+            android:textColor="@color/negro"
             android:textAlignment="center"
             android:textSize="24sp" />
     </RelativeLayout>
@@ -92,7 +93,8 @@
             android:ems="10"
             android:id="@+id/cu_txt_comentario"
             android:layout_weight="1"
-            android:hint="Agregar Comentario" />
+            android:hint="Agregar Comentario"
+            android:textColor="@color/negro"/>
 
         <Button
             android:text="Agregar Comentario"

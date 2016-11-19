@@ -20,6 +20,7 @@
             android:id="@+id/ou_texto_calificacion"
             tools:textStyle="bold"
             android:textStyle="bold"
+            android:textColor="@color/negro"
             android:textAlignment="center"
             android:textSize="24sp" />
 
@@ -36,6 +37,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/textView16"
             android:layout_weight="1"
+            android:textColor="@color/negro"
             android:textAlignment="center" />
     </LinearLayout>
 
@@ -67,6 +69,7 @@
                 android:text="Puntuacion total:"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/negro"
                 android:id="@+id/ou_txt_puntuacion" />
         </LinearLayout>
 
@@ -83,6 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/ou_coment_usuarios"
+            android:textColor="@color/negro"
             android:layout_weight="0.01" />
 
         <ListView

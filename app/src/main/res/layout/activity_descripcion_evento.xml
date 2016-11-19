@@ -40,6 +40,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/de_usuario_creador"
+                        android:textColor="@color/violetadiseno"
                         android:layout_weight="3.14" />
                 </LinearLayout>
 
@@ -54,6 +55,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="false"
                         android:layout_centerHorizontal="false"
+                        android:textColor="@color/violetadiseno"
                         android:id="@+id/de_descrip_evento"
                         android:layout_weight="1"
                         android:padding="2dp"
@@ -73,12 +75,10 @@
                 android:layout_height="match_parent">
 
                 <Button
-                    android:text="Ubicación en el mapa"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="147dp"
                     android:id="@+id/de_ubicacion_mapa"
-                    android:layout_weight="0.14"
-                    android:background="@drawable/btncambia"
+                    android:background="@drawable/pin11"
                     android:textColor="@color/colorPrimary"/>
 
                 <LinearLayout
@@ -119,6 +119,7 @@
                     android:id="@+id/de_txv_usuario"
                     android:layout_weight="1"
                     android:textAlignment="center"
+                    android:textColor="@color/violetadiseno"
                     android:padding="2dp"
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
@@ -147,6 +148,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/de_puntuacion"
                     android:layout_weight="1"
+                    android:textColor="@color/violetadiseno"
                     android:textAlignment="center"
                     android:padding="2dp"
                     android:paddingBottom="2dp"

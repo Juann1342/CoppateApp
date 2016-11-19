@@ -36,6 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/nombreOtrosUser"
+        android:textColor="@color/negro"
         android:textSize="22dp"
         android:layout_marginTop="10dp"/>
 
@@ -44,6 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/edadOtrosUser"
+        android:textColor="@color/negro"
         android:textSize="22dp"
         android:layout_marginTop="10dp"
         />
@@ -53,6 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/sexoOtrosUser"
+        android:textColor="@color/negro"
         android:textSize="22dp"
         android:layout_marginTop="10dp"/>
 

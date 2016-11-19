@@ -40,6 +40,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/ie_usuario_creador"
+                        android:textColor="@color/negro"
+                        android:textStyle="normal"
                         android:layout_weight="3.14" />
                 </LinearLayout>
 
@@ -56,6 +58,8 @@
                         android:layout_centerHorizontal="false"
                         android:id="@+id/ie_descrip_evento"
                         android:layout_weight="1"
+                        android:textColor="@color/negro"
+                        android:textStyle="normal"
                         android:padding="2dp"
                         android:paddingBottom="2dp"
                         android:paddingEnd="2dp"
@@ -73,12 +77,10 @@
                 android:layout_height="match_parent">
 
                 <Button
-                    android:text="Ubicación en el mapa"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="98dp"
+                    android:layout_height="123dp"
                     android:id="@+id/ie_ubicacion_mapa"
-                    android:layout_weight="0.14"
-                    android:background="@drawable/btncambia"
+                    android:background="@drawable/mapabuscar"
                     android:textColor="@color/colorPrimary"/>
 
                 <LinearLayout
@@ -121,6 +123,8 @@
                     android:textAlignment="center"
                     android:padding="2dp"
                     android:paddingLeft="2dp"
+                    android:textColor="@color/negro"
+                    android:textStyle="normal"
                     android:paddingRight="2dp"
                     android:paddingTop="2dp"
                     android:paddingStart="2dp"
@@ -149,6 +153,8 @@
                     android:layout_weight="1"
                     android:textAlignment="center"
                     android:padding="2dp"
+                    android:textColor="@color/negro"
+                    android:textStyle="normal"
                     android:paddingBottom="2dp"
                     android:paddingEnd="2dp"
                     android:paddingLeft="2dp"
