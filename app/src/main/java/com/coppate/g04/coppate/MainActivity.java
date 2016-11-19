@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         lista_eventos_mios = new ArrayList<String>();
 
         try {
-            lista_eventos_mios.add(eventos[0].getNombre());
+            lista_eventos_mios.add(MisEventos.getInstance().getEventos()[0].getNombre());
             lista_eventos_cercanos = new ArrayList<String>();
             lista_eventos_otros_participo = new ArrayList<String>();
         }
@@ -531,9 +531,9 @@ public class MainActivity extends AppCompatActivity {
                     // Obtener array "metas" Json
                     JSONArray mensaje = response.getJSONArray("eventos");
                     // Parsear con Gson
-                    this.eventos = gson.fromJson(mensaje.toString(), Evento[].class);
-                    funciones.mostrarToastLargo("Toast procesarResp: " + String.valueOf(eventos.length));
-                    funciones.mostrarToastLargo(eventos[0].getNombre());
+                    MisEventos.getInstance().setEventos(gson.fromJson(mensaje.toString(), Evento[].class));
+                    funciones.mostrarToastLargo("Toast procesarResp: " + String.valueOf(MisEventos.getInstance().getEventos().length));
+                    funciones.mostrarToastLargo(MisEventos.getInstance().getEventos()[0].getNombre());
                     break;
                 case "2": // FALLIDO
                     funciones.mostrarToastCorto("Debug2: Error en procesarRespuesta");;

@@ -447,7 +447,6 @@ public class CrearEvento extends AppCompatActivity {
         map.put("costo", costo.getText().toString());
         map.put("fecha_inicio", "2016-10-17"); //Solo para probar.
         map.put("fecha_fin", "2016-10-17"); //Solo para probar.
-        map.put("time_stamp", "NULL"); //Solo para probar.
         map.put("foto", "NULL");
         map.put("ubicacion", lugar_evento.getText().toString());
         map.put("latitud", "166.123");
