@@ -17,6 +17,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.coppate.g04.coppate.Constantes;
+import com.coppate.g04.coppate.VolleySingleton;
+import com.coppate.g04.coppate.Usuario;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -26,6 +29,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
@@ -331,13 +335,16 @@ public class CrearEvento extends Activity {
 
         HashMap<String, String> map = new HashMap<>();// Mapeo previo
 
+        map.put("nombre", nombre_evento.getText().toString());
         map.put("id_owner", Usuario.getInstance().getId_usuario());
-        // map.put("id_owner", "1");
         map.put("edad_min", edad_desde.getText().toString());
         map.put("edad_max", edad_hasta.getText().toString());
         map.put("cupo_min", cupo_min.getText().toString());
         map.put("cupo_max", cupo_max.getText().toString());
-        map.put("fecha", "2016-10-17"); //Solo para probar.
+        map.put("costo", costo.getText().toString());
+        map.put("fecha_inicio", "2016-10-17"); //Solo para probar.
+        map.put("fecha_fin", "2016-10-17"); //Solo para probar.
+        map.put("time_stamp", "NULL"); //Solo para probar.
         map.put("foto", "NULL");
         map.put("ubicacion", lugar_evento.getText().toString());
         map.put("latitud", "166.123");
@@ -345,6 +352,8 @@ public class CrearEvento extends Activity {
         map.put("id_categoria", "1");
         map.put("desc_evento", "Prueba conexión con DB");
         map.put("id_sexo", "1");
+        map.put("estado", "activo");
+
 
         // Crear nuevo objeto Json basado en el mapa
         JSONObject jobject = new JSONObject(map);

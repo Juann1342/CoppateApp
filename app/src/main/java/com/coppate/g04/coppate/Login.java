@@ -73,7 +73,7 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onSuccess(LoginResult loginResult) { //Si el inicio de sesion es exitoso
-                Usuario.getInstance().setId_usuario(loginResult.getAccessToken().getUserId());
+                Usuario.getInstance().setId_usuario(Profile.getCurrentProfile().getId());  // Estaba esto: setId_usuario(loginResult.getAccessToken().getUserId());
                 Usuario.getInstance().setNombre(Profile.getCurrentProfile().getFirstName());
                 Usuario.getInstance().setApellido(Profile.getCurrentProfile().getLastName());
                 Usuario.getInstance().setEmail(Profile.getCurrentProfile().getName());
