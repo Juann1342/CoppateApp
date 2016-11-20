@@ -3,6 +3,7 @@ package com.coppate.g04.coppate;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
+import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ public class AcercaDe extends AppCompatActivity {
     Button volver;
     TextView acerca;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,13 +27,17 @@ public class AcercaDe extends AppCompatActivity {
         acerca = (TextView)findViewById(R.id.ad_acerca);
         volver = (Button)findViewById(R.id.ad_volver);
 
-        acerca.setText("\n\nAplicación desarrollada por los estudiantes de la universidad de Ezeiza\n\n\n" +
+        Typeface face=Typeface.createFromAsset(getAssets(),"fonts/fuente3.ttf");
+        acerca.setTypeface(face);
+
+        acerca.setText("\nAplicación desarrollada por los estudiantes de la UPE\n\n\n" +
                 "Juan Nuñez         Guillermo Bazzi\n\n" +
                 "Luis Cikotik       Daniel Enciso\n\n" +
-                "Gabriel Cordova    Rosario Barrientos\n\n" +
-                "Julian Arsuaga\n\n" +
-                "para la materia Desarrollo de Software dictada por los profesores\n\n\n" +
-                "Ing. Sebastian Ramirez\n\n" +
+                "Gabriel Cordova\n\n" +
+                "Rosario Barrientos\n\n" +
+                "Julian Arsuaga\n\n\n" +
+                "Materia Desarrollo de Software profesores\n\n" +
+                "Ing. Sebastian Ramirez\n" +
                 "Ing. Federico Brucchieri");
 
         volver.setOnClickListener(new View.OnClickListener() {

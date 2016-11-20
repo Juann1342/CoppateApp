@@ -56,6 +56,7 @@ public class CrearEvento extends AppCompatActivity {
     EditText edad_desde;
     EditText edad_hasta;
     EditText costo;
+    EditText descripcion;
     Button btn_crear;
     //Button btn_invitar_contactos;
     Spinner spn_tipo_evento;
@@ -147,6 +148,7 @@ public class CrearEvento extends AppCompatActivity {
         edad_desde = (EditText) findViewById(R.id.ce_edadDesde);
         edad_hasta = (EditText) findViewById(R.id.ce_edadHasta);
         costo = (EditText) findViewById(R.id.ce_costo_evento);
+        descripcion = (EditText)findViewById(R.id.ce_descripEvent);
 
         btn_crear = (Button) findViewById(R.id.ce_btnCrearEvento);
         //btn_invitar_contactos = (Button) findViewById(R.id.ce_acceso_a_contactos);
@@ -185,11 +187,11 @@ public class CrearEvento extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        tipo = parent.getItemAtPosition(position).toString();
+                        tipo = "1";
                         break;
 
                     case 1:
-                        tipo = parent.getItemAtPosition(position).toString();
+                        tipo = "2";
                         break;
                 }
             }
@@ -206,11 +208,11 @@ public class CrearEvento extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        sexo = "Hombres";
+                        sexo = "1";
                         break;
 
                     case 1:
-                        sexo = "Mujeres";
+                        sexo = "2";
                         break;
                 }
             }
@@ -359,6 +361,7 @@ public class CrearEvento extends AppCompatActivity {
 
             }
                 else {
+                    guardarEvento();
                     funciones.mostrarToastLargo("Debe seleccionar una ubicación en el mapa");
                 }
 
@@ -463,14 +466,16 @@ public class CrearEvento extends AppCompatActivity {
         map.put("cupo_min", cupo_min.getText().toString());
         map.put("cupo_max", cupo_max.getText().toString());
         map.put("costo", costo.getText().toString());
-        map.put("fecha_inicio", "2016-10-17"); //Solo para probar.
-        map.put("fecha_fin", "2016-10-17"); //Solo para probar.
+        map.put("fecha_inicio", funciones.getFechaActual()); //Solo para probar.
+        map.put("fecha_fin", "2016-25-11"); //Solo para probar.
         map.put("foto", "NULL");
         map.put("ubicacion", lugar_evento.getText().toString());
-        map.put("latitud", latitud.toString());
-        map.put("longitud", longitud.toString());
+        map.put("latitud", "latitud de prueba");
+        map.put("longitud", "Longitud de prueba");
+        /*map.put("latitud", latitud.toString());
+        map.put("longitud", longitud.toString());*/
         map.put("id_categoria", "1");
-        map.put("desc_evento", "Prueba conexión con DB");
+        map.put("desc_evento", descripcion.getText().toString());
         map.put("id_sexo", "1");
         map.put("estado", "activo");
 
@@ -616,7 +621,7 @@ public class CrearEvento extends AppCompatActivity {
                 latitud = data.getDoubleExtra("latitud",PUBLIC_STATIC_DOUBLE_LATITUD);
                 longitud= data.getDoubleExtra("longitud",PUBLIC_STATIC_DOUBLE_LONGITUD);
 
-                funciones.mostrarToastLargo("latitud"+latitud.toString()+"\n"+"longitud"+longitud.toString());
+                //funciones.mostrarToastLargo("latitud"+latitud.toString()+"\n"+"longitud"+longitud.toString());
             }catch (Exception e) {
                 funciones.mostrarToastCorto("ALGO PASÓ");
             }
@@ -679,92 +684,6 @@ public class CrearEvento extends AppCompatActivity {
 
     }
 
-    public void obtenerDatos() {
-        AsyncHttpClient client = new AsyncHttpClient();
-        // este es la url del server que no puede ser localhost porque se usa en el emulador de la app
-        String url = "http://192.168.1.1/GetData.php";
-
-        RequestParams parametros = new RequestParams();
-        parametros.put("Edad", 18);
-
-        /* ################################################################
-        corregir el error de header para pasar los parametros
-        ################################################################
-         */
-
-        /*
-        client.post(url, parametros, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-            }
-        });*/
-    }
-
-
-    // este listener del boton ya no tiene utilidad
-        /*btn_invitar_contactos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            /*    Intent pantalla = new Intent(getApplicationContext(), InvitarContactos.class);
-
-                //mostrarToast("Hasta aca llegamos");
-                try {
-                    pantalla.putExtra("Contactos", contactos);
-                    setResult(RESULT_OK, pantalla);
-                    Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
-                    CrearEvento.this.startActivityForResult(pantalla, CONTACT_PICK_REQUEST,bndlanimation);
-                    funciones.playSoundPickButton(v);
-
-                    /* Apply our splash exit (fade out) and main
-                        entry (fade in) animation transitions. */
-    //overridePendingTransition(R.anim.mainfadein,R.anim.splashfadeout);
-    //     } catch (Exception e) {
-    //        funciones.mostrarToastCorto(e.toString());
-    // }
-            /*}
-        });*/
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    /*public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("CrearEvento Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
-    }*/
     public void onBackPressed() {
         CrearEvento.this.finish();
         overridePendingTransition(R.anim.reingreso, R.anim.nothing);
