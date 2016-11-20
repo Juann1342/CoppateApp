@@ -1,10 +1,8 @@
 package com.coppate.g04.coppate;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,9 +19,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.coppate.g04.coppate.Constantes;
-import com.coppate.g04.coppate.VolleySingleton;
-import com.coppate.g04.coppate.Usuario;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -33,7 +28,6 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
@@ -43,8 +37,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-
-import static android.R.attr.data;
 
 
 public class CrearEvento extends AppCompatActivity {
@@ -137,7 +129,7 @@ public class CrearEvento extends AppCompatActivity {
         invita_contactos = false;
         guarda_evento = false;
 
-        textView1 = (TextView) findViewById(R.id.ce_lista_coppados);
+      //  textView1 = (TextView) findViewById(R.id.ce_lista_coppados);
      //   textView2 = (TextView) findViewById(R.id.ce_lista_coppados2);
 
         //defino las posibles opciones que pueden tener los desplegables (esto despues lo tengo que reemplazar con lo que traigo
@@ -145,7 +137,7 @@ public class CrearEvento extends AppCompatActivity {
 
         spn_tipo_evento = (Spinner) findViewById(R.id.ce_spnTipoEvento);
         spn_sexo = (Spinner) findViewById(R.id.ce_spnSexoEvento);
-        spn_contactos = (Spinner) findViewById(R.id.ce_spn_contactos_activos);
+       // spn_contactos = (Spinner) findViewById(R.id.ce_spn_contactos_activos);
 
         nombre_evento = (EditText) findViewById(R.id.ce_nameEvent);
         lugar_evento = (EditText) findViewById(R.id.ce_lugarEncuentro);

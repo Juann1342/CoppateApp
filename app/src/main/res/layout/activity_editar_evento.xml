@@ -153,13 +153,6 @@
                 android:layout_width="121dp"
                 android:layout_height="match_parent">
 
-                <Button
-                    android:layout_width="71dp"
-                    android:layout_height="89dp"
-                    android:id="@+id/ee_ubicacion_mapa"
-                    android:background="@drawable/mapabuscar"
-                    android:textColor="@color/colorPrimary" />
-
             </LinearLayout>
 
         </LinearLayout>
@@ -212,5 +205,15 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:layout_width="71dp"
+        android:layout_height="89dp"
+        android:id="@+id/ee_ubicacion_mapa"
+        android:background="@drawable/mapabuscar"
+        android:textColor="@color/colorPrimary"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
