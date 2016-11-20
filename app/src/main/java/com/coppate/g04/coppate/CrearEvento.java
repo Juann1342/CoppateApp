@@ -1,6 +1,5 @@
 package com.coppate.g04.coppate;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -59,7 +58,7 @@ public class CrearEvento extends AppCompatActivity {
     //definimos los componenetes que va a tener la clase y que despues pueden llamarse para operar
     EditText nombre_evento;
     EditText lugar_evento;
-    Button fecha_evento;
+//    Button fecha_evento;
     EditText cupo_min;
     EditText cupo_max;
     EditText edad_desde;
@@ -150,7 +149,7 @@ public class CrearEvento extends AppCompatActivity {
 
         nombre_evento = (EditText) findViewById(R.id.ce_nameEvent);
         lugar_evento = (EditText) findViewById(R.id.ce_lugarEncuentro);
-        fecha_evento = (Button) findViewById(R.id.ce_fecha_evento);
+//        fecha_evento = (Button) findViewById(R.id.ce_fecha_evento);
         cupo_min = (EditText) findViewById(R.id.ce_cupoMin);
         cupo_max = (EditText) findViewById(R.id.ce_cupoMax);
         edad_desde = (EditText) findViewById(R.id.ce_edadDesde);
@@ -374,6 +373,8 @@ public class CrearEvento extends AppCompatActivity {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client2 = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+
         //------------Fecha y Hora
 
         btnDatePicker.setOnClickListener(new View.OnClickListener() {
