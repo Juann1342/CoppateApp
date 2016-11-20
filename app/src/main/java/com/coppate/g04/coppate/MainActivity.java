@@ -443,8 +443,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void goBuscar() {
         Intent intent = new Intent(this, BuscarEvento.class);
-        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
-        startActivity(intent,bndlanimation);
+        startActivity(intent);
     }  //dirige a la pantalla buscar
 
     public void irBuscar(View view) {

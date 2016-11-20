@@ -172,7 +172,7 @@
             android:weightSum="0">
 
             <Button
-                android:text="Editar Evento"
+                android:text="Editar"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/ee_editar_evento"
@@ -186,7 +186,7 @@
 
 
             <Button
-                android:text="Cancelar Evento"
+                android:text="Cancelar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/ee_cancelar_evento"
