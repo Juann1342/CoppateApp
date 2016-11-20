@@ -45,6 +45,8 @@ public class EditarEvento extends Activity {
     EditText edad_desde;
     EditText edad_hasta;
 
+    TextView titulo_evento;
+
     Funciones funciones;
 
     Integer id_event;
@@ -55,6 +57,12 @@ public class EditarEvento extends Activity {
     AlertDialog.Builder dialogo;
 
     private Gson gson = new Gson();
+
+    private static final int REQUEST_MAPA= 1;
+    private static final Double PUBLIC_STATIC_DOUBLE_LATITUD = 0.0;
+    private static final Double PUBLIC_STATIC_DOUBLE_LONGITUD = 0.0;
+    Double latitud;
+    Double longitud;
 
 
     // creamos un bundle que nos recuperara los extras que hayamos puesto en la otra actividad
@@ -92,8 +100,6 @@ public class EditarEvento extends Activity {
 
         funciones = new Funciones(getApplicationContext());
 
-        funciones.mostrarToastCorto(id_event.toString());
-
         ubicacion = (Button)findViewById(R.id.ee_ubicacion_mapa);
         editar_evento = (Button) findViewById(R.id.ee_editar_evento);
         cancelar_evento = (Button)findViewById(R.id.ee_cancelar_evento);
@@ -106,6 +112,9 @@ public class EditarEvento extends Activity {
         cupo_min = (EditText)findViewById(R.id.ee_cupoMin);
         edad_desde = (EditText)findViewById(R.id.ee_edadDesde);
         edad_hasta = (EditText)findViewById(R.id.ee_edadHasta);
+        ubicacion.setEnabled(false);
+
+        titulo_evento = (TextView)findViewById(R.id.ee_usuario);
 
         nombre_evento.setText("Probandooooooooo");
 
@@ -127,6 +136,7 @@ public class EditarEvento extends Activity {
                 edad_hasta.setEnabled(true);
                 edad_desde.setEnabled(true);
                 cambios = true;
+                ubicacion.setEnabled(true);
                 //guardar_cambios.setEnabled(true);
             }
         });
@@ -135,8 +145,8 @@ public class EditarEvento extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent intent_mapa = new Intent(EditarEvento.this,MapsActivityCercanos.class);
-                startActivity(intent_mapa);
+                Intent intent = new Intent(EditarEvento.this, MapsActivity.class);
+                startActivityForResult(intent,REQUEST_MAPA);
             }
         });
 
@@ -172,8 +182,7 @@ public class EditarEvento extends Activity {
                     public void onClick(View view)
                     {
                         // si el usuario presiona en aceptar, se cierra la aplicación
-                        EditarEvento.this.finish();
-                        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+                        goMain();
 
                     }
                 });
@@ -239,8 +248,7 @@ public class EditarEvento extends Activity {
                         // aca va una funcion para guardar datos y actualizar datos en la base de datos..
 
                         // si el usuario presiona en aceptar, se cierra la aplicación
-                        EditarEvento.this.finish();
-                        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+                        goMain();
 
                     }
                 });
@@ -319,20 +327,25 @@ public class EditarEvento extends Activity {
 
             switch (estado) {
                 case "1": // EXITO
-                    funciones.mostrarToastCorto(estado);
+                    //funciones.mostrarToastCorto(estado);
                     JSONArray mensaje = response.getJSONArray("evento");
                     //JSONObject objeto = response.getJSONObject("evento");
                     //funciones.mostrarToastCorto("Mensaje: "+objeto.toString());
-                    MisEventos.getInstance().setEventos(gson.fromJson(mensaje.toString(), Evento[].class));
-                    funciones.mostrarToastLargo("Toast procesarResp: " + String.valueOf(MisEventos.getInstance().getEventos().length));
-                    nombre_evento.setText(MisEventos.getInstance().getEventos()[0].getNombre());
-                    descripcion_evento.setText(MisEventos.getInstance().getEventos()[0].getDesc_evento());
-                    //lugar_encuentro.setText(MisEventos.getInstance().getEventos()[0].getLatitud());
-                    costo_evento.setText(MisEventos.getInstance().getEventos()[0].getCosto().toString());
-                    cupo_min.setText(MisEventos.getInstance().getEventos()[0].getCupo_min().toString());
-                    cupo_max.setText(MisEventos.getInstance().getEventos()[0].getCupo_max().toString());
-                    edad_desde.setText(MisEventos.getInstance().getEventos()[0].getEdad_min().toString());
-                    edad_hasta.setText(MisEventos.getInstance().getEventos()[0].getEdad_max().toString());
+
+                    // utilizamos el singleton de MisEventos y le pasamos el evento actual
+                    MisEventos.getInstance().setEvento(gson.fromJson(mensaje.toString(), Evento[].class));
+                    //funciones.mostrarToastLargo("Toast procesarResp: " + String.valueOf(MisEventos.getInstance().getEventos().length));
+
+                    nombre_evento.setText(MisEventos.getInstance().getEvento()[0].getNombre());
+                    descripcion_evento.setText(MisEventos.getInstance().getEvento()[0].getDesc_evento());
+                    lugar_encuentro.setText(MisEventos.getInstance().getEvento()[0].getUbicacion());
+                    costo_evento.setText(MisEventos.getInstance().getEvento()[0].getCosto().toString());
+                    cupo_min.setText(MisEventos.getInstance().getEvento()[0].getCupo_min().toString());
+                    cupo_max.setText(MisEventos.getInstance().getEvento()[0].getCupo_max().toString());
+                    edad_desde.setText(MisEventos.getInstance().getEvento()[0].getEdad_min().toString());
+                    edad_hasta.setText(MisEventos.getInstance().getEvento()[0].getEdad_max().toString());
+
+                    titulo_evento.setText("Descripción del evento: "+MisEventos.getInstance().getEvento()[0].getNombre()+", del usuario: "+Usuario.getInstance().getNombre()+" "+Usuario.getInstance().getApellido());
 
                     // Obtener array "metas" Json
                     /*JSONArray mensaje = response.getJSONArray("evento");
@@ -377,8 +390,7 @@ public class EditarEvento extends Activity {
                     // aca va una funcion para guardar datos y actualizar datos en la base de datos..
 
                     // si el usuario presiona en aceptar, se cierra la aplicación
-                    EditarEvento.this.finish();
-                    overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+                    goMain();
 
                 }
             });
@@ -417,14 +429,27 @@ public class EditarEvento extends Activity {
             dialogo2.show();*/
         }else{
             goMain();
-            EditarEvento.this.finish();
-            overridePendingTransition(R.anim.reingreso, R.anim.nothing);
         }
 
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_MAPA && resultCode == RESULT_OK) {
+            try {
+                latitud = data.getDoubleExtra("latitud", PUBLIC_STATIC_DOUBLE_LATITUD);
+                longitud = data.getDoubleExtra("longitud", PUBLIC_STATIC_DOUBLE_LONGITUD);
+            } catch (Exception e) {
+                funciones.mostrarToastCorto("ALGO PASÓ");
+            }
+        }
     }
 
     private void goMain(){
         Intent mainotravez = new Intent(EditarEvento.this,MainActivity.class);
         startActivity(mainotravez);
+        EditarEvento.this.finish();
+        overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+
     }
 }

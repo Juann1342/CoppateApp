@@ -6,6 +6,8 @@ package com.coppate.g04.coppate;
 public class MisEventos {
     Evento[] eventos;
 
+    Evento[] evento;
+
     private static MisEventos ourInstance = new MisEventos();
 
     public static MisEventos getInstance() {
@@ -21,5 +23,13 @@ public class MisEventos {
 
     public void setEventos(Evento[] eventos) {
         this.eventos = eventos;
+    }
+
+    public Evento[] getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento[] eventos) {
+        this.evento = eventos;
     }
 }

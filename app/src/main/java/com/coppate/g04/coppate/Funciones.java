@@ -174,6 +174,15 @@ public class Funciones implements Parcelable {
         return formattedDate;
     }
 
+    public String transformarFecha(String fecha){
+        ;
+        String[] separated = fecha.split("/");
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+        String formattedDate = df.format(separated[2]+separated[1]+separated[0]);
+
+        return formattedDate;
+    }
+
     // no funciona aun la funcion de mostrar dialogo pregunta.
     public Boolean mostrarDialogoPregunta(String titulo,String pregunta,String si, String no){
         // creamos una variable final con el resulta a retornar
