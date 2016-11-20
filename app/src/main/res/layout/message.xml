@@ -29,18 +29,18 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/black"
             android:textAllCaps="false"
-            android:textColorHint="@color/purpuraoscuro"
+            android:textColorHint="@color/violeta1"
             android:textAlignment="center"
-            android:textStyle="bold|italic"
+            android:textStyle="normal"
             android:layout_weight="1" />
     </LinearLayout>
 
     <View
         android:id="@+id/message_divider"
         android:layout_width="fill_parent"
-        android:layout_height="10dp"
-        android:layout_marginBottom="3dp"
-        android:layout_marginTop="3dp"
+        android:layout_height="2dp"
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="1dp"
         android:background="@color/violeta1"
         android:layout_weight="0.50" />
 
@@ -61,26 +61,25 @@
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColorHint="@color/purpuraoscuro"
-            android:textStyle="bold|italic" />
+            android:textStyle="normal" />
     </ScrollView>
 
     <LinearLayout
         android:id="@+id/message_botonera"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="0"
         android:layout_gravity="center_vertical|center_horizontal|center"
         android:gravity="center">
 
         <Button
             android:id="@+id/message_aceptar"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btncambia"
+            android:layout_height="36dp"
+            android:background="@drawable/bordemensajes"
             android:text="Aceptar"
             android:textColor="@color/colorPrimary"
             android:layout_width="wrap_content"
-            android:gravity="center_vertical|center_horizontal|center"
-            android:layout_gravity="center_vertical|center_horizontal|center" />
+            android:textStyle="normal"/>
 
     </LinearLayout>
 

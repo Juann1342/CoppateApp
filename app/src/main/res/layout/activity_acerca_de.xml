@@ -8,26 +8,30 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.coppate.g04.coppate.MensajeDescargo"
-    android:background="@color/violetadiseno">
+    android:background="@color/gris1">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/ad_acerca"
-        android:textColor="@color/abc_primary_text_material_dark"
+        android:textColor="@color/negro"
         android:textAllCaps="true"
         android:textAlignment="center"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true" />
 
     <Button
         android:text="Volver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ad_volver"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:background="@drawable/btncambia"
-        android:textColor="@color/colorPrimary"/>
+        android:textColor="@color/negro"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp" />
+
 </RelativeLayout>

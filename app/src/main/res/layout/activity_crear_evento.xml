@@ -227,10 +227,10 @@
         tools:layout_editor_absoluteX="242dp" />
 -->
     <Button
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="60dp"
+        android:layout_height="72dp"
         android:id="@+id/crearEventoMapa"
-        android:background="@drawable/pin11"
+        android:background="@drawable/mapabuscar"
         android:textColor="@color/colorPrimary"
         tools:layout_constraintRight_creator="1"
         app:layout_constraintRight_toRightOf="parent"

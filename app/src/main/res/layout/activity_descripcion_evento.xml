@@ -175,7 +175,7 @@
                 android:layout_marginBottom="17dp"
                 android:id="@+id/de_cancelar_asistencia"
                 android:layout_weight="1"
-                android:background="@drawable/btncambia"
+                android:background="@drawable/bordemensajes"
                 android:textColor="@color/colorPrimary"
                 android:textAllCaps="false"
                 android:textAlignment="center" />

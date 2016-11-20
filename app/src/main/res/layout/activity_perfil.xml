@@ -18,8 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/ap_texto_Perfil"
-            tools:textStyle="bold"
-            android:textStyle="bold"
+            android:textStyle="normal"
             android:textColor="@color/negro"
             android:textAlignment="center"
             android:textSize="24sp" />
@@ -53,8 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ap_texto_Nombre"
-            tools:textStyle="bold"
-            android:textStyle="bold"
+            android:textStyle="normal"
             android:textColor="@color/negro"
             android:textAlignment="viewStart"
             android:textSize="24sp" />
@@ -83,8 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/ap_txt_apodo"
-            tools:textStyle="bold"
-            android:textStyle="bold"
+            android:textStyle="normal"
             android:textColor="@color/negro"
             android:textAlignment="viewStart"
             android:textSize="24sp" />
@@ -112,9 +109,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/ap_texto_Fecha_de_Nacimiento"
-            tools:textStyle="bold"
             android:textColor="@color/negro"
-            android:textStyle="bold"
+            android:textStyle="normal"
             android:textAlignment="viewStart"
             android:textSize="24sp" />
 
@@ -139,7 +135,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/ap_editar_perfil"
             android:textColor="@color/colorPrimary"
-            android:background="@drawable/btncambia"
+            android:background="@drawable/bordemensajes"
             android:layout_weight="1" />
     </LinearLayout>
 

@@ -146,7 +146,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimary"
         android:typeface="serif"
-        android:background="@drawable/btncambia"
+        android:background="@color/violeta2"
         tools:layout_editor_absoluteY="16dp"
         tools:layout_editor_absoluteX="163dp" />
 

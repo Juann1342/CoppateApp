@@ -76,9 +76,9 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:text="No, estoy Coppado"
-            android:textColor="@color/negro"
+            android:textColor="@color/blanco"
             android:textSize="17dp"
-            android:textStyle="bold"
+            android:textStyle="normal"
             android:background="@drawable/bordemensajes"
             android:layout_weight="0.23" />
 
@@ -86,12 +86,12 @@
             android:id="@+id/aceptar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Si, muy Seguro   "
-            android:textColor="@color/negro"
-            android:textStyle="bold"
+            android:text=" Si, estoy seguro  "
+            android:textColor="@color/blanco"
+            android:textStyle="normal"
             android:textSize="17dp"
             android:background="@drawable/bordemensajes"
-            android:layout_weight="0.51" />
+            android:layout_weight="0.27" />
     </LinearLayout>
 
 </LinearLayout>

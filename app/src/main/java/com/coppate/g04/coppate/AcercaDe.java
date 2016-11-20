@@ -23,15 +23,12 @@ public class AcercaDe extends AppCompatActivity {
         acerca = (TextView)findViewById(R.id.ad_acerca);
         volver = (Button)findViewById(R.id.ad_volver);
 
-        acerca.setText("Aplicacion desarrollada por los alumnos de la universidad de Ezeiza\n\n" +
-                "Juan Nuñez\n\n" +
-                "Guillermo Bazzi\n\n" +
-                "Luis Cikotik\n\n" +
-                "Daniel Enciso\n\n" +
-                "Gabriel Cordova\n\n" +
-                "Rosario Barrientos\n\n" +
+        acerca.setText("\n\nAplicación desarrollada por los estudiantes de la universidad de Ezeiza\n\n\n" +
+                "Juan Nuñez         Guillermo Bazzi\n\n" +
+                "Luis Cikotik       Daniel Enciso\n\n" +
+                "Gabriel Cordova    Rosario Barrientos\n\n" +
                 "Julian Arsuaga\n\n" +
-                "para la materia Desarrollo de Software dictada por los profesores\n\n" +
+                "para la materia Desarrollo de Software dictada por los profesores\n\n\n" +
                 "Ing. Sebastian Ramirez\n\n" +
                 "Ing. Federico Brucchieri");
 

@@ -577,7 +577,7 @@ public class MainActivity extends AppCompatActivity {
 
             // seteamos el texto del boton afirmativo como el texto del propio boton
             Button aceptar = (Button) customDialog.findViewById(R.id.aceptar);
-            aceptar.setText("Si, muy seguro");
+            aceptar.setText(" Si, muy seguro  ");
             aceptar.setOnClickListener(new View.OnClickListener() {
 
                 @Override

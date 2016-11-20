@@ -19,7 +19,6 @@
             android:layout_height="match_parent"
             android:id="@+id/cu_texto_calificacion"
             tools:textStyle="normal"
-            android:textStyle="italic"
             android:textColor="@color/negro"
             android:textAlignment="center"
             android:textSize="24sp" />
@@ -101,7 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/cu_btn_comentar"
-            android:background="@drawable/btncambia"
+            android:background="@drawable/bordemensajes"
             android:textColor="@color/colorPrimary" />
     </LinearLayout>
 </LinearLayout>

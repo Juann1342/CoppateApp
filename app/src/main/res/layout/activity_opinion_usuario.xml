@@ -100,7 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/ou_btn_calificar"
-            android:background="@drawable/btncambia"
+            android:background="@drawable/bordemensajes"
             android:textColor="@color/colorPrimary" />
 
     </LinearLayout>

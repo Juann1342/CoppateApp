@@ -43,7 +43,7 @@
     android:id="@+id/btn_done"
     android:layout_alignParentBottom="true"
     android:text="Hecho"
-    android:background="@drawable/btncambia"
+    android:background="@drawable/bordemensajes"
     android:textColor="@color/colorPrimary"    />
 
 </RelativeLayout>

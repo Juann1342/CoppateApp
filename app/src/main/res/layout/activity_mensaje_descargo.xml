@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.coppate.g04.coppate.MensajeDescargo"
-    android:background="@color/violetadiseno">
+    android:background="@color/gris1">
 
     <TextView
         android:layout_width="wrap_content"
@@ -17,7 +17,7 @@
         android:text="Coppate Inc. no se responsabilizará por el mal uso de la aplicación.Aplicación no apta para menores de 18 años."
         android:id="@+id/descargo"
         android:autoText="false"
-        android:textColor="@color/abc_primary_text_material_dark"
+        android:textColor="@color/negro"
         android:textSize="32sp"
         android:textAlignment="center"
         android:layout_alignParentTop="true"
@@ -28,6 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Aceptar"
+        android:textColor="@color/blanco"
         android:id="@+id/bot_aceptar"
         android:onClick="aceptar"
         android:layout_alignParentBottom="true"
