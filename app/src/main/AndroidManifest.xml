@@ -106,7 +106,6 @@
             android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
             android:name=".AcercaDe"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_acerca_de"
             android:parentActivityName=".MainActivity"

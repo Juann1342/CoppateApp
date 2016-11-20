@@ -256,10 +256,11 @@ public class CrearEvento extends AppCompatActivity {
                     funciones.mostrarToastCorto((Usuario.getInstance().getNombre() + " ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo));
                     funciones.playSoundGotaAgua(arg0);
                 }*/
-                if(!invita_contactos){
+                if (latitud != null) {
+                    if(!invita_contactos){
 
                     Dialog customDialog = null;
-                    customDialog = new Dialog(CrearEvento.this,R.style.Theme_Dialog_Translucent);
+                    customDialog = new Dialog(CrearEvento.this, R.style.Theme_Dialog_Translucent);
                     // con este tema personalizado evitamos los bordes por defecto
                     //customDialog = new Dialog(this,R.style.AppTheme);
                     //deshabilitamos el título por defecto
@@ -283,9 +284,8 @@ public class CrearEvento extends AppCompatActivity {
                     aceptar.setOnClickListener(new View.OnClickListener() {
 
                         @Override
-                        public void onClick(View view)
-                        {
-                            try{
+                        public void onClick(View view) {
+                            try {
                                 guardarEvento();
                                 /* if(ok en la base de datos al guardar el evento) hace lo que sigue*/
                                 guarda_evento = true;
@@ -293,7 +293,7 @@ public class CrearEvento extends AppCompatActivity {
                                 /* hay que hacer una funcion que tome el codigo del evento ese para pasarlo
                                 a goInvitarContactos()*/
                                 goInvitarContactos("Evento de Prueba", invita_contactos);
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
                             }
 
@@ -307,14 +307,13 @@ public class CrearEvento extends AppCompatActivity {
                     cancelar.setOnClickListener(new View.OnClickListener() {
 
                         @Override
-                        public void onClick(View view)
-                        {
+                        public void onClick(View view) {
                             try {
                                 guardarEvento();
                                 guarda_evento = true;
-                                goInvitarContactos("nada",invita_contactos);
+                                goInvitarContactos("nada", invita_contactos);
                                 //funciones.playSoundGotaAgua(arg0);
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
                             }
                             // si el usuario presiona en aceptar, se cierra el cuadro y vuele al activity que lo llamo.
@@ -367,7 +366,13 @@ public class CrearEvento extends AppCompatActivity {
                 }
 
             }
+                else {
+                    funciones.mostrarToastLargo("Debe seleccionar una ubicación en el mapa");
+                }
+
+            }
         });
+
 
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
