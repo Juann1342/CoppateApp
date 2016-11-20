@@ -66,7 +66,6 @@ public class perfil extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
-
         funciones = new Funciones(getApplicationContext());
 
         foto_perfil = (ImageView) findViewById(R.id.ap_perfil_pict);
