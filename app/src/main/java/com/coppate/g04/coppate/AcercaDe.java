@@ -27,7 +27,8 @@ public class AcercaDe extends AppCompatActivity {
         acerca = (TextView)findViewById(R.id.ad_acerca);
         volver = (Button)findViewById(R.id.ad_volver);
 
-        Typeface face=Typeface.createFromAsset(getAssets(),"fonts/fuente3.ttf");
+        //las dos lineas siguientes se utilizan para la fuente de las palabras
+        Typeface face=Typeface.createFromAsset(getAssets(),"font/fuente3.ttf");
         acerca.setTypeface(face);
 
         acerca.setText("\nAplicación desarrollada por los estudiantes de la UPE\n\n\n" +
