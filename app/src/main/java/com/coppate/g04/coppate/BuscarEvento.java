@@ -3,10 +3,12 @@ package com.coppate.g04.coppate;
 import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -54,6 +56,7 @@ public class BuscarEvento extends AppCompatActivity {
         getSupportActionBar().hide();
 
         funciones = new Funciones(getApplicationContext());
+
         //HttpClient httpClient = new DefaultHttpClient();
        // HttpPost
         buscar = (Button)findViewById(R.id.buscar);

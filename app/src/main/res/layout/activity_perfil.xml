@@ -31,7 +31,7 @@
         android:minHeight="0dp"
         android:minWidth="0dp">
 
-        <ImageButton
+        <ImageView
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:scaleType="fitCenter"

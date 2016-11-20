@@ -10,6 +10,7 @@
     android:orientation="vertical"
     android:layout_gravity="center_vertical|center_horizontal|center">
 
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"

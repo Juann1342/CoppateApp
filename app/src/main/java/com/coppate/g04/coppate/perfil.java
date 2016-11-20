@@ -24,6 +24,8 @@ import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.Profile;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -35,12 +37,22 @@ import java.util.Date;
 public class perfil extends Activity {
 
     private static final String TAG = "";
-    ImageButton foto_perfil;
+    ImageView foto_perfil;
     EditText nombre;
     EditText fecha_nac;
     EditText apodo;
     Button editar_perfil;
     String fecha_actual = "";
+
+    Bitmap bitmap = null;
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
 
     Funciones funciones;
 
@@ -57,7 +69,7 @@ public class perfil extends Activity {
 
         funciones = new Funciones(getApplicationContext());
 
-        foto_perfil = (ImageButton) findViewById(R.id.ap_perfil_pict);
+        foto_perfil = (ImageView) findViewById(R.id.ap_perfil_pict);
         nombre = (EditText) findViewById(R.id.ap_txt_Mi_nombre);
         fecha_nac = (EditText) findViewById(R.id.ap_txt_birthday);
         apodo = (EditText) findViewById(R.id.ap_apodo);
@@ -65,6 +77,7 @@ public class perfil extends Activity {
 
         //foto_perfil.setImageResource(Profile.getCurrentProfile().getProfilePictureUri(320,320));
         foto_perfil.setImageBitmap(getUserPic(Usuario.getInstance().getId_usuario()));
+        //foto_perfil.setImageBitmap(getBitmap());
 
         try {
             fecha_nac.setText(Usuario.getInstance().getFecha_nacimiento());
@@ -119,20 +132,6 @@ public class perfil extends Activity {
     // funcion para cargar imagen de perfil de facebook
     public Bitmap getUserPic(String userID) {
 
-        /* make the API call */
-        /*GraphRequestAsyncTask gr = new GraphRequest(
-                AccessToken.getCurrentAccessToken(),
-                userID,
-                null,
-                HttpMethod.GET,
-                new GraphRequest.Callback() {
-                    public void onCompleted(GraphResponse response) {
-                        /* handle the result */
-                    /*}
-                }
-        ).executeAsync();*/
-
-
         URL imageURL = null;
         Bitmap bitmap = null;
         //Log.d(TAG, "Loading Picture");
@@ -150,6 +149,55 @@ public class perfil extends Activity {
             funciones.mostrarToastLargo("Error: "+e.toString());
         }
         return bitmap;
+        /*Bundle params = new Bundle();
+        params.putString("fields", "id,email,gender,cover,picture.type(large)");
+        final GraphRequestAsyncTask graphRequestAsyncTask = new GraphRequest(AccessToken.getCurrentAccessToken(), "me", params, HttpMethod.GET,
+                new GraphRequest.Callback() {
+                    @Override
+                    public void onCompleted(GraphResponse response) {
+                        if (response != null) {
+                            try {
+                                JSONObject data = response.getJSONObject();
+                                if (data.has("picture")) {
+                                    String profilePicUrl = data.getJSONObject("picture").getJSONObject("data").getString("url");
+                                    Bitmap profilePic = BitmapFactory.decodeStream(profilePicUrl.openConnection().getInputStream());
+                                    //foto_perfil.setBitmap(profilePic);
+                                    setBitmap(profilePic);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }).executeAsync();
+        /*GraphRequest request = GraphRequest.newMeRequest(
+                AccessToken.getCurrentAccessToken(),
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+                        // Application code
+                    }
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,link");
+        request.setParameters(parameters);
+        request.executeAsync();*/
+
+        /* make the API call */
+        /*GraphRequestAsyncTask gr = new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                userID,
+                null,
+                HttpMethod.GET,
+                new GraphRequest.Callback() {
+                    public void onCompleted(GraphResponse response) {
+                        /* handle the result */
+                    /*}
+                }
+        ).executeAsync();*/
+
         /*String urldisplay = "http://graph.facebook.com/"+userID+"/picture?type=normal";
         Bitmap mIcon11 = null;
         try {

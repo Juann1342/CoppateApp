@@ -15,6 +15,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import java.sql.Array;
 import java.util.ArrayList;
 
 public class EditarEvento extends Activity {
@@ -34,10 +47,14 @@ public class EditarEvento extends Activity {
 
     Funciones funciones;
 
-    Integer id_evento;
+    Integer id_event;
+    Integer id_eveto;
+
     Boolean cambios = null;
 
     AlertDialog.Builder dialogo;
+
+    private Gson gson = new Gson();
 
 
     // creamos un bundle que nos recuperara los extras que hayamos puesto en la otra actividad
@@ -54,7 +71,7 @@ public class EditarEvento extends Activity {
 
         b = getIntent().getExtras();
 
-        id_evento = b.getInt("ID_evento");
+        id_event= b.getInt("ID_evento");
 
         /* evento_en_bd = getEvento(id_evento, id_usuario);
         *
@@ -75,6 +92,8 @@ public class EditarEvento extends Activity {
 
         funciones = new Funciones(getApplicationContext());
 
+        funciones.mostrarToastCorto(id_event.toString());
+
         ubicacion = (Button)findViewById(R.id.ee_ubicacion_mapa);
         editar_evento = (Button) findViewById(R.id.ee_editar_evento);
         cancelar_evento = (Button)findViewById(R.id.ee_cancelar_evento);
@@ -87,6 +106,11 @@ public class EditarEvento extends Activity {
         cupo_min = (EditText)findViewById(R.id.ee_cupoMin);
         edad_desde = (EditText)findViewById(R.id.ee_edadDesde);
         edad_hasta = (EditText)findViewById(R.id.ee_edadHasta);
+
+        nombre_evento.setText("Probandooooooooo");
+
+        obtenerDatosEventoPorID();
+
 
         editar_evento.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -257,6 +281,78 @@ public class EditarEvento extends Activity {
 
     }
 
+    private void obtenerDatosEventoPorID(){
+        VolleySingleton.
+                getInstance(getApplicationContext()).
+                addToRequestQueue(
+                        new JsonObjectRequest(
+                                Request.Method.GET,
+                                Constantes.GET_BY_ID + "?idEvento=" + id_event,
+                                null,
+                                new Response.Listener<JSONObject>() {
+
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        // Procesar la respuesta Json
+                                        procesarRespuesta(response);
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        funciones.mostrarToastCorto("Debug1: Error en obtenerDatosEventoPorID");
+                                    }
+                                }
+
+                        )
+                );
+    }
+
+    /*
+    *  @param response Objeto Json con la respuesta
+    */
+    private void procesarRespuesta(JSONObject response) {
+        try {
+            // Obtener atributo "estado"
+            String estado = response.getString("estado");
+
+
+            switch (estado) {
+                case "1": // EXITO
+                    funciones.mostrarToastCorto(estado);
+                    JSONArray mensaje = response.getJSONArray("evento");
+                    //JSONObject objeto = response.getJSONObject("evento");
+                    //funciones.mostrarToastCorto("Mensaje: "+objeto.toString());
+                    MisEventos.getInstance().setEventos(gson.fromJson(mensaje.toString(), Evento[].class));
+                    funciones.mostrarToastLargo("Toast procesarResp: " + String.valueOf(MisEventos.getInstance().getEventos().length));
+                    nombre_evento.setText(MisEventos.getInstance().getEventos()[0].getNombre());
+                    descripcion_evento.setText(MisEventos.getInstance().getEventos()[0].getDesc_evento());
+                    //lugar_encuentro.setText(MisEventos.getInstance().getEventos()[0].getLatitud());
+                    costo_evento.setText(MisEventos.getInstance().getEventos()[0].getCosto().toString());
+                    cupo_min.setText(MisEventos.getInstance().getEventos()[0].getCupo_min().toString());
+                    cupo_max.setText(MisEventos.getInstance().getEventos()[0].getCupo_max().toString());
+                    edad_desde.setText(MisEventos.getInstance().getEventos()[0].getEdad_min().toString());
+                    edad_hasta.setText(MisEventos.getInstance().getEventos()[0].getEdad_max().toString());
+
+                    // Obtener array "metas" Json
+                    /*JSONArray mensaje = response.getJSONArray("evento");
+                    // Parsear con Gson
+                    MisEventos.getInstance().setEventos(gson.fromJson(mensaje.toString(), Evento[].class));
+                    //funciones.mostrarToastLargo("Toast procesarResp: " + String.valueOf(MisEventos.getInstance().getEventos().length));
+                    funciones.mostrarToastLargo(MisEventos.getInstance().getEventos()[0].getNombre());*/
+                    break;
+                case "2": // FALLIDO
+                    funciones.mostrarToastCorto("Debug2: Error en procesarRespuesta");;
+                    break;
+            }
+
+        } catch (JSONException e) {
+            //Log.d(TAG, e.getMessage());
+            funciones.mostrarToastCorto("Fallo?");
+        }
+
+    }
+
     public void onBackPressed() {
         if(cambios){
 
@@ -320,9 +416,15 @@ public class EditarEvento extends Activity {
             });
             dialogo2.show();*/
         }else{
+            goMain();
             EditarEvento.this.finish();
             overridePendingTransition(R.anim.reingreso, R.anim.nothing);
         }
 
+    }
+
+    private void goMain(){
+        Intent mainotravez = new Intent(EditarEvento.this,MainActivity.class);
+        startActivity(mainotravez);
     }
 }

@@ -10,6 +10,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.location.LocationManager;
 import android.os.Build;
@@ -159,8 +160,13 @@ public class MainActivity extends AppCompatActivity {
         // inicializamos los arraylist que nos serviran para cargar los datos de los adaptadores para los listview
         lista_eventos_mios = new ArrayList<String>();
 
+        int largo = 0;
         try {
-            lista_eventos_mios.add(MisEventos.getInstance().getEventos()[0].getNombre());
+            largo = MisEventos.getInstance().getEventos().length;
+            for (int i = 0; i<largo; i++){
+                lista_eventos_mios.add(MisEventos.getInstance().getEventos()[i].getNombre());
+            }
+
             lista_eventos_cercanos = new ArrayList<String>();
             lista_eventos_otros_participo = new ArrayList<String>();
         }
@@ -169,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // cargamos datos de prueba que tienen que venir de la BD, tanto los propios como los otros
         lista_eventos_cercanos.add("Evento cercano: 1");
-        lista_eventos_mios.add("Eventos mios: 1");
+        //lista_eventos_mios.add("Eventos mios: 1"); -- codigo hardcode
         lista_eventos_otros_participo.add("Eventos participo: 1");
 
         // llamammos a las funciones que listan los eventos cercanos, de otros y mios
@@ -276,6 +282,7 @@ public class MainActivity extends AppCompatActivity {
             lista_mis_eventos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                     entrarAMiEvento(view);
                 }
             });
@@ -287,14 +294,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void entrarAMiEvento(View v){
         try {
+
             Integer id_evento = lista_mis_eventos.getPositionForView(v);
+            Integer idEvent = Integer.valueOf(MisEventos.getInstance().getEventos()[id_evento].getId_evento());
+            funciones.mostrarToastCorto("ID_evento: "+idEvent.toString());
             Intent intent_descripcion = new Intent(MainActivity.this, EditarEvento.class);
             // le pasamos el parametro del ide de evento para tomarlo en la pantalla de DESCRIPCION DE EVENTO y mostrar los datos necesarios
-            intent_descripcion.putExtra("ID_evento", id_evento);
+            intent_descripcion.putExtra("ID_evento", idEvent);
             // creamos la animacion de deslizamiento
             Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in, R.anim.left_out).toBundle();
             // lanzamos la actividad de DESCRIPCION y le cargamos la animacion
             startActivity(intent_descripcion, bndlanimation);
+            MainActivity.this.finish();
         }catch (Exception e){
             funciones.mostrarToastCorto("Error al cargar la siguiente pantalla");
         }
@@ -533,8 +544,8 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray mensaje = response.getJSONArray("eventos");
                     // Parsear con Gson
                     MisEventos.getInstance().setEventos(gson.fromJson(mensaje.toString(), Evento[].class));
-                    funciones.mostrarToastLargo("Toast procesarResp: " + String.valueOf(MisEventos.getInstance().getEventos().length));
-                    funciones.mostrarToastLargo(MisEventos.getInstance().getEventos()[0].getNombre());
+                    //funciones.mostrarToastLargo("Toast procesarResp: " + String.valueOf(MisEventos.getInstance().getEventos().length));
+                    //funciones.mostrarToastLargo(MisEventos.getInstance().getEventos()[0].getNombre());
                     break;
                 case "2": // FALLIDO
                     funciones.mostrarToastCorto("Debug2: Error en procesarRespuesta");;
@@ -637,6 +648,8 @@ public class MainActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
 
     }
+
+
     /*@Override
     public void onBackPressed() {
         AlertDialog.Builder dialogo2 = new AlertDialog.Builder(MainActivity.this);
