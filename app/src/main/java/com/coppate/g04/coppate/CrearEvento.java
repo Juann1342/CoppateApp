@@ -374,6 +374,7 @@ public class CrearEvento extends AppCompatActivity {
                 else{
                     funciones.mostrarToastLargo("Primero debe seleccionar una ubicación en el mapa");
 
+
                 }
 
             }
