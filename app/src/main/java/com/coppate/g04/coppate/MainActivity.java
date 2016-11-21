@@ -1,61 +1,42 @@
 package com.coppate.g04.coppate;
 
 import android.app.ActivityOptions;
-
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.AccessToken;
-import com.facebook.FacebookCallback;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
     Button btn_crear_evento;
     Button otrosUsuarios;
     TextView txt_mis_eventos;
+    Button botonBuscar;
     android.support.v7.app.AlertDialog alert;
+
 
     // tomamos los ListView para mostrar los eventos cercanos, de otros y propios
     ListView eventos_de_otros;
@@ -115,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         btn_crear_evento = (Button) findViewById(R.id.ma_crear_evento);
         otrosUsuarios = (Button) findViewById(R.id.btnOtrosUser);
         probando = (Button)findViewById(R.id.probando);
+        botonBuscar = (Button)findViewById(R.id.botonBuscar);
         //los listview
         lista_mis_eventos = (ListView) findViewById(R.id.ma_listar_mis_eventos);
         lista_eventos_a_participar = (ListView) findViewById(R.id.ma_eventos_donde_participo);
@@ -219,6 +203,17 @@ public class MainActivity extends AppCompatActivity {
                 //goAcercaDe();
             }
         });
+
+
+         botonBuscar.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            goBuscarEvento();
+        //goAcercaDe();
+        }
+        });
+
+
 
     }
 
@@ -473,6 +468,17 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, perfil.class);
         startActivity(intent);
     }  //dirige a la pantalla perfil
+
+
+     private void goBuscarEvento() {
+     Intent intent = new Intent(this, BuscarEvento.class);
+     startActivity(intent);
+     }  //dirige a la pantalla BuscarEvento
+
+
+
+
+
 
     public void getUsuarioPorID(String id_user){
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(new JsonObjectRequest(
