@@ -484,7 +484,7 @@ public class CrearEvento extends AppCompatActivity {
         map.put("id_categoria", "1");
         map.put("desc_evento", descripcion.getText().toString());
         map.put("id_sexo", "1");
-        map.put("estado", "activo");
+        map.put("id_estado", "1"); // 1=activo 2=finalizado 3=cancelado 4=en pausa
 
 
         // Crear nuevo objeto Json basado en el mapa
