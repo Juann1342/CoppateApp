@@ -1,8 +1,11 @@
 package com.coppate.g04.coppate;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +22,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.coppate.g04.coppate.Constantes;
+import com.coppate.g04.coppate.VolleySingleton;
+import com.coppate.g04.coppate.Usuario;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -28,6 +34,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
@@ -37,6 +44,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.R.attr.data;
 
 
 public class CrearEvento extends AppCompatActivity {
@@ -50,19 +59,20 @@ public class CrearEvento extends AppCompatActivity {
     //definimos los componenetes que va a tener la clase y que despues pueden llamarse para operar
     EditText nombre_evento;
     EditText lugar_evento;
-//    Button fecha_evento;
+    Button fecha_evento;
     EditText cupo_min;
     EditText cupo_max;
     EditText edad_desde;
     EditText edad_hasta;
     EditText costo;
-    EditText descripcion;
     Button btn_crear;
     //Button btn_invitar_contactos;
     Spinner spn_tipo_evento;
     Spinner spn_sexo;
     Spinner spn_contactos;
     Button mapaCrear;
+
+    EditText descripcion;
 
     Bundle bundle;
 
@@ -130,24 +140,25 @@ public class CrearEvento extends AppCompatActivity {
         invita_contactos = false;
         guarda_evento = false;
 
-      //  textView1 = (TextView) findViewById(R.id.ce_lista_coppados);
-     //   textView2 = (TextView) findViewById(R.id.ce_lista_coppados2);
+        textView1 = (TextView) findViewById(R.id.ce_lista_coppados);
+        //   textView2 = (TextView) findViewById(R.id.ce_lista_coppados2);
 
         //defino las posibles opciones que pueden tener los desplegables (esto despues lo tengo que reemplazar con lo que traigo
         // de la base de datos)
 
         spn_tipo_evento = (Spinner) findViewById(R.id.ce_spnTipoEvento);
         spn_sexo = (Spinner) findViewById(R.id.ce_spnSexoEvento);
-       // spn_contactos = (Spinner) findViewById(R.id.ce_spn_contactos_activos);
+        spn_contactos = (Spinner) findViewById(R.id.ce_spn_contactos_activos);
 
         nombre_evento = (EditText) findViewById(R.id.ce_nameEvent);
         lugar_evento = (EditText) findViewById(R.id.ce_lugarEncuentro);
-//        fecha_evento = (Button) findViewById(R.id.ce_fecha_evento);
+        fecha_evento = (Button) findViewById(R.id.ce_fecha_evento);
         cupo_min = (EditText) findViewById(R.id.ce_cupoMin);
         cupo_max = (EditText) findViewById(R.id.ce_cupoMax);
         edad_desde = (EditText) findViewById(R.id.ce_edadDesde);
         edad_hasta = (EditText) findViewById(R.id.ce_edadHasta);
         costo = (EditText) findViewById(R.id.ce_costo_evento);
+
         descripcion = (EditText)findViewById(R.id.ce_descripEvent);
 
         btn_crear = (Button) findViewById(R.id.ce_btnCrearEvento);
@@ -250,71 +261,72 @@ public class CrearEvento extends AppCompatActivity {
                     funciones.mostrarToastCorto((Usuario.getInstance().getNombre() + " ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo));
                     funciones.playSoundGotaAgua(arg0);
                 }*/
+
                 if (latitud != null) {
-                    if(!invita_contactos){
+                    if (!invita_contactos) {
 
-                    Dialog customDialog = null;
-                    customDialog = new Dialog(CrearEvento.this, R.style.Theme_Dialog_Translucent);
-                    // con este tema personalizado evitamos los bordes por defecto
-                    //customDialog = new Dialog(this,R.style.AppTheme);
-                    //deshabilitamos el título por defecto
-                    customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    //obligamos al usuario a pulsar los botones para cerrarlo
-                    customDialog.setCancelable(false);
-                    //establecemos el contenido de nuestro dialog para poder visualizarlo en pantalla
-                    customDialog.setContentView(R.layout.dialog);
+                        Dialog customDialog = null;
+                        customDialog = new Dialog(CrearEvento.this, R.style.Theme_Dialog_Translucent);
+                        // con este tema personalizado evitamos los bordes por defecto
+                        //customDialog = new Dialog(this,R.style.AppTheme);
+                        //deshabilitamos el título por defecto
+                        customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        //obligamos al usuario a pulsar los botones para cerrarlo
+                        customDialog.setCancelable(false);
+                        //establecemos el contenido de nuestro dialog para poder visualizarlo en pantalla
+                        customDialog.setContentView(R.layout.dialog);
 
-                    // creamos y mostramos el titulo en pantalla
-                    TextView titulo = (TextView) customDialog.findViewById(R.id.titulo);
-                    titulo.setText("Invitar Contactos");
+                        // creamos y mostramos el titulo en pantalla
+                        TextView titulo = (TextView) customDialog.findViewById(R.id.titulo);
+                        titulo.setText("Invitar Contactos");
 
-                    // creamos y mostramos el mensaje que deseamos visualizar
-                    TextView contenido = (TextView) customDialog.findViewById(R.id.contenido);
-                    contenido.setText("¿Deseas invitar Contactos al evento?");
+                        // creamos y mostramos el mensaje que deseamos visualizar
+                        TextView contenido = (TextView) customDialog.findViewById(R.id.contenido);
+                        contenido.setText("¿Deseas invitar Contactos al evento?");
 
-                    // seteamos el texto del boton afirmativo como el texto del propio boton
-                    Button aceptar = (Button) customDialog.findViewById(R.id.aceptar);
-                    aceptar.setText("Si, invitar");
-                    aceptar.setOnClickListener(new View.OnClickListener() {
+                        // seteamos el texto del boton afirmativo como el texto del propio boton
+                        Button aceptar = (Button) customDialog.findViewById(R.id.aceptar);
+                        aceptar.setText("Si, invitar");
+                        aceptar.setOnClickListener(new View.OnClickListener() {
 
-                        @Override
-                        public void onClick(View view) {
-                            try {
-                                guardarEvento();
+                            @Override
+                            public void onClick(View view) {
+                                try {
+                                    guardarEvento();
                                 /* if(ok en la base de datos al guardar el evento) hace lo que sigue*/
-                                guarda_evento = true;
-                                invita_contactos = true;
+                                    guarda_evento = true;
+                                    invita_contactos = true;
                                 /* hay que hacer una funcion que tome el codigo del evento ese para pasarlo
                                 a goInvitarContactos()*/
-                                goInvitarContactos("Evento de Prueba", invita_contactos);
-                            } catch (Exception e) {
-                                funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
+                                    goInvitarContactos("Evento de Prueba", invita_contactos);
+                                } catch (Exception e) {
+                                    funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
+                                }
+
                             }
+                        });
 
-                        }
-                    });
+                        // seteamos el texto del boton negativo como el texto del propio boton
+                        Button cancelar = (Button) customDialog.findViewById(R.id.cancelar);
+                        cancelar.setText("No");
+                        final Dialog finalCustomDialog1 = customDialog;
+                        cancelar.setOnClickListener(new View.OnClickListener() {
 
-                    // seteamos el texto del boton negativo como el texto del propio boton
-                    Button cancelar = (Button) customDialog.findViewById(R.id.cancelar);
-                    cancelar.setText("No");
-                    final Dialog finalCustomDialog1 = customDialog;
-                    cancelar.setOnClickListener(new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View view) {
-                            try {
-                                guardarEvento();
-                                guarda_evento = true;
-                                goInvitarContactos("nada", invita_contactos);
-                                //funciones.playSoundGotaAgua(arg0);
-                            } catch (Exception e) {
-                                funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
+                            @Override
+                            public void onClick(View view) {
+                                try {
+                                    guardarEvento();
+                                    guarda_evento = true;
+                                    goInvitarContactos("nada", invita_contactos);
+                                    //funciones.playSoundGotaAgua(arg0);
+                                } catch (Exception e) {
+                                    funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
+                                }
+                                // si el usuario presiona en aceptar, se cierra el cuadro y vuele al activity que lo llamo.
+                                //finalCustomDialog1.dismiss();
                             }
-                            // si el usuario presiona en aceptar, se cierra el cuadro y vuele al activity que lo llamo.
-                            //finalCustomDialog1.dismiss();
-                        }
-                    });
-                    customDialog.show();
+                        });
+                        customDialog.show();
 
 
                     /*AlertDialog.Builder dialogo = new AlertDialog.Builder(CrearEvento.this);
@@ -354,27 +366,22 @@ public class CrearEvento extends AppCompatActivity {
                     });
                     dialogo.show();*/
 
-                    // al pulsar en crear evento se lanza el sonido de la gota de agua. no me es posible ahora corregirlo
-                    // para que luego de aceptar los botones SI o NO se lance el sonido...
+                        // al pulsar en crear evento se lanza el sonido de la gota de agua. no me es posible ahora corregirlo
+                        // para que luego de aceptar los botones SI o NO se lance el sonido...
 
+                    }
                 }
-
-            }
-                else {
-                    guardarEvento();
-                    funciones.mostrarToastLargo("Debe seleccionar una ubicación en el mapa");
+                else{
+                    funciones.mostrarToastLargo("Primero debe seleccionar una ubicación en el mapa");
                 }
 
             }
         });
 
 
-
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client2 = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-
-
         //------------Fecha y Hora
 
         btnDatePicker.setOnClickListener(new View.OnClickListener() {
@@ -467,13 +474,11 @@ public class CrearEvento extends AppCompatActivity {
         map.put("cupo_max", cupo_max.getText().toString());
         map.put("costo", costo.getText().toString());
         map.put("fecha_inicio", funciones.getFechaActual()); //Solo para probar.
-        map.put("fecha_fin", "2016-25-11"); //Solo para probar.
+        map.put("fecha_fin", "2016-10-17"); //Solo para probar.
         map.put("foto", "NULL");
         map.put("ubicacion", lugar_evento.getText().toString());
-        map.put("latitud", "latitud de prueba");
-        map.put("longitud", "Longitud de prueba");
-        /*map.put("latitud", latitud.toString());
-        map.put("longitud", longitud.toString());*/
+        map.put("latitud", latitud.toString());
+        map.put("longitud", longitud.toString());
         map.put("id_categoria", "1");
         map.put("desc_evento", descripcion.getText().toString());
         map.put("id_sexo", "1");
@@ -615,13 +620,13 @@ public class CrearEvento extends AppCompatActivity {
                 funciones.mostrarToastCorto("No, no funciona");
             }
             //contactsDisplay.setText("Selected Contacts : \n\n"+display);
-            }
+        }
         if (requestCode == REQUEST_MAPA && resultCode == RESULT_OK){
             try {
                 latitud = data.getDoubleExtra("latitud",PUBLIC_STATIC_DOUBLE_LATITUD);
                 longitud= data.getDoubleExtra("longitud",PUBLIC_STATIC_DOUBLE_LONGITUD);
 
-                //funciones.mostrarToastLargo("latitud"+latitud.toString()+"\n"+"longitud"+longitud.toString());
+                funciones.mostrarToastLargo("latitud"+latitud.toString()+"\n"+"longitud"+longitud.toString());
             }catch (Exception e) {
                 funciones.mostrarToastCorto("ALGO PASÓ");
             }
@@ -684,6 +689,92 @@ public class CrearEvento extends AppCompatActivity {
 
     }
 
+    public void obtenerDatos() {
+        AsyncHttpClient client = new AsyncHttpClient();
+        // este es la url del server que no puede ser localhost porque se usa en el emulador de la app
+        String url = "http://192.168.1.1/GetData.php";
+
+        RequestParams parametros = new RequestParams();
+        parametros.put("Edad", 18);
+
+        /* ################################################################
+        corregir el error de header para pasar los parametros
+        ################################################################
+         */
+
+        /*
+        client.post(url, parametros, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });*/
+    }
+
+
+    // este listener del boton ya no tiene utilidad
+        /*btn_invitar_contactos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            /*    Intent pantalla = new Intent(getApplicationContext(), InvitarContactos.class);
+
+                //mostrarToast("Hasta aca llegamos");
+                try {
+                    pantalla.putExtra("Contactos", contactos);
+                    setResult(RESULT_OK, pantalla);
+                    Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+                    CrearEvento.this.startActivityForResult(pantalla, CONTACT_PICK_REQUEST,bndlanimation);
+                    funciones.playSoundPickButton(v);
+
+                    /* Apply our splash exit (fade out) and main
+                        entry (fade in) animation transitions. */
+    //overridePendingTransition(R.anim.mainfadein,R.anim.splashfadeout);
+    //     } catch (Exception e) {
+    //        funciones.mostrarToastCorto(e.toString());
+    // }
+            /*}
+        });*/
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    /*public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("CrearEvento Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
+    }*/
     public void onBackPressed() {
         CrearEvento.this.finish();
         overridePendingTransition(R.anim.reingreso, R.anim.nothing);

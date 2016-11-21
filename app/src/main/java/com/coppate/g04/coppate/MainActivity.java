@@ -30,6 +30,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -62,8 +63,8 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-
     private static final int NOTIF_ALERTA_ID = 1;
+
     // boton que redirige a la actitiy crear evento
     Button probando;
     Button btn_crear_evento;
@@ -90,10 +91,19 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<String> participo;
     ArrayAdapter<String> adapt_eventos_otros;
 
+
+    Handler mHandler;
+
+    private LinearLayout LayoutMisEventos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        LayoutMisEventos = (LinearLayout) findViewById(R.id.layoutMisEventos);
+        LayoutMisEventos.setVisibility(View.VISIBLE);
+
 
         funciones = new Funciones(getApplicationContext());
 
@@ -161,14 +171,17 @@ public class MainActivity extends AppCompatActivity {
         lista_eventos_mios = new ArrayList<String>();
 
         int largo = 0;
+
         try {
+
             largo = MisEventos.getInstance().getEventos().length;
-            for (int i = 0; i<largo; i++){
+            for (int i = 0; i < largo; i++) {
                 lista_eventos_mios.add(MisEventos.getInstance().getEventos()[i].getNombre());
             }
 
             lista_eventos_cercanos = new ArrayList<String>();
             lista_eventos_otros_participo = new ArrayList<String>();
+            funciones.mostrarToastCorto("ok");
         }
         catch (Exception e) {
             funciones.mostrarToastCorto("flasheo el add");
@@ -182,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
         mostrarEventosCercanos(lista_eventos_cercanos);
         mostrarMisEventos(lista_eventos_mios);
         mostrarEventosEnQueParticipo(lista_eventos_otros_participo);
+
 
 
         btn_crear_evento.setOnClickListener(new View.OnClickListener() {
@@ -207,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -284,6 +299,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                     entrarAMiEvento(view);
+
                 }
             });
             // termina el listview
@@ -325,7 +341,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             lista_eventos_a_participar.setAdapter(participo);
-             // obtenemos el id del evento actual que se selecciona de la lista y lo cargamos en el activity descripcion de evento
+
+            // obtenemos el id del evento actual que se selecciona de la lista y lo cargamos en el activity descripcion de evento
             lista_eventos_a_participar.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -443,7 +460,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void goBuscar() {
         Intent intent = new Intent(this, BuscarEvento.class);
-        startActivity(intent);
+        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
+        startActivity(intent,bndlanimation);
+       // startActivity(intent);
     }  //dirige a la pantalla buscar
 
     public void irBuscar(View view) {
@@ -513,6 +532,7 @@ public class MainActivity extends AppCompatActivity {
                                     public void onResponse(JSONObject response) {
                                         // Procesar la respuesta Json
                                         procesarRespuesta(response);
+
                                     }
                                 },
                                 new Response.ErrorListener() {

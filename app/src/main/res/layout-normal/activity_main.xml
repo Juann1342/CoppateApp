@@ -144,13 +144,21 @@
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_width="197dp"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+
+
+                            android:id="@+id/layoutMisEventos"
+
+
+                            android:visibility="gone"
+                            >
 
                             <TextView android:id="@+id/txtview_mis_eventos"
                                 android:text="Eventos Propios"
                                 android:layout_width="match_parent"
                                 android:layout_height="33dp"
-                                android:paddingStart="4dp" />
+                                android:paddingStart="4dp"
+                                android:paddingLeft="4dp" />
 
                             <ListView
                                 android:layout_width="match_parent"
