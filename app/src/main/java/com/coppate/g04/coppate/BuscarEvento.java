@@ -1,17 +1,13 @@
 package com.coppate.g04.coppate;
 
 import android.app.ActivityOptions;
-import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -20,8 +16,11 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import android.content.pm.ActivityInfo;
+import android.view.WindowManager;
+
+
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 
@@ -36,12 +35,6 @@ public class BuscarEvento extends AppCompatActivity {
     EditText ingreso_codigo;
     Boolean codigo;
     Funciones funciones;
-    Button fecha_evento;
-    Button btnDatePicker;
-    EditText txtDate;
-    private int mYear, mMonth, mDay;
-
-
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -56,9 +49,8 @@ public class BuscarEvento extends AppCompatActivity {
         getSupportActionBar().hide();
 
         funciones = new Funciones(getApplicationContext());
-
         //HttpClient httpClient = new DefaultHttpClient();
-       // HttpPost
+        // HttpPost
         buscar = (Button)findViewById(R.id.buscar);
 
         codigo = false;
@@ -74,7 +66,7 @@ public class BuscarEvento extends AppCompatActivity {
         List lista = new ArrayList();
         lista.add("Social");
         lista.add("Privado");
-       
+
 
         ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, lista);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -132,41 +124,6 @@ public class BuscarEvento extends AppCompatActivity {
                 }
             }
         });
-
-
-        fecha_evento = (Button) findViewById(R.id.ce_fecha_evento);
-//        btnDatePicker = (Button) findViewById(R.id.ce_fecha_evento);
-        txtDate = (EditText) findViewById(R.id.in_date);
-
-        btnDatePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-
-            public void onClick(View v) {
-                if (v == btnDatePicker) {
-
-                    // Get Current Date
-                    final Calendar c = Calendar.getInstance();
-                    mYear = c.get(Calendar.YEAR);
-                    mMonth = c.get(Calendar.MONTH);
-                    mDay = c.get(Calendar.DAY_OF_MONTH);
-
-
-                    DatePickerDialog datePickerDialog = new DatePickerDialog (BuscarEvento.this,
-                            new DatePickerDialog.OnDateSetListener() {
-
-                                @Override
-                                public void onDateSet(DatePicker view, int year,
-                                                      int monthOfYear, int dayOfMonth) {
-
-                                    txtDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-
-                                }
-                            }, mYear, mMonth, mDay);
-                    datePickerDialog.show();
-                }
-            }
-        });
-
     }
 
     /**
