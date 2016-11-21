@@ -1,11 +1,8 @@
 package com.coppate.g04.coppate;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,9 +19,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.coppate.g04.coppate.Constantes;
-import com.coppate.g04.coppate.VolleySingleton;
-import com.coppate.g04.coppate.Usuario;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -34,7 +28,6 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
@@ -44,8 +37,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-
-import static android.R.attr.data;
 
 
 public class CrearEvento extends AppCompatActivity {
@@ -59,7 +50,7 @@ public class CrearEvento extends AppCompatActivity {
     //definimos los componenetes que va a tener la clase y que despues pueden llamarse para operar
     EditText nombre_evento;
     EditText lugar_evento;
-    Button fecha_evento;
+  //  Button fecha_evento;
     EditText cupo_min;
     EditText cupo_max;
     EditText edad_desde;
@@ -152,7 +143,7 @@ public class CrearEvento extends AppCompatActivity {
 
         nombre_evento = (EditText) findViewById(R.id.ce_nameEvent);
         lugar_evento = (EditText) findViewById(R.id.ce_lugarEncuentro);
-        fecha_evento = (Button) findViewById(R.id.ce_fecha_evento);
+      //  fecha_evento = (Button) findViewById(R.id.ce_fecha_evento);
         cupo_min = (EditText) findViewById(R.id.ce_cupoMin);
         cupo_max = (EditText) findViewById(R.id.ce_cupoMax);
         edad_desde = (EditText) findViewById(R.id.ce_edadDesde);
