@@ -113,7 +113,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 botonesOcultos.setVisibility(View.VISIBLE);
 
                 mMap.addMarker(new MarkerOptions()
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.marcadorflag))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.eventomapa))
                         .anchor(0.0f, 1.0f)
                         .position(latLng));
 
