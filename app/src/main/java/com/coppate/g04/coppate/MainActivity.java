@@ -10,6 +10,7 @@ import android.content.res.Resources;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -40,6 +41,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -165,10 +167,9 @@ public class MainActivity extends AppCompatActivity {
 
             lista_eventos_cercanos = new ArrayList<String>();
             lista_eventos_otros_participo = new ArrayList<String>();
-            funciones.mostrarToastCorto("ok");
         }
         catch (Exception e) {
-            funciones.mostrarToastCorto("flasheo el add");
+            funciones.mostrarToastCorto("Deslice hacia abajo");
         }
         // cargamos datos de prueba que tienen que venir de la BD, tanto los propios como los otros
         lista_eventos_cercanos.add("Evento cercano: 1");
@@ -215,8 +216,34 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    }
 
+
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.rosafuxia1,R.color.violetadiseno,R.color.violeta1);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+
+
+                        mostrarEventosCercanos(lista_eventos_cercanos);
+                        mostrarMisEventos(lista_eventos_mios);
+                        mostrarEventosEnQueParticipo(lista_eventos_otros_participo);
+
+                        finish();
+                        startActivity(getIntent());
+
+
+                    }
+                },3000);
+            }
+        });
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -274,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
         return notif;
     }
 
-    private void mostrarMisEventos(ArrayList<String> array_mis_eventos){
+    private void mostrarMisEventos(ArrayList<String> array_mis_eventos){ //###########################################################
         try {
             adaptador = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
             // hay que hacer que el "ARRAYADAPTER lo tome de la base de datos y luego recorrerlo, ahora esta a manopla
@@ -322,7 +349,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void mostrarEventosEnQueParticipo(ArrayList<String> array_eventos_participo){
+    private void mostrarEventosEnQueParticipo(ArrayList<String> array_eventos_participo){ //#################################################################
         try {
             participo = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
             // hay que hacer que el "ARRAYADAPTER lo tome de la base de datos y luego recorrerlo, ahora esta a manopla
