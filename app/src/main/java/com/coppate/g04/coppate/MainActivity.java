@@ -3,6 +3,9 @@ package com.coppate.g04.coppate;
 import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +13,8 @@ import android.content.res.Resources;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -152,6 +157,12 @@ public class MainActivity extends AppCompatActivity {
 
         // hacemos que tome los eventos de la base de datos
         listarEventoPorOwner();
+        listarEventoEnQueParticipo();
+        try {
+            funciones.mostrarToastCorto(ListaMiembros.getInstance().getMiembros()[0].getId_evento().toString());
+        }catch (Exception e){
+            funciones.mostrarToastCorto("Error lista eventos que participo: "+e.toString());
+        }
 
         // inicializamos los arraylist que nos serviran para cargar los datos de los adaptadores para los listview
         lista_eventos_mios = new ArrayList<String>();
@@ -544,6 +555,57 @@ public class MainActivity extends AppCompatActivity {
 
     private void respuestaGetUsuarioPorID(JSONObject response){
         // y ahora??
+    }
+
+    public void listarEventoEnQueParticipo(){
+        VolleySingleton.
+                getInstance(getApplicationContext()).
+                addToRequestQueue(
+                        new JsonObjectRequest(
+                                Request.Method.GET,
+                                Constantes.GET_EVENTOS_BY_MIEMBRO + "?idUsuario=" + Usuario.getInstance().getId_usuario(),
+                                null,
+                                new Response.Listener<JSONObject>() {
+
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        // Procesar la respuesta Json
+                                        seteaEventosMiembro(response);
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        funciones.mostrarToastCorto("Debug1: Error en listarEventoEnQueParticipo");
+                                    }
+                                }
+
+                        )
+                );
+    }
+
+    private void seteaEventosMiembro(JSONObject response){
+        try {
+            // Obtener atributo "estado"
+            String estado = response.getString("estado");
+
+            switch (estado) {
+                case "1": // EXITO
+                    // Obtener array "metas" Json
+                    JSONArray mensaje = response.getJSONArray("eventos");
+                    // Parsear con Gson
+                    ListaMiembros.getInstance().setMiembro(gson.fromJson(mensaje.toString(), Miembro[].class));
+                    //funciones.mostrarToastLargo("Toast procesarResp: " + String.valueOf(MisEventos.getInstance().getEventos().length));
+                    //funciones.mostrarToastLargo(MisEventos.getInstance().getEventos()[0].getNombre());
+                    break;
+                case "2": // FALLIDO
+                    funciones.mostrarToastCorto("Debug2: Error en seteaEventosMiembro");;
+                    break;
+            }
+
+        } catch (JSONException e) {
+            //Log.d(TAG, e.getMessage());
+        }
     }
 
     /**

@@ -324,6 +324,8 @@ public class EditarEvento extends Activity {
             // Obtener atributo "estado"
             String estado = response.getString("estado");
 
+            funciones.mostrarToastCorto("estado:" +estado);
+
 
             switch (estado) {
                 case "1": // EXITO

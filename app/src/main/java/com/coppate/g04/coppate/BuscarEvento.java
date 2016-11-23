@@ -121,11 +121,11 @@ public class BuscarEvento extends AppCompatActivity {
                         funciones.mostrarToastCorto("No se ha ingresado el codigo de busqueda");
                     }else {
                         // cuando el codigo no este nulo, le pasamos la busqueda
-                        realizarBusqueda(codigo,str_code);
+                        realizarBusqueda(codigo,Integer.valueOf(str_code));
                     }
                 }else {
                     // cuando el usuario no haya seleccionado el codigo, se realizara una busqueda comun
-                    realizarBusqueda(codigo,str_code);
+                    realizarBusqueda(codigo,Integer.valueOf(str_code));
                 }
             }
         });
@@ -172,7 +172,7 @@ public class BuscarEvento extends AppCompatActivity {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
 
-    private void realizarBusqueda(Boolean codigo, String texto){
+    private void realizarBusqueda(Boolean codigo, Integer texto){
         if(codigo){
             // hacemos una busqueda en la base de datos del codigo ingresado
             funciones.mostrarToastLargo("Realizando la busqueda del codigo: "+ texto);
@@ -187,11 +187,11 @@ public class BuscarEvento extends AppCompatActivity {
         }
     }
 
-    private void ingresarADescripcionDeEvento(String codigo){
+    private void ingresarADescripcionDeEvento(Integer codigo){
         try {
             Intent intent_descripcion = new Intent(BuscarEvento.this, InvitacionEvento.class);
             // le pasamos el parametro del ide de evento para tomarlo en la pantalla de DESCRIPCION DE EVENTO y mostrar los datos necesarios
-            intent_descripcion.putExtra("Codigo", codigo);
+            intent_descripcion.putExtra("ID_evento", codigo);
             // creamos la animacion de deslizamiento
             Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in, R.anim.left_out).toBundle();
             // lanzamos la actividad de DESCRIPCION y le cargamos la animacion
