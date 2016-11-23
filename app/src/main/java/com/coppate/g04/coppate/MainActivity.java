@@ -46,7 +46,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -104,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         // los botones
         btn_crear_evento = (Button) findViewById(R.id.ma_crear_evento);
         otrosUsuarios = (Button) findViewById(R.id.btnOtrosUser);
-        probando = (Button)findViewById(R.id.probando);
+      //  probando = (Button)findViewById(R.id.probando);
         botonBuscar = (Button)findViewById(R.id.botonBuscar);
         //los listview
         lista_mis_eventos = (ListView) findViewById(R.id.ma_listar_mis_eventos);
@@ -208,13 +207,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        probando.setOnClickListener(new View.OnClickListener() {
+      /*  probando.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goPerfil();
                 //goAcercaDe();
             }
-        });
+        });*/
 
 
          botonBuscar.setOnClickListener(new View.OnClickListener() {

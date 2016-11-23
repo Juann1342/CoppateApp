@@ -1,4 +1,6 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,9 +11,13 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity"
     android:orientation="horizontal"
+    android:id="@+id/swipelayout"
     android:background="@color/cardview_light_background">
 
 
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <TabHost android:id="@android:id/tabhost"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -28,8 +34,7 @@
                 android:id="@android:id/tabs"
                 android:background="@color/colorPrimary"
                 android:dividerPadding="1dip"
-                android:orientation="horizontal"
-                />
+                android:orientation="horizontal" />
 
             <FrameLayout android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -92,12 +97,6 @@
                         android:textColor="@color/colorPrimary"
                         android:id="@+id/btnOtrosUser" />
 
-                    <Button
-                        android:text="Button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/probando" />
-
                     <ListView
                         android:id="@+id/ma_lv_eventos_cercanos"
                         android:layout_width="match_parent"
@@ -108,7 +107,7 @@
 
                 <LinearLayout android:id="@+id/tab1"
                     android:orientation="vertical"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/colorPrimary"
                     android:weightSum="1">
@@ -146,7 +145,9 @@
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_width="197dp"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:id="@+id/layoutMisEventos"
+                            android:visibility="gone">
 
                             <TextView android:id="@+id/txtview_mis_eventos"
                                 android:text="Eventos Propios"
@@ -193,7 +194,7 @@
 
         </LinearLayout>
     </TabHost>
+    </ScrollView>
 
-
-</LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout >
 

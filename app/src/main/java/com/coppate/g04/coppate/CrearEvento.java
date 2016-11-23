@@ -62,7 +62,7 @@ public class CrearEvento extends AppCompatActivity {
     //Button btn_invitar_contactos;
     Spinner spn_tipo_evento;
     Spinner spn_sexo;
-    Spinner spn_contactos;
+  //  Spinner spn_contactos;
     Button mapaCrear;
 
     EditText descripcion;
@@ -90,8 +90,8 @@ public class CrearEvento extends AppCompatActivity {
 
     private static final int RESULT_PICK_CONTACT = 85500;
     final int CONTACT_PICK_REQUEST = 1000;
-    private TextView textView1;
-    private TextView textView2;
+ //   private TextView textView1;
+  //  private TextView textView2;
     private Boolean invita_contactos;
     private Boolean guarda_evento;
 
@@ -136,7 +136,7 @@ public class CrearEvento extends AppCompatActivity {
         invita_contactos = false;
         guarda_evento = false;
 
-        textView1 = (TextView) findViewById(R.id.ce_lista_coppados);
+   //     textView1 = (TextView) findViewById(R.id.ce_lista_coppados);
         //   textView2 = (TextView) findViewById(R.id.ce_lista_coppados2);
 
         //defino las posibles opciones que pueden tener los desplegables (esto despues lo tengo que reemplazar con lo que traigo
@@ -144,7 +144,7 @@ public class CrearEvento extends AppCompatActivity {
 
         spn_tipo_evento = (Spinner) findViewById(R.id.ce_spnTipoEvento);
         spn_sexo = (Spinner) findViewById(R.id.ce_spnSexoEvento);
-        spn_contactos = (Spinner) findViewById(R.id.ce_spn_contactos_activos);
+  //      spn_contactos = (Spinner) findViewById(R.id.ce_spn_contactos_activos);
 
         nombre_evento = (EditText) findViewById(R.id.ce_nameEvent);
         lugar_evento = (EditText) findViewById(R.id.ce_lugarEncuentro);
@@ -185,7 +185,7 @@ public class CrearEvento extends AppCompatActivity {
         //seteamos los adaptadores a nuestra Lista desplegable
         spn_sexo.setAdapter(adapt_sexo);
         spn_tipo_evento.setAdapter(adapt_tipo);
-        spn_contactos.setAdapter(adapt_contacts);
+  //      spn_contactos.setAdapter(adapt_contacts);
 
 
         // se guarda el tipo que se ha seleccionado en la variable TIPO para una utilizacion posterior
