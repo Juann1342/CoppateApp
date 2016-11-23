@@ -27,9 +27,11 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,6 +69,8 @@ public class CrearEvento extends AppCompatActivity {
 
     Bundle bundle;
 
+    private Gson gson = new Gson();
+
     Button btnDatePicker, btnTimePicker;
     EditText txtDate, txtTime;
     private int mYear, mMonth, mDay, mHour, mMinute;
@@ -79,6 +83,7 @@ public class CrearEvento extends AppCompatActivity {
     String sexo = "";
     String tipo = "";
 
+    String id_event;
 
     Double latitud;
     Double longitud;
@@ -285,11 +290,12 @@ public class CrearEvento extends AppCompatActivity {
                                 try {
                                     guardarEvento();
                                 /* if(ok en la base de datos al guardar el evento) hace lo que sigue*/
+                                    obtenerIdEventoCreado();
                                     guarda_evento = true;
                                     invita_contactos = true;
                                 /* hay que hacer una funcion que tome el codigo del evento ese para pasarlo
                                 a goInvitarContactos()*/
-                                    goInvitarContactos("Evento de Prueba", invita_contactos);
+                                    goInvitarContactos(id_event, invita_contactos);
                                 } catch (Exception e) {
                                     funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
                                 }
@@ -364,8 +370,6 @@ public class CrearEvento extends AppCompatActivity {
                 }
                 else{
                     funciones.mostrarToastLargo("Primero debe seleccionar una ubicación en el mapa");
-
-
                 }
 
             }
@@ -450,6 +454,71 @@ public class CrearEvento extends AppCompatActivity {
         }
     }
 
+    private String obtenerIdEventoCreado(){
+        VolleySingleton.
+                getInstance(getApplicationContext()).
+                addToRequestQueue(
+                        new JsonObjectRequest(
+                                Request.Method.GET,
+                                Constantes.GET_ULTIMO_EVENTO_CREADO + "?idOwner=" + Usuario.getInstance().getId_usuario(),
+                                null,
+                                new Response.Listener<JSONObject>() {
+
+                                    @Override
+                                    public void onResponse(JSONObject respuesta) {
+                                        // Procesar la respuesta Json
+                                        id_event = getIdEvento(respuesta);
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        funciones.mostrarToastCorto("Debug1: Error en obtenerDatosEventoPorID");
+                                    }
+                                }
+
+                        )
+                );
+        return id_event;
+
+    }
+
+    /*
+    *  @param response Objeto Json con la respuesta
+    */
+    private String getIdEvento(JSONObject respuesta) {
+        try {
+            // Obtener atributo "estado"
+            String estado = respuesta.getString("estado");
+
+            funciones.mostrarToastCorto("estado:" + estado);
+
+
+            switch (estado) {
+                case "1": // EXITO
+                    //funciones.mostrarToastCorto(estado);
+                    JSONArray mensaje = respuesta.getJSONArray("evento");
+                    //JSONObject objeto = response.getJSONObject("evento");
+                    //funciones.mostrarToastCorto("Mensaje: "+objeto.toString());
+
+                    // utilizamos el singleton de MisEventos y le pasamos el evento actual
+                    MisEventos.getInstance().setEvento(gson.fromJson(mensaje.toString(), Evento[].class));
+
+                    id_event = MisEventos.getInstance().getEvento()[0].getId_evento();
+                    break;
+                case "2": // FALLIDO
+                    funciones.mostrarToastCorto("Se ha producido un error al solicitar los datos del evento");
+                    ;
+                    break;
+            }
+
+        } catch (JSONException e) {
+            //Log.d(TAG, e.getMessage());
+            funciones.mostrarToastCorto("Fallo general en la conexion");
+        }
+        return id_event;
+    }
+
     /**
      * Guarda un evento en la DB
      * Acá puede empezar a romper.
@@ -470,8 +539,14 @@ public class CrearEvento extends AppCompatActivity {
         map.put("fecha_fin", "2016-10-17"); //Solo para probar.
         map.put("foto", "NULL");
         map.put("ubicacion", lugar_evento.getText().toString());
-        map.put("latitud", latitud.toString());
-        map.put("longitud", longitud.toString());
+        try {
+            map.put("latitud", latitud.toString());
+            map.put("longitud", longitud.toString());
+        }catch (Exception e){
+            funciones.mostrarToastCorto("No fue posible cargar los datos de la posicion en gps");
+            map.put("latitud", "latitud de prueba tras fallo");
+            map.put("longitud", "longitud de prueba tras fallo");
+        }
         map.put("id_categoria", "1");
         map.put("desc_evento", descripcion.getText().toString());
         map.put("id_sexo", "1");

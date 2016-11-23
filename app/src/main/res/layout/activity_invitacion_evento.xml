@@ -43,6 +43,14 @@
                         android:textColor="@color/negro"
                         android:textStyle="normal"
                         android:layout_weight="3.14" />
+                    <TextView
+                        android:text="Nombre del evento: xxxx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ie_nombre_evento"
+                        android:textColor="@color/negro"
+                        android:textStyle="normal"
+                        android:layout_weight="3.14" />
                 </LinearLayout>
 
                 <LinearLayout

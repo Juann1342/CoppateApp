@@ -16,6 +16,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class InvitacionEvento extends AppCompatActivity {
 
     ImageView foto_perfil;
@@ -23,6 +33,7 @@ public class InvitacionEvento extends AppCompatActivity {
     TextView puntuacion;
     TextView descrip_evento;
     TextView usuario_creador;
+    TextView nombre_evento;
     Button copparse;
     Button mostrar_ubicacion;
     Button rechazar;
@@ -34,6 +45,8 @@ public class InvitacionEvento extends AppCompatActivity {
 
     // creamos un bundle que nos recuperara los extras que hayamos puesto en la otra actividad
     Bundle b;
+
+    private Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +65,7 @@ public class InvitacionEvento extends AppCompatActivity {
         foto_perfil = (ImageView) findViewById(R.id.ie_foto_perfil);
         descrip_evento = (TextView) findViewById(R.id.ie_descrip_evento);
         usuario_creador = (TextView) findViewById(R.id.ie_usuario_creador);
+        nombre_evento = (TextView)findViewById(R.id.ie_nombre_evento);
         copparse = (Button) findViewById(R.id.ie_copparse);
         rechazar = (Button) findViewById(R.id.ie_rechazar);
         mostrar_ubicacion = (Button) findViewById(R.id.ie_ubicacion_mapa);
@@ -59,11 +73,12 @@ public class InvitacionEvento extends AppCompatActivity {
         puntuacion = (TextView) findViewById(R.id.ie_puntuacion);
 
         foto_perfil.setImageResource(R.drawable.foto_perfil);
-        descrip_evento.setText("Descripcion del evento: "+id_evento.toString());
+        descrip_evento.setText("Descripcion: "+id_evento.toString());
         usuario_creador.setText("Usuario XXXXX, obtenido a traves del id evento: "+id_evento.toString());
         calif_total.setImageResource(R.drawable.estrella_vacia);
         puntuacion.setText("Puntuacion total del usuario XXXX a traves del id evento: "+id_evento.toString());
 
+        obtenerDatosEventoPorID();
 
         rechazar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +181,79 @@ public class InvitacionEvento extends AppCompatActivity {
         Intent opiniones = new Intent(InvitacionEvento.this, OpinionUsuario.class);
         Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
         startActivity(opiniones,bndlanimation);
+    }
+
+    private void obtenerDatosEventoPorID(){
+        //funciones.mostrarToastCorto("Id_evento en Invitacion: "+id_evento.toString());
+        VolleySingleton.
+                getInstance(getApplicationContext()).
+                addToRequestQueue(
+                        new JsonObjectRequest(
+                                Request.Method.GET,
+                                Constantes.GET_BY_ID + "?idEvento=" + id_evento,
+                                null,
+                                new Response.Listener<JSONObject>() {
+
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        // Procesar la respuesta Json
+                                        procesarRespuesta(response);
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        funciones.mostrarToastCorto("Debug1: Error en obtenerDatosEventoPorID");
+                                    }
+                                }
+
+                        )
+                );
+    }
+
+    /*
+    *  @param response Objeto Json con la respuesta
+    */
+    private void procesarRespuesta(JSONObject response) {
+        try {
+            // Obtener atributo "estado"
+            String estado = response.getString("estado");
+
+            switch (estado) {
+                case "1": // EXITO
+                    //funciones.mostrarToastCorto(estado);
+                    JSONArray mensaje = response.getJSONArray("evento");
+
+                    // utilizamos el singleton de MisEventos y le pasamos el evento actual de otro usuario que nos paso o vimos el codigo
+                    MisEventos.getInstance().setEventoOtroUsuario(gson.fromJson(mensaje.toString(), Evento[].class));
+                    //funciones.mostrarToastLargo("Toast procesarResp: " + String.valueOf(MisEventos.getInstance().getEventos().length));
+                    /*usuario_creador = (TextView) findViewById(R.id.ie_usuario_creador);
+                    // fijarse eso
+                    // ver el usuario actual
+                    calif_total = (ImageView) findViewById(R.id.ie_calif_total);
+                    puntuacion = (TextView) findViewById(R.id.ie_puntuacion);
+
+                    // foto del usuario del perfil
+                    foto_perfil.setImageResource(R.drawable.foto_perfil);
+                    usuario_creador.setText("Usuario XXXXX, obtenido a traves del id evento: "+id_evento.toString());
+                    puntuacion.setText("Puntuacion total del usuario XXXX a traves del id evento: "+id_evento.toString());*/
+
+                    nombre_evento.setText("Evento: "+MisEventos.getInstance().getEventoOtroUsuario()[0].getNombre());
+                    descrip_evento.setText("Descripcion: "+MisEventos.getInstance().getEventoOtroUsuario()[0].getDesc_evento());
+
+                    break;
+                case "2": // FALLIDO
+                    funciones.mostrarToastCorto("No hemos encontrado el evento que buscas");
+                    nombre_evento.setText("Evento no encontrado..");
+                    descrip_evento.setText("");
+                    break;
+            }
+
+        } catch (JSONException e) {
+            //Log.d(TAG, e.getMessage());
+            funciones.mostrarToastCorto("Se ha producido un error al buscar el evento con el codigo :"+id_evento.toString()+" que ingresaste..");
+        }
+
     }
 
     public void onBackPressed() {

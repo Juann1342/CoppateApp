@@ -3,6 +3,9 @@ package com.coppate.g04.coppate;
 import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +13,9 @@ import android.content.res.Resources;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.RequiresApi;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -40,6 +46,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -150,6 +157,12 @@ public class MainActivity extends AppCompatActivity {
 
         // hacemos que tome los eventos de la base de datos
         listarEventoPorOwner();
+        listarEventoEnQueParticipo();
+        try {
+            funciones.mostrarToastCorto(ListaMiembros.getInstance().getMiembros()[0].getId_evento().toString());
+        }catch (Exception e){
+            funciones.mostrarToastCorto("Error lista eventos que participo: "+e.toString());
+        }
 
         // inicializamos los arraylist que nos serviran para cargar los datos de los adaptadores para los listview
         lista_eventos_mios = new ArrayList<String>();
@@ -165,10 +178,9 @@ public class MainActivity extends AppCompatActivity {
 
             lista_eventos_cercanos = new ArrayList<String>();
             lista_eventos_otros_participo = new ArrayList<String>();
-            funciones.mostrarToastCorto("ok");
         }
         catch (Exception e) {
-            funciones.mostrarToastCorto("flasheo el add");
+            funciones.mostrarToastCorto("Deslice hacia abajo");
         }
         // cargamos datos de prueba que tienen que venir de la BD, tanto los propios como los otros
         lista_eventos_cercanos.add("Evento cercano: 1");
@@ -215,8 +227,34 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    }
 
+
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.rosafuxia1,R.color.violetadiseno,R.color.violeta1);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+
+
+                        mostrarEventosCercanos(lista_eventos_cercanos);
+                        mostrarMisEventos(lista_eventos_mios);
+                        mostrarEventosEnQueParticipo(lista_eventos_otros_participo);
+
+                        finish();
+                        startActivity(getIntent());
+
+
+                    }
+                },3000);
+            }
+        });
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -274,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
         return notif;
     }
 
-    private void mostrarMisEventos(ArrayList<String> array_mis_eventos){
+    private void mostrarMisEventos(ArrayList<String> array_mis_eventos){ //###########################################################
         try {
             adaptador = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
             // hay que hacer que el "ARRAYADAPTER lo tome de la base de datos y luego recorrerlo, ahora esta a manopla
@@ -322,7 +360,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void mostrarEventosEnQueParticipo(ArrayList<String> array_eventos_participo){
+    private void mostrarEventosEnQueParticipo(ArrayList<String> array_eventos_participo){ //#################################################################
         try {
             participo = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
             // hay que hacer que el "ARRAYADAPTER lo tome de la base de datos y luego recorrerlo, ahora esta a manopla
@@ -517,6 +555,57 @@ public class MainActivity extends AppCompatActivity {
 
     private void respuestaGetUsuarioPorID(JSONObject response){
         // y ahora??
+    }
+
+    public void listarEventoEnQueParticipo(){
+        VolleySingleton.
+                getInstance(getApplicationContext()).
+                addToRequestQueue(
+                        new JsonObjectRequest(
+                                Request.Method.GET,
+                                Constantes.GET_EVENTOS_BY_MIEMBRO + "?idUsuario=" + Usuario.getInstance().getId_usuario(),
+                                null,
+                                new Response.Listener<JSONObject>() {
+
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        // Procesar la respuesta Json
+                                        seteaEventosMiembro(response);
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        funciones.mostrarToastCorto("Debug1: Error en listarEventoEnQueParticipo");
+                                    }
+                                }
+
+                        )
+                );
+    }
+
+    private void seteaEventosMiembro(JSONObject response){
+        try {
+            // Obtener atributo "estado"
+            String estado = response.getString("estado");
+
+            switch (estado) {
+                case "1": // EXITO
+                    // Obtener array "metas" Json
+                    JSONArray mensaje = response.getJSONArray("eventos");
+                    // Parsear con Gson
+                    ListaMiembros.getInstance().setMiembro(gson.fromJson(mensaje.toString(), Miembro[].class));
+                    //funciones.mostrarToastLargo("Toast procesarResp: " + String.valueOf(MisEventos.getInstance().getEventos().length));
+                    //funciones.mostrarToastLargo(MisEventos.getInstance().getEventos()[0].getNombre());
+                    break;
+                case "2": // FALLIDO
+                    funciones.mostrarToastCorto("Debug2: Error en seteaEventosMiembro");;
+                    break;
+            }
+
+        } catch (JSONException e) {
+            //Log.d(TAG, e.getMessage());
+        }
     }
 
     /**
