@@ -295,7 +295,7 @@ public class CrearEvento extends AppCompatActivity {
                                     invita_contactos = true;
                                 /* hay que hacer una funcion que tome el codigo del evento ese para pasarlo
                                 a goInvitarContactos()*/
-                                    goInvitarContactos(id_event, invita_contactos);
+                                    goInvitarContactos(MisEventos.getInstance().getEvento()[0].getId_evento(), invita_contactos);
                                 } catch (Exception e) {
                                     funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
                                 }
@@ -454,7 +454,7 @@ public class CrearEvento extends AppCompatActivity {
         }
     }
 
-    private String obtenerIdEventoCreado(){
+    private void obtenerIdEventoCreado(){
         VolleySingleton.
                 getInstance(getApplicationContext()).
                 addToRequestQueue(
@@ -467,7 +467,7 @@ public class CrearEvento extends AppCompatActivity {
                                     @Override
                                     public void onResponse(JSONObject respuesta) {
                                         // Procesar la respuesta Json
-                                        id_event = getIdEvento(respuesta);
+                                        getIdEvento(respuesta);
                                     }
                                 },
                                 new Response.ErrorListener() {
@@ -479,14 +479,12 @@ public class CrearEvento extends AppCompatActivity {
 
                         )
                 );
-        return id_event;
-
     }
 
     /*
     *  @param response Objeto Json con la respuesta
     */
-    private String getIdEvento(JSONObject respuesta) {
+    private void getIdEvento(JSONObject respuesta) {
         try {
             // Obtener atributo "estado"
             String estado = respuesta.getString("estado");
@@ -497,14 +495,14 @@ public class CrearEvento extends AppCompatActivity {
             switch (estado) {
                 case "1": // EXITO
                     //funciones.mostrarToastCorto(estado);
-                    JSONArray mensaje = respuesta.getJSONArray("evento");
+                    JSONArray mensaje = respuesta.getJSONArray("eventos");
                     //JSONObject objeto = response.getJSONObject("evento");
                     //funciones.mostrarToastCorto("Mensaje: "+objeto.toString());
 
                     // utilizamos el singleton de MisEventos y le pasamos el evento actual
                     MisEventos.getInstance().setEvento(gson.fromJson(mensaje.toString(), Evento[].class));
 
-                    id_event = MisEventos.getInstance().getEvento()[0].getId_evento();
+                    //id_event = MisEventos.getInstance().getEvento()[0].getId_evento();
                     break;
                 case "2": // FALLIDO
                     funciones.mostrarToastCorto("Se ha producido un error al solicitar los datos del evento");
@@ -516,7 +514,6 @@ public class CrearEvento extends AppCompatActivity {
             //Log.d(TAG, e.getMessage());
             funciones.mostrarToastCorto("Fallo general en la conexion");
         }
-        return id_event;
     }
 
     /**
