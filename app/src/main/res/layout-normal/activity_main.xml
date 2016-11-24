@@ -81,28 +81,20 @@
 
 
                     </LinearLayout>
-
-
-                    <TextView android:id="@+id/ma_lista_eventos_cercanos"
-                        android:text="Lista de eventos cercanos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <Button
-                        android:text="ir a perfil del otro usuario"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/boton_pulsado"
-                        android:textColor="@color/colorPrimary"
-                        android:id="@+id/btnOtrosUser" />
-
+                        android:layout_height="373dp">
                     <ListView
                         android:id="@+id/ma_lv_eventos_cercanos"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
+                    </LinearLayout>
 
 
                 </LinearLayout>
+
+
+
 
                 <LinearLayout android:id="@+id/tab1"
                     android:orientation="vertical"

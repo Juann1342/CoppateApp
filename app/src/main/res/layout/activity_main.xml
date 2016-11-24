@@ -89,13 +89,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <Button
-                        android:text="ir a perfil del otro usuario"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/boton_pulsado"
-                        android:textColor="@color/colorPrimary"
-                        android:id="@+id/btnOtrosUser" />
 
                     <ListView
                         android:id="@+id/ma_lv_eventos_cercanos"

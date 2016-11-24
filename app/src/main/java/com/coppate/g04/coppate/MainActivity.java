@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
     // boton que redirige a la actitiy crear evento
     Button probando;
     Button btn_crear_evento;
-    Button otrosUsuarios;
     TextView txt_mis_eventos;
     Button botonBuscar;
     android.support.v7.app.AlertDialog alert;
@@ -102,8 +101,6 @@ public class MainActivity extends AppCompatActivity {
         txt_mis_eventos = (TextView) findViewById(R.id.txtview_mis_eventos);
         // los botones
         btn_crear_evento = (Button) findViewById(R.id.ma_crear_evento);
-        otrosUsuarios = (Button) findViewById(R.id.btnOtrosUser);
-      //  probando = (Button)findViewById(R.id.probando);
         botonBuscar = (Button)findViewById(R.id.botonBuscar);
         //los listview
         lista_mis_eventos = (ListView) findViewById(R.id.ma_listar_mis_eventos);
@@ -152,11 +149,12 @@ public class MainActivity extends AppCompatActivity {
         tabs.addTab(spec);
 
 
-        tabs.setCurrentTab(2);
+        tabs.setCurrentTab(1);
 
         // hacemos que tome los eventos de la base de datos
         listarEventoPorOwner();
         listarEventoEnQueParticipo();
+        getEventosCercanos();
         try {
             funciones.mostrarToastCorto(ListaMiembros.getInstance().getMiembros()[0].getId_evento().toString());
         }catch (Exception e){
@@ -166,23 +164,41 @@ public class MainActivity extends AppCompatActivity {
         // inicializamos los arraylist que nos serviran para cargar los datos de los adaptadores para los listview
         lista_eventos_mios = new ArrayList<String>();
 
+        lista_eventos_cercanos = new ArrayList<String>();
+        lista_eventos_otros_participo = new ArrayList<String>();
+
         int largo = 0;
 
         try {
-
             largo = MisEventos.getInstance().getEventos().length;
             for (int i = 0; i < largo; i++) {
                 lista_eventos_mios.add(MisEventos.getInstance().getEventos()[i].getNombre());
             }
 
-            lista_eventos_cercanos = new ArrayList<String>();
-            lista_eventos_otros_participo = new ArrayList<String>();
         }
         catch (Exception e) {
             funciones.mostrarToastCorto("Deslice hacia abajo");
         }
+
+        int largo2= 0;
+
+        try {
+
+            largo2 = MisEventos.getInstance().getEventosCercanos().length;
+            for (int i = 0; i < largo2; i++) {
+                lista_eventos_cercanos.add(MisEventos.getInstance().getEventosCercanos()[i].getNombre());
+            }
+
+          //  lista_eventos_cercanos = new ArrayList<String>();
+          //  lista_eventos_otros_participo = new ArrayList<String>();
+        }
+        catch (Exception e) {
+            funciones.mostrarToastCorto("Deslice hacia abajo");
+        }
+
+
         // cargamos datos de prueba que tienen que venir de la BD, tanto los propios como los otros
-        lista_eventos_cercanos.add("Evento cercano: 1");
+       // lista_eventos_cercanos.add("Evento cercano: 1");
         //lista_eventos_mios.add("Eventos mios: 1"); -- codigo hardcode
         lista_eventos_otros_participo.add("Eventos participo: 1");
 
@@ -200,12 +216,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        otrosUsuarios.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goPerfilOtrosUsuarios(v);
-            }
-        });
 
       /*  probando.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -249,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     }
-                },3000);
+                },4000);   //Actualiza pantalla
             }
         });
 
@@ -311,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
         return notif;
     }
 
-    private void mostrarMisEventos(ArrayList<String> array_mis_eventos){ //###########################################################
+    private void mostrarMisEventos(ArrayList<String> array_mis_eventos){
         try {
             adaptador = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
             // hay que hacer que el "ARRAYADAPTER lo tome de la base de datos y luego recorrerlo, ahora esta a manopla
@@ -359,7 +369,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void mostrarEventosEnQueParticipo(ArrayList<String> array_eventos_participo){ //#################################################################
+    private void mostrarEventosEnQueParticipo(ArrayList<String> array_eventos_participo){
         try {
             participo = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
             // hay que hacer que el "ARRAYADAPTER lo tome de la base de datos y luego recorrerlo, ahora esta a manopla
@@ -472,14 +482,6 @@ public class MainActivity extends AppCompatActivity {
         funciones.playSoundPickButton();
     }
 
-    private void goPerfilOtrosUsuarios(View v){
-        /*Intent intent = new Intent(MainActivity.this, OpinionUsuario.class);
-        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
-        startActivity(intent,bndlanimation);*/
-        Intent intent = new Intent(MainActivity.this, PerfilOtrosUser.class);
-        Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
-        startActivity(intent,bndlanimation);
-    }
 
     private void goMapa() {
         Intent intent = new Intent(this, MapsActivityCercanos.class);
@@ -640,6 +642,7 @@ public class MainActivity extends AppCompatActivity {
                 );
     }
 
+
     /**
      * Interpreta los resultados de la respuesta y así
      * realizar las operaciones correspondientes
@@ -761,6 +764,71 @@ public class MainActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
 
     }
+
+
+
+
+    public void getEventosCercanos(){
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(new JsonObjectRequest(
+                Request.Method.GET,
+                Constantes.GET,
+                null,
+                new Response.Listener<JSONObject>(){
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        procesarRespuestaEventos(response);
+                    }
+                }
+                ,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        funciones.mostrarToastCorto(("Se ha producido un Error Volley: " + error.getMessage()));
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                headers.put("Accept", "application/json");
+                return headers;
+            }
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8" + getParamsEncoding();
+            }
+        });
+
+    }
+    private void procesarRespuestaEventos(JSONObject response) {
+        try {
+            // Obtener atributo "estado"
+            String estado = response.getString("estado");
+
+            switch (estado) {
+                case "1": // EXITO
+                    // Obtener array "metas" Json
+                    JSONArray mensaje = response.getJSONArray("eventos");
+                    // Parsear con Gson
+                    MisEventos.getInstance().setEventosCercanos(gson.fromJson(mensaje.toString(), Evento[].class));
+                    //funciones.mostrarToastLargo("Toast procesarResp: " + String.valueOf(MisEventos.getInstance().getEventos().length));
+                    //funciones.mostrarToastLargo(MisEventos.getInstance().getEventos()[0].getNombre());
+                    break;
+                case "2": // FALLIDO
+                    funciones.mostrarToastCorto("Debug2: No encontró el registro");;
+                    break;
+            }
+
+        } catch (JSONException e) {
+            //Log.d(TAG, e.getMessage());
+        }
+
+    }
+
+
+
 
 
     /*@Override

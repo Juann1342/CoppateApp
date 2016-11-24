@@ -13,6 +13,10 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,6 +27,14 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MapsActivityCercanos extends FragmentActivity implements OnMapReadyCallback {
 
@@ -35,6 +47,11 @@ public class MapsActivityCercanos extends FragmentActivity implements OnMapReady
     double lat = 0.0;
     double lon = 0.0;
 
+    Funciones funciones;
+
+    private Gson gson = new Gson();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +61,7 @@ public class MapsActivityCercanos extends FragmentActivity implements OnMapReady
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        funciones= new Funciones(getApplicationContext());
     }
 
 
@@ -184,6 +202,65 @@ public class MapsActivityCercanos extends FragmentActivity implements OnMapReady
 
         actualizarUbicacion(location);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,15000,0,locListener);
+    }
+
+    public void getEventosCercanos(){
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(new JsonObjectRequest(
+                Request.Method.GET,
+                Constantes.GET,
+                null,
+                new Response.Listener<JSONObject>(){
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        procesarRespuestaEventos(response);
+                    }
+                }
+                ,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        funciones.mostrarToastCorto(("Se ha producido un Error Volley: " + error.getMessage()));
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                headers.put("Accept", "application/json");
+                return headers;
+            }
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8" + getParamsEncoding();
+            }
+        });
+
+    }
+    private void procesarRespuestaEventos(JSONObject response) {
+        try {
+            // Obtener atributo "estado"
+            String estado = response.getString("estado");
+
+            switch (estado) {
+                case "1": // EXITO
+                    // Obtener array "metas" Json
+                    JSONArray mensaje = response.getJSONArray("eventos");
+                    // Parsear con Gson
+                    MisEventos.getInstance().setEventosCercanos(gson.fromJson(mensaje.toString(), Evento[].class));
+                    //funciones.mostrarToastLargo("Toast procesarResp: " + String.valueOf(MisEventos.getInstance().getEventos().length));
+                    //funciones.mostrarToastLargo(MisEventos.getInstance().getEventos()[0].getNombre());
+                    break;
+                case "2": // FALLIDO
+                    funciones.mostrarToastCorto("Debug2: Error en procesarRespuesta");;
+                    break;
+            }
+
+        } catch (JSONException e) {
+            //Log.d(TAG, e.getMessage());
+        }
+
     }
 
 }
