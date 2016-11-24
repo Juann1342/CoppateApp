@@ -1,5 +1,8 @@
 package com.coppate.g04.coppate;
 
+import android.net.Uri;
+
+
 /**
  * Created by guillermo.bazzi on 10/31/2016.
  */
@@ -13,7 +16,7 @@ class Usuario {
     private String fecha_nacimiento;
     private int id_sexo;
     private String alias;
-    private String foto;
+    private Uri foto;
 
     String getId_usuario() {
         return id_usuario;
@@ -71,11 +74,11 @@ class Usuario {
         this.alias = alias;
     }
 
-    String getFoto() {
+    Uri getFoto() {
         return foto;
     }
 
-    void setFoto(String foto) {
+    void setFoto(Uri foto) {
         this.foto = foto;
     }
 

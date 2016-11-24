@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 Usuario.getInstance().setFecha_nacimiento("2016-11-11");
                 Usuario.getInstance().setId_sexo(1);
                 Usuario.getInstance().setAlias(Profile.getCurrentProfile().getName());
-                Usuario.getInstance().setFoto("URI de la foto");   //Profile.getCurrentProfile().getProfilePictureUri(128,128).toString()
+                Usuario.getInstance().setFoto(Profile.getCurrentProfile().getProfilePictureUri(128,128));
                 funciones.mostrarToastLargo("Hola :" + Usuario.getInstance().getNombre() + " " + Usuario.getInstance().getApellido());
             }catch (Exception e){
                 funciones.mostrarToastCorto(e.toString());
