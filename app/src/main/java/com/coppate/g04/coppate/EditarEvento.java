@@ -3,49 +3,51 @@ package com.coppate.g04.coppate;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
-import java.sql.Array;
-import java.util.ArrayList;
-
 public class EditarEvento extends Activity {
 
-    Button ubicacion;
+  //  Button ubicacion;
     Button editar_evento;
     Button cancelar_evento;
     Button guardar_cambios;
     EditText descripcion_evento;
-    EditText nombre_evento;
+    TextView nombre_evento;
     EditText lugar_encuentro;
     EditText costo_evento;
     EditText cupo_min;
     EditText cupo_max;
     EditText edad_desde;
     EditText edad_hasta;
+    Spinner spn_tipo_evento;
+    Spinner spn_sexo;
 
-    TextView titulo_evento;
+    String[] opciones_sexo = {"Masculino", "Femenino", "Indiferente"};
+    String[] opciones_tipo = {"Social", "Privado"};
+    String sexo = "";
+    String tipo = "";
+
+
+    //  TextView titulo_evento;
 
     Funciones funciones;
 
@@ -100,21 +102,24 @@ public class EditarEvento extends Activity {
 
         funciones = new Funciones(getApplicationContext());
 
-        ubicacion = (Button)findViewById(R.id.ee_ubicacion_mapa);
+      //  ubicacion = (Button)findViewById(R.id.ee_ubicacion_mapa);
         editar_evento = (Button) findViewById(R.id.ee_editar_evento);
         cancelar_evento = (Button)findViewById(R.id.ee_cancelar_evento);
         guardar_cambios = (Button)findViewById(R.id.ee_guardar_cambios);
         descripcion_evento = (EditText) findViewById(R.id.ee_descripcion_evento);
-        nombre_evento = (EditText)findViewById(R.id.ee_nombre_evento);
+        nombre_evento = (TextView)findViewById(R.id.ee_nombre_evento);
         lugar_encuentro = (EditText)findViewById(R.id.ee_lugar);
         costo_evento = (EditText)findViewById(R.id.ee_costo);
         cupo_max = (EditText)findViewById(R.id.ee_cupoMax);
         cupo_min = (EditText)findViewById(R.id.ee_cupoMin);
         edad_desde = (EditText)findViewById(R.id.ee_edadDesde);
         edad_hasta = (EditText)findViewById(R.id.ee_edadHasta);
-        ubicacion.setEnabled(false);
+        spn_tipo_evento = (Spinner) findViewById(R.id.ce_spnTipoEvento);
+        spn_sexo = (Spinner) findViewById(R.id.ce_spnSexoEvento);
 
-        titulo_evento = (TextView)findViewById(R.id.ee_usuario);
+     //   ubicacion.setEnabled(false);
+
+      //  titulo_evento = (TextView)findViewById(R.id.ee_usuario);
 
         nombre_evento.setText("Probandooooooooo");
 
@@ -136,11 +141,66 @@ public class EditarEvento extends Activity {
                 edad_hasta.setEnabled(true);
                 edad_desde.setEnabled(true);
                 cambios = true;
-                ubicacion.setEnabled(true);
+             //   ubicacion.setEnabled(true);
                 //guardar_cambios.setEnabled(true);
             }
         });
 
+
+        // definimos los adaptadores de las listas que tenemos en este caso las opciones de sexo y tipo de evento
+        ArrayAdapter<String> adapt_sexo = new ArrayAdapter<String>(EditarEvento.this, android.R.layout.simple_spinner_item, opciones_sexo);
+        ArrayAdapter<String> adapt_tipo = new ArrayAdapter<String>(EditarEvento.this, android.R.layout.simple_spinner_item, opciones_tipo);
+
+        //seteamos los adaptadores a nuestra Lista desplegable
+        spn_sexo.setAdapter(adapt_sexo);
+        spn_tipo_evento.setAdapter(adapt_tipo);
+
+
+        // se guarda el tipo que se ha seleccionado en la variable TIPO para una utilizacion posterior
+        spn_tipo_evento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        tipo = "1";
+                        break;
+
+                    case 1:
+                        tipo = "2";
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // no hay funcion de nada.. algo siempre se selecciona
+            }
+        });
+
+        spn_sexo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        sexo = "1";
+                        break;
+
+                    case 1:
+                        sexo = "2";
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // no hay funcion de nada.. algo siempre se selecciona
+            }
+        });
+
+
+
+/*
         ubicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,7 +209,7 @@ public class EditarEvento extends Activity {
                 startActivityForResult(intent,REQUEST_MAPA);
             }
         });
-
+*/
         cancelar_evento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -347,7 +407,7 @@ public class EditarEvento extends Activity {
                     edad_desde.setText(MisEventos.getInstance().getEvento()[0].getEdad_min().toString());
                     edad_hasta.setText(MisEventos.getInstance().getEvento()[0].getEdad_max().toString());
 
-                    titulo_evento.setText("Descripción del evento: "+MisEventos.getInstance().getEvento()[0].getNombre()+", del usuario: "+Usuario.getInstance().getNombre()+" "+Usuario.getInstance().getApellido());
+               //     titulo_evento.setText("Descripción del evento: "+MisEventos.getInstance().getEvento()[0].getNombre()+", del usuario: "+Usuario.getInstance().getNombre()+" "+Usuario.getInstance().getApellido());
 
                     // Obtener array "metas" Json
                     /*JSONArray mensaje = response.getJSONArray("evento");
@@ -357,7 +417,7 @@ public class EditarEvento extends Activity {
                     funciones.mostrarToastLargo(MisEventos.getInstance().getEventos()[0].getNombre());*/
                     break;
                 case "2": // FALLIDO
-                    funciones.mostrarToastCorto("Debug2: Error en procesarRespuesta");;
+                    funciones.mostrarToastCorto("Debug2: Error en procesarRespuesta");
                     break;
             }
 

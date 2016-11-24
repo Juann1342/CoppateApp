@@ -75,7 +75,7 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -103,7 +103,8 @@
             <activity
             android:name=".PruebaSlide"
             android:label="@string/title_activity_prueba_slide"
-            android:theme="@style/AppTheme.NoActionBar" />-->
+            android:theme="@style/AppTheme.NoActionBar" />
+        -->
         <activity
             android:name=".AcercaDe"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -124,7 +125,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".ResultadoBusqueda"></activity>
+        <activity android:name=".ResultadoBusqueda" />
     </application>
 
 </manifest>
