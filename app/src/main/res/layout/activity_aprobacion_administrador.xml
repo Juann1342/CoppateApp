@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_aprobacion_administrador"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.coppate.g04.coppate.Aprobacion_administrador">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="117dp"
+            android:layout_weight="0.94">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="85dp">
+
+                    <TextView
+                        android:text="Solicitud a evento del usuario XXX"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ie_usuario_coppado"
+                        android:textColor="@color/negro"
+                        android:textStyle="normal"
+                        android:layout_weight="3.14" />
+                    <TextView
+                        android:text="Nombre del evento: xxxx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ie_nombre_evento"
+                        android:textColor="@color/negro"
+                        android:textStyle="normal"
+                        android:layout_weight="3.14" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="204dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="92dp"
+                    android:src="@drawable/foto_perfil"
+                    android:id="@+id/ie_foto_perfil"
+                    android:layout_weight="1"
+                    />
+
+                <TextView
+                    android:text="Usuario XXXX. Haga click en la imagen para ver las calificaciones de este usuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ie_txv_usuario"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:padding="2dp"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/negro"
+                    android:textStyle="normal"
+                    android:paddingRight="2dp"
+                    android:paddingTop="2dp"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:paddingBottom="2dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="76dp"
+                    android:src="@drawable/estrella_vacia"
+                    android:id="@+id/ie_calif_total"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:text="Puntuacion del Usuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ie_puntuacion"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:padding="2dp"
+                    android:textColor="@color/negro"
+                    android:textStyle="normal"
+                    android:paddingBottom="2dp"
+                    android:paddingEnd="2dp"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+                    android:paddingStart="2dp"
+                    android:paddingTop="2dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:textAlignment="center">
+
+            <Button
+                android:text="Rechazar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="17dp"
+                android:id="@+id/ie_rechazar"
+                android:layout_weight="1"
+                android:background="@drawable/btncambia"
+                android:textColor="@color/colorPrimary"
+                android:textAllCaps="false"
+                android:textAlignment="center" />
+
+            <Button
+                android:text="Copparlo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ie_copparse"
+                android:layout_weight="1"
+                android:background="@drawable/btncambia"
+                android:textColor="@color/colorPrimary"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="34dp"
+                android:layout_marginEnd="34dp"
+                android:layout_alignBottom="@+id/ie_rechazar" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

@@ -5,7 +5,7 @@
     android:id="@+id/activity_editar_evento"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.coppate.g04.coppate.DescripcionEvento">
+    tools:context="com.coppate.g04.coppate.EditarEvento">
 
 
     <TextView
@@ -76,10 +76,12 @@
             android:textColor="@color/colorPrimary"
             android:textAllCaps="false"
             android:textAlignment="center"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="98dp"
-            android:gravity="top|center_horizontal" />
+            android:gravity="top|center_horizontal"
+            android:textSize="14sp"
+            android:minWidth="45dp"
+            android:layout_width="75dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/ee_guardar_cambios"
+            app:layout_constraintRight_toLeftOf="@+id/ee_solicitud" />
 
 
         <Button
@@ -90,12 +92,30 @@
             android:textColor="@color/colorPrimary"
             android:textAllCaps="false"
             android:textAlignment="center"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="98dp"
+            android:layout_width="75dp"
             android:gravity="top|center_horizontal"
-            android:elevation="0dp" />
+            android:elevation="0dp"
+            android:textSize="14sp"
+            android:minWidth="45dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/ee_guardar_cambios" />
+
+        <Button
+            android:text="Solicitud"
+            android:layout_height="wrap_content"
+            android:id="@+id/ee_solicitud"
+            android:background="@drawable/btncambia"
+            android:textColor="@color/colorPrimary"
+            android:textAllCaps="false"
+            android:textAlignment="center"
+            android:gravity="top|center_horizontal"
+            android:elevation="0dp"
+            android:textSize="14sp"
+            android:minWidth="45dp"
+            android:layout_width="75dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
         <Button
             android:text="Guardar"
@@ -107,12 +127,12 @@
             android:textAlignment="center"
             android:visibility="invisible"
             android:elevation="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/ee_cancelar_evento"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            android:layout_width="98dp"
-            android:gravity="top|center_horizontal" />
+            android:layout_width="75dp"
+            android:gravity="top|center_horizontal"
+            android:textSize="14sp"
+            android:minWidth="45dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/ee_editar_evento" />
 
     </android.support.constraint.ConstraintLayout>
 

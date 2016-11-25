@@ -33,6 +33,7 @@ public class EditarEvento extends Activity {
     Button editar_evento;
     Button cancelar_evento;
     Button guardar_cambios;
+    Button solicitud_evento;
     EditText descripcion_evento;
     TextView nombre_evento;
     EditText lugar_encuentro;
@@ -108,6 +109,7 @@ public class EditarEvento extends Activity {
       //  ubicacion = (Button)findViewById(R.id.ee_ubicacion_mapa);
         editar_evento = (Button) findViewById(R.id.ee_editar_evento);
         cancelar_evento = (Button)findViewById(R.id.ee_cancelar_evento);
+        solicitud_evento = (Button)findViewById(R.id.ee_solicitud);
         guardar_cambios = (Button)findViewById(R.id.ee_guardar_cambios);
         descripcion_evento = (EditText) findViewById(R.id.ee_descripcion_evento);
         nombre_evento = (TextView)findViewById(R.id.ee_nombre_evento);
@@ -135,6 +137,7 @@ public class EditarEvento extends Activity {
                 guardar_cambios.setVisibility(View.VISIBLE);
                 editar_evento.setEnabled(true);
                 cancelar_evento.setEnabled(true);
+                solicitud_evento.setEnabled(true);
                 descripcion_evento.setEnabled(true);
                 nombre_evento.setEnabled(true);
                 lugar_encuentro.setEnabled(true);
@@ -213,6 +216,15 @@ public class EditarEvento extends Activity {
             }
         });
 */
+
+        solicitud_evento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goListaSolicitud();
+            }
+        });
+
+
         cancelar_evento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -525,4 +537,12 @@ public class EditarEvento extends Activity {
         overridePendingTransition(R.anim.reingreso, R.anim.nothing);
 
     }
+
+
+     private void goListaSolicitud(){
+     Intent aprobar = new Intent(EditarEvento.this, Aprobacion_administrador.class);
+     startActivity(aprobar);
+     }
+
+
 }

@@ -126,6 +126,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".ResultadoBusqueda" />
+        <activity android:name=".Aprobacion_administrador"></activity>
     </application>
 
 </manifest>
