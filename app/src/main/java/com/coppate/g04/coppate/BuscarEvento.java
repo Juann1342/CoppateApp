@@ -127,7 +127,17 @@ public class BuscarEvento extends AppCompatActivity {
                     }
                 }else {
                     // cuando el usuario no haya seleccionado el codigo, se realizara una busqueda comun
-                    realizarBusqueda(codigo,Integer.valueOf(str_code));
+                    try {
+                        if((str_code == null) || (str_code.equals(""))){
+                            realizarBusqueda(codigo,-1);
+                        }
+                        else{
+                            realizarBusqueda(codigo,Integer.valueOf(str_code));
+                        }
+                    }catch (Exception e){
+                        funciones.mostrarToastCorto("Se ha producido un error al realizar la busqueda");
+                    }
+
                 }
             }
         });

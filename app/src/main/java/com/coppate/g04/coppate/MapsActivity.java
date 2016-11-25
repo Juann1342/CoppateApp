@@ -88,13 +88,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         miUbicacion();
 
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             return;
         }
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
-
 
         //marcador para eventos en el mapa
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
@@ -158,6 +158,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.man)));
         mMap.animateCamera(miUbicacion);
     }*/
+
 
     //metodo para obtener la ubicación, se comprueba si es null para que la app no se cierre si sucede
     public void actualizarUbicacion(Location location) {

@@ -35,6 +35,7 @@ public class Constantes {
     public static final String GET_USER_BY_ID = "http://" + URL + "/obtener_usuario_por_id.php";
     public static final String GET_EVENTOS_BY_MIEMBRO = "http://" + URL + "/obtener_eventos_miembro.php";
     public static final String GET_ULTIMO_EVENTO_CREADO = "http://" + URL + "/obtener_ultimo_evento_creado.php";
+    public static final String UPDATE_EVENTO = "http://" + URL + "/actualizar_evento.php";
 
     /**
      * Clave para el valor extra que representa al identificador de una evento

@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -81,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<String> participo;
     ArrayAdapter<String> adapt_eventos_otros;
 
+    Boolean actualizar;
+
 
     Handler mHandler;
 
@@ -94,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
         LayoutMisEventos = (LinearLayout) findViewById(R.id.layoutMisEventos);
         LayoutMisEventos.setVisibility(View.VISIBLE);
 
+        actualizar = false;
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.rosafuxia1,R.color.violetadiseno,R.color.violeta1);
 
         funciones = new Funciones(getApplicationContext());
 
@@ -139,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
         TabHost tabs = (TabHost) findViewById(android.R.id.tabhost);
         tabs.setup();
 
-
         TabHost.TabSpec spec = tabs.newTabSpec("mitab1");
         spec.setContent(R.id.tab1);
         spec.setIndicator("", getResources().getDrawable(R.drawable.tab1));
@@ -153,15 +158,16 @@ public class MainActivity extends AppCompatActivity {
 
         tabs.setCurrentTab(1);
 
+
         // hacemos que tome los eventos de la base de datos
         listarEventoPorOwner();
         listarEventoEnQueParticipo();
         getEventosCercanos();
-        try {
+        /*try {
             funciones.mostrarToastCorto(ListaMiembros.getInstance().getMiembros()[0].getId_evento().toString());
         }catch (Exception e){
             funciones.mostrarToastCorto("Error lista eventos que participo: "+e.toString());
-        }
+        }*/
 
         // inicializamos los arraylist que nos serviran para cargar los datos de los adaptadores para los listview
         lista_eventos_mios = new ArrayList<String>();
@@ -180,6 +186,8 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (Exception e) {
             funciones.mostrarToastCorto("Deslice hacia abajo");
+            actualizar = true;
+
         }
 
         int largo2= 0;
@@ -191,8 +199,8 @@ public class MainActivity extends AppCompatActivity {
                 lista_eventos_cercanos.add(MisEventos.getInstance().getEventosCercanos()[i].getNombre());
             }
 
-          //  lista_eventos_cercanos = new ArrayList<String>();
-          //  lista_eventos_otros_participo = new ArrayList<String>();
+            //  lista_eventos_cercanos = new ArrayList<String>();
+            //  lista_eventos_otros_participo = new ArrayList<String>();
         }
         catch (Exception e) {
             funciones.mostrarToastCorto("Deslice hacia abajo");
@@ -200,9 +208,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         // cargamos datos de prueba que tienen que venir de la BD, tanto los propios como los otros
-       // lista_eventos_cercanos.add("Evento cercano: 1");
+        // lista_eventos_cercanos.add("Evento cercano: 1");
         //lista_eventos_mios.add("Eventos mios: 1"); -- codigo hardcode
-        lista_eventos_otros_participo.add("Eventos participo: 1");
+        lista_eventos_otros_participo.add("PaintBall");
+        lista_eventos_otros_participo.add("Picadito");
+        lista_eventos_otros_participo.add("Hoy Se sale Fuerte");
+        lista_eventos_otros_participo.add("Clase de Resaca");
+        lista_eventos_otros_participo.add("Domingo en Casa");
+        lista_eventos_otros_participo.add("Despedida de Soltera");
+        lista_eventos_otros_participo.add("Mi Cumple 18");
+        lista_eventos_otros_participo.add("Fiesta a pleno");
 
         // llamammos a las funciones que listan los eventos cercanos, de otros y mios
         mostrarEventosCercanos(lista_eventos_cercanos);
@@ -228,29 +243,49 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
 
-         botonBuscar.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            goBuscarEvento();
-        //goAcercaDe();
-        }
+        botonBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBuscarEvento();
+                //goAcercaDe();
+            }
         });
 
+        if(actualizar){
+            actualizarPantalla(swipeRefreshLayout);
+            actualizar=false;
+        }else {
+            NoActualizarPantalla(swipeRefreshLayout);
+            actualizar=true;
+        }
+    }
 
+    private  void NoActualizarPantalla(final SwipeRefreshLayout swr){
+        swr.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
-
-
-        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
-        swipeRefreshLayout.setColorSchemeResources(R.color.rosafuxia1,R.color.violetadiseno,R.color.violeta1);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeRefreshLayout.setRefreshing(true);
+                //swipeRefreshLayout.setRefreshing(true);
                 (new Handler()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        swipeRefreshLayout.setRefreshing(false);
+                        swr.setRefreshing(false);
+                    }
+                },500);   //Actualiza pantalla
+            }
+        });
+    }
 
+    private  void actualizarPantalla(final SwipeRefreshLayout swr){
+        swr.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                //swipeRefreshLayout.setRefreshing(true);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swr.setRefreshing(false);
 
                         mostrarEventosCercanos(lista_eventos_cercanos);
                         mostrarMisEventos(lista_eventos_mios);
@@ -264,9 +299,7 @@ public class MainActivity extends AppCompatActivity {
                 },4000);   //Actualiza pantalla
             }
         });
-
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -360,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
 
             Integer id_evento = lista_mis_eventos.getPositionForView(v);
             Integer idEvent = Integer.valueOf(MisEventos.getInstance().getEventos()[id_evento].getId_evento());
-            funciones.mostrarToastCorto("ID_evento: "+idEvent.toString());
+            //funciones.mostrarToastCorto("ID_evento: "+idEvent.toString());
             Intent intent_descripcion = new Intent(MainActivity.this, EditarEvento.class);
             // le pasamos el parametro del ide de evento para tomarlo en la pantalla de DESCRIPCION DE EVENTO y mostrar los datos necesarios
             intent_descripcion.putExtra("ID_evento", idEvent);
@@ -441,9 +474,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void entrarAEvento(View v){
         Integer id_evento_cercano = eventos_de_otros.getPositionForView(v);
+        Integer idEvent = Integer.valueOf(MisEventos.getInstance().getEventosCercanos()[id_evento_cercano].getId_evento());
         Intent intent_entrar_a_evento = new Intent(MainActivity.this, InvitacionEvento.class);
         // le pasamos el parametro del id de evento para tomarlo en la pantalla de INVITACION A EVENTO y mostrar los datos necesarios
-        intent_entrar_a_evento.putExtra("ID_evento", id_evento_cercano);
+        intent_entrar_a_evento.putExtra("ID_evento", idEvent);
         // creamos la animacion de deslizamiento
         Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in, R.anim.left_out).toBundle();
         // lanzamos la actividad de DESCRIPCION y le cargamos la animacion
@@ -453,7 +487,6 @@ public class MainActivity extends AppCompatActivity {
     /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
     }*/
 
     private void AlertNoGps() { //Funcion que da la opción de activar el gps
@@ -501,7 +534,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, BuscarEvento.class);
         Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
         startActivity(intent,bndlanimation);
-       // startActivity(intent);
+        // startActivity(intent);
     }  //dirige a la pantalla buscar
 
     public void irBuscar(View view) {
@@ -514,10 +547,10 @@ public class MainActivity extends AppCompatActivity {
     }  //dirige a la pantalla perfil
 
 
-     private void goBuscarEvento() {
-     Intent intent = new Intent(this, BuscarEvento.class);
-     startActivity(intent);
-     }  //dirige a la pantalla BuscarEvento
+    private void goBuscarEvento() {
+        Intent intent = new Intent(this, BuscarEvento.class);
+        startActivity(intent);
+    }  //dirige a la pantalla BuscarEvento
 
 
 
@@ -526,35 +559,35 @@ public class MainActivity extends AppCompatActivity {
 
     public void getUsuarioPorID(String id_user){
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(new JsonObjectRequest(
-                    Request.Method.GET,
-                    Constantes.GET_USER_BY_ID+"id_usuario="+id_user,
-                    null,
-                    new Response.Listener<JSONObject>(){
+                Request.Method.GET,
+                Constantes.GET_USER_BY_ID+"id_usuario="+id_user,
+                null,
+                new Response.Listener<JSONObject>(){
 
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            respuestaGetUsuarioPorID(response);
-                        }
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        respuestaGetUsuarioPorID(response);
                     }
+                }
                 ,
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                    funciones.mostrarToastCorto(("Se ha producido un Error Volley: " + error.getMessage()));
-                        }
+                        funciones.mostrarToastCorto(("Se ha producido un Error Volley: " + error.getMessage()));
+                    }
                 }
-                ) {
-                @Override
-               public Map<String, String> getHeaders() {
-                    Map<String, String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/json; charset=utf-8");
-                    headers.put("Accept", "application/json");
-                    return headers;
-                }
-                @Override
-                public String getBodyContentType() {
-                    return "application/json; charset=utf-8" + getParamsEncoding();
-                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                headers.put("Accept", "application/json");
+                return headers;
+            }
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8" + getParamsEncoding();
+            }
         });
 
     }
@@ -738,7 +771,6 @@ public class MainActivity extends AppCompatActivity {
 
             /*final Dialog finalCustomDialog = customDialog;
             ((Button) customDialog.findViewById(R.id.cancelar)).setOnClickListener(new View.OnClickListener() {
-
                 @Override
                 public void onClick(View view)
                 {
@@ -851,14 +883,10 @@ public class MainActivity extends AppCompatActivity {
         });
         dialogo2.setNegativeButton("No, quiero seguir coppandome", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo2, int id) {
-
             }
         });
         dialogo2.show();
-
         MainActivity.this.finish();*/
 
 
 }
-
-

@@ -12,20 +12,28 @@ import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.PixelCopy;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphRequestAsyncTask;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.Profile;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.facebook.login.widget.ProfilePictureView;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -228,6 +236,7 @@ public class perfil extends Activity {
 
         profileImage = (ProfilePictureView) findViewById(R.id.profilePicture);
         profileImage.setProfileId(Profile.getCurrentProfile().getId());
+
         /*try {
             fecha_actual = funciones.getFechaActual();
             NOMBRE_FOTO = "coppate"+fecha_actual+".jpg";
@@ -247,6 +256,7 @@ public class perfil extends Activity {
             funciones.mostrarToastCorto("Se ha producido un error al querer utilizar la camara");
         }*/
     }
+
 
     public void onBackPressed() {
         perfil.this.finish();

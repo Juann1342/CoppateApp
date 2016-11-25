@@ -1,6 +1,7 @@
 package com.coppate.g04.coppate;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -26,6 +28,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class EditarEvento extends Activity {
 
@@ -195,6 +200,10 @@ public class EditarEvento extends Activity {
                     case 1:
                         sexo = "2";
                         break;
+
+                    case 2:
+                        sexo="3";
+                        break;
                 }
             }
 
@@ -321,7 +330,7 @@ public class EditarEvento extends Activity {
                     public void onClick(View view)
                     {
                         // aca va una funcion para guardar datos y actualizar datos en la base de datos..
-
+                        actualizarEvento();
                         // si el usuario presiona en aceptar, se cierra la aplicación
                         goMain();
 
@@ -391,7 +400,7 @@ public class EditarEvento extends Activity {
                                 new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-                                        funciones.mostrarToastCorto("Debug1: Error en obtenerDatosEventoPorID");
+                                        //funciones.mostrarToastCorto("Debug1: Error en obtenerDatosEventoPorID");
                                     }
                                 }
 
@@ -407,7 +416,7 @@ public class EditarEvento extends Activity {
             // Obtener atributo "estado"
             String estado = response.getString("estado");
 
-            funciones.mostrarToastCorto("estado:" +estado);
+            //funciones.mostrarToastCorto("estado:" +estado);
 
 
             switch (estado) {
@@ -429,6 +438,23 @@ public class EditarEvento extends Activity {
                     cupo_max.setText(MisEventos.getInstance().getEvento()[0].getCupo_max().toString());
                     edad_desde.setText(MisEventos.getInstance().getEvento()[0].getEdad_min().toString());
                     edad_hasta.setText(MisEventos.getInstance().getEvento()[0].getEdad_max().toString());
+                    String sex = MisEventos.getInstance().getEvento()[0].getId_sexo();
+                    if (sex == "1") {
+                        opciones_sexo[0] = "Masculino";
+                        opciones_sexo[1] = "Femenino";
+                        opciones_sexo[2] = "Indiferente";
+                    }
+                    if (sex == "2") {
+                        opciones_sexo[0] = "Femenino";
+                        opciones_sexo[1] = "Masculino";
+                        opciones_sexo[2] = "Indiferente";
+                    }
+                    if(sex == "3"){
+                        opciones_sexo[0] = "Indistinto";
+                        opciones_sexo[1] = "Femenino";
+                        opciones_sexo[2] = "Masculino";
+                    }
+
 
                //     titulo_evento.setText("Descripción del evento: "+MisEventos.getInstance().getEvento()[0].getNombre()+", del usuario: "+Usuario.getInstance().getNombre()+" "+Usuario.getInstance().getApellido());
 
@@ -440,13 +466,113 @@ public class EditarEvento extends Activity {
                     funciones.mostrarToastLargo(MisEventos.getInstance().getEventos()[0].getNombre());*/
                     break;
                 case "2": // FALLIDO
-                    funciones.mostrarToastCorto("Debug2: Error en procesarRespuesta");
+                    //funciones.mostrarToastCorto("Debug2: Error en procesarRespuesta");
                     break;
             }
 
         } catch (JSONException e) {
             //Log.d(TAG, e.getMessage());
-            funciones.mostrarToastCorto("Fallo?");
+            //funciones.mostrarToastCorto("Fallo?");
+        }
+
+    }
+
+    public void actualizarEvento() {
+
+        HashMap<String, String> map = new HashMap<>();// Mapeo previo
+
+        map.put("id_evento",String.valueOf(id_event));
+        map.put("edad_min", edad_desde.getText().toString());
+        map.put("edad_max", edad_hasta.getText().toString());
+        map.put("cupo_min", cupo_min.getText().toString());
+        map.put("cupo_max", cupo_max.getText().toString());
+        map.put("costo", costo_evento.getText().toString());
+        map.put("ubicacion", lugar_encuentro.getText().toString());
+        map.put("id_categoria", tipo);
+        map.put("desc_evento", descripcion_evento.getText().toString());
+        map.put("id_sexo", sexo);
+        map.put("id_estado", "1"); // 1=activo 2=finalizado 3=cancelado 4=en pausa
+
+        // Crear nuevo objeto Json basado en el mapa
+        JSONObject jobject = new JSONObject(map);
+
+
+        // Actualizar datos en el servidor
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(
+                new JsonObjectRequest(
+                        Request.Method.POST,
+                        Constantes.UPDATE_EVENTO,
+                        jobject,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                // Procesar la respuesta del servidor
+                                updateEvento(response);
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                //funciones.mostrarToastCorto(("Error Volley: " + error.getMessage()));
+                            }
+                        }
+
+                ) {
+                    @Override
+                    public Map<String, String> getHeaders() {
+                        Map<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json; charset=utf-8");
+                        headers.put("Accept", "application/json");
+                        return headers;
+                    }
+
+                    @Override
+                    public String getBodyContentType() {
+                        return "application/json; charset=utf-8" + getParamsEncoding();
+                    }
+                }
+        );
+
+    }
+
+    /**
+     * Procesa la respuesta obtenida desde el sevidor
+     *
+     * @param response Objeto Json
+     */
+    private void updateEvento(JSONObject response) {
+
+        try {
+            // Obtener estado
+            String estado = response.getString("estado");
+            // Obtener mensaje
+            String mensaje = response.getString("mensaje");
+
+            //funciones.mostrarToastCorto("Mensaje: "+mensaje +"\n"+"Estado: "+estado);
+            switch (estado) {
+                case "1":
+                    // Mostrar mensaje
+
+                    // Enviar código de éxito
+                    //getApplicationContext().setResult(Activity.RESULT_OK);
+                    // Terminar actividad
+                    //getApplicationContext().finish();
+                    break;
+
+                case "2":
+                    // Mostrar mensaje
+                    Toast.makeText(
+                            getApplicationContext(),
+                            mensaje,
+                            Toast.LENGTH_LONG).show();
+                    // Enviar código de falla
+                    //getApplicationContext().setResult(Activity.RESULT_CANCELED);
+                    // Terminar actividad
+                    //View.getContext().finish();
+                    break;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
     }
@@ -525,7 +651,7 @@ public class EditarEvento extends Activity {
                 latitud = data.getDoubleExtra("latitud", PUBLIC_STATIC_DOUBLE_LATITUD);
                 longitud = data.getDoubleExtra("longitud", PUBLIC_STATIC_DOUBLE_LONGITUD);
             } catch (Exception e) {
-                funciones.mostrarToastCorto("ALGO PASÓ");
+                //funciones.mostrarToastCorto("ALGO PASÓ");
             }
         }
     }
@@ -540,8 +666,9 @@ public class EditarEvento extends Activity {
 
 
      private void goListaSolicitud(){
-     Intent aprobar = new Intent(EditarEvento.this, Aprobacion_administrador.class);
-     startActivity(aprobar);
+         Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in, R.anim.left_out).toBundle();
+         Intent aprobar = new Intent(EditarEvento.this, Aprobacion_administrador.class);
+         startActivity(aprobar,bndlanimation);
      }
 
 

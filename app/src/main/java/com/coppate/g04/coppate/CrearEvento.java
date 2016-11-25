@@ -80,7 +80,7 @@ public class CrearEvento extends AppCompatActivity {
 
     // estos strings los tenemos que tomar de la BD, son solo de pruebas
     String[] opciones_sexo = {"Masculino", "Femenino", "Indiferente"};
-    String[] opciones_tipo = {"Social", "Privado"};
+    String[] opciones_tipo = {"Social", "Deportes"};
     String[] contacts_selected = {""};
     //ArrayList<String> arrayContact = new ArrayList<String>();
     String sexo = "";
@@ -90,6 +90,8 @@ public class CrearEvento extends AppCompatActivity {
 
     Double latitud;
     Double longitud;
+
+    String fecha_seleccionada;
 
     private static final int RESULT_PICK_CONTACT = 85500;
     final int CONTACT_PICK_REQUEST = 1000;
@@ -224,6 +226,9 @@ public class CrearEvento extends AppCompatActivity {
                     case 1:
                         sexo = "2";
                         break;
+                    case 2:
+                        sexo = "3";
+                        break;
                 }
             }
 
@@ -292,12 +297,10 @@ public class CrearEvento extends AppCompatActivity {
                             public void onClick(View view) {
                                 try {
                                     guardarEvento();
-                                /* if(ok en la base de datos al guardar el evento) hace lo que sigue*/
+                                    /* if(ok en la base de datos al guardar el evento) hace lo que sigue*/
                                     obtenerIdEventoCreado();
                                     guarda_evento = true;
                                     invita_contactos = true;
-                                /* hay que hacer una funcion que tome el codigo del evento ese para pasarlo
-                                a goInvitarContactos()*/
                                     goInvitarContactos(MisEventos.getInstance().getEvento()[0].getId_evento(), invita_contactos);
                                 } catch (Exception e) {
                                     funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
@@ -406,9 +409,13 @@ public class CrearEvento extends AppCompatActivity {
 
                                     txtDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
 
+                                    fecha_seleccionada = String.valueOf(year)+"-"+String.valueOf(monthOfYear+1)+"-"+String.valueOf(dayOfMonth);
+
                                 }
                             }, mYear, mMonth, mDay);
                     datePickerDialog.show();
+
+
                 }
             }
         });
@@ -454,7 +461,7 @@ public class CrearEvento extends AppCompatActivity {
         if(invitar){
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "Te invito al evento que he organizado a través de Coppate. Introduce el siguente código en el buscador de eventos. Codigo: " + codigo + " :Si aún no tienes la aplicación puedes encontrarla disponible en Play Store");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Te invito al evento que he organizado a través de Coppate. Introduce el siguente código en el buscador de eventos. Codigo: '" + codigo + "' :Si aún no tienes la aplicación puedes encontrarla disponible en Play Store");
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
             finish();
@@ -499,7 +506,8 @@ public class CrearEvento extends AppCompatActivity {
             // Obtener atributo "estado"
             String estado = respuesta.getString("estado");
 
-            funciones.mostrarToastCorto("estado:" + estado);
+            //
+            // funciones.mostrarToastCorto("estado:" + estado);
 
 
             switch (estado) {
@@ -542,8 +550,13 @@ public class CrearEvento extends AppCompatActivity {
         map.put("cupo_min", cupo_min.getText().toString());
         map.put("cupo_max", cupo_max.getText().toString());
         map.put("costo", costo.getText().toString());
-        map.put("fecha_inicio", funciones.getFechaActual()); //Solo para probar.
-        map.put("fecha_fin", "2016-10-17"); //Solo para probar.
+        map.put("fecha_inicio", funciones.getFechaActual());
+        try {
+            map.put("fecha_fin", fecha_seleccionada);
+        }catch (Exception e){
+            funciones.mostrarToastCorto("Se ha producido un error al cargar la fecha..");
+            map.put("fecha_fin", "2015-01-01");
+        }
         map.put("foto", "NULL");
         map.put("ubicacion", lugar_evento.getText().toString());
         try {
@@ -554,9 +567,9 @@ public class CrearEvento extends AppCompatActivity {
             map.put("latitud", "latitud de prueba tras fallo");
             map.put("longitud", "longitud de prueba tras fallo");
         }
-        map.put("id_categoria", "1");
+        map.put("id_categoria", tipo);
         map.put("desc_evento", descripcion.getText().toString());
-        map.put("id_sexo", "1");
+        map.put("id_sexo", sexo);
         map.put("id_estado", "1"); // 1=activo 2=finalizado 3=cancelado 4=en pausa
 
 
@@ -580,7 +593,7 @@ public class CrearEvento extends AppCompatActivity {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                funciones.mostrarToastCorto(("Error Volley: " + error.getMessage()));
+                                //funciones.mostrarToastCorto(("Error Volley: " + error.getMessage()));
                             }
                         }
 
@@ -701,9 +714,9 @@ public class CrearEvento extends AppCompatActivity {
                 latitud = data.getDoubleExtra("latitud",PUBLIC_STATIC_DOUBLE_LATITUD);
                 longitud= data.getDoubleExtra("longitud",PUBLIC_STATIC_DOUBLE_LONGITUD);
 
-                funciones.mostrarToastLargo("latitud"+latitud.toString()+"\n"+"longitud"+longitud.toString());
+                //funciones.mostrarToastLargo("latitud"+latitud.toString()+"\n"+"longitud"+longitud.toString());
             }catch (Exception e) {
-                funciones.mostrarToastCorto("ALGO PASÓ");
+                //funciones.mostrarToastCorto("ALGO PASÓ");
             }
         }
         /*mostrarToast("Probando..");
