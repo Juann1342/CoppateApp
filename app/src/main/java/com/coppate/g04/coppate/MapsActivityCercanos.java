@@ -33,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,6 +63,10 @@ public class MapsActivityCercanos extends FragmentActivity implements OnMapReady
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         funciones= new Funciones(getApplicationContext());
+
+
+
+
     }
 
 
@@ -71,6 +76,25 @@ public class MapsActivityCercanos extends FragmentActivity implements OnMapReady
         mMap = googleMap;
 
         miUbicacion();
+
+
+        int largo = 0;
+        try {
+
+            largo = MisEventos.getInstance().getEventosCercanos().length;
+            for (int i = 0; i < largo; i++) {
+
+                agregarMarcador(MisEventos.getInstance().getEventosCercanos()[i].getLatitud(),MisEventos.getInstance().getEventosCercanos()[i].getLongitud(),MisEventos.getInstance().getEventosCercanos()[i].getId_evento());
+            }
+
+            //  lista_eventos_cercanos = new ArrayList<String>();
+            //  lista_eventos_otros_participo = new ArrayList<String>();
+        }
+        catch (Exception e) {
+            funciones.mostrarToastCorto("Deslice hacia abajo");
+        }
+
+
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -85,25 +109,7 @@ public class MapsActivityCercanos extends FragmentActivity implements OnMapReady
             @Override
             public void onMapLongClick(LatLng latLng) {  //obtiene latitud y longitud de donde estoy pulsando
 
-                //###############USAR PARA LEVANTAR EVENTOS DE LA BD Y MARCARLOS EN EL MAPA#######
 
-             /*   mMap.addMarker(new MarkerOptions()
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.marcadorflag))
-                        .anchor(0.0f, 1.0f)
-                        .position(latLng));
-
-
-
-                //obtener coordenadas
-                Projection proj = mMap.getProjection();
-                Point coord = proj.toScreenLocation(latLng);
-
-                Toast.makeText(
-                        MapsActivityCercanos.this,
-                        "Coordenadas\n"+"Latitud:"+latLng.latitude+"\n"+
-                                "Longitud:"+latLng.longitude+"\n",
-                        Toast.LENGTH_SHORT).show(); */
-                    //###########################################//
                 Intent intent = new Intent(MapsActivityCercanos.this, CrearEvento.class); //ir a la activity crear evento
                 startActivity(intent);
 
@@ -114,13 +120,15 @@ public class MapsActivityCercanos extends FragmentActivity implements OnMapReady
             }
         });
 //acciones al pulsar un marcador
+
+
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                Toast.makeText(getApplicationContext(),"Evento :)", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(MapsActivityCercanos.this, DescripcionEvento.class); //ir a descripcion del evento
-                startActivity(intent);
+                irAdescripcion(Integer.valueOf(marker.getTitle()));
+               // marker.setTitle("");
+
 
                 return false;
 
@@ -133,18 +141,22 @@ public class MapsActivityCercanos extends FragmentActivity implements OnMapReady
 
     //metodo para agregar el marcador, con camera update centro el mapa en mi posicion
 
-  /*  public void agregarMarcador(double lat, double lon) {
+    public void agregarMarcador(double lat, double lon,String titulo) {
         LatLng coordenadas = new LatLng(lat, lon);
-        CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas,14);
 
+        //CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas,14);
         //si el marcador es distinto a null se debera remover
-        if (marcador != null) marcador.remove();
-        marcador = mMap.addMarker(new MarkerOptions()
+        if (marcador != null){
+            marcador.remove();
+        }
+                mMap.addMarker(new MarkerOptions()
                 .position(coordenadas)
-                .title("Aquí te encuentras")
-               .icon(BitmapDescriptorFactory.fromResource(R.drawable.man)));
-        mMap.animateCamera(miUbicacion);
-    }*/
+
+                .anchor(0.0f, 1.0f)
+                .title(titulo)
+               .icon(BitmapDescriptorFactory.fromResource(R.drawable.eventomapa)));
+      //  mMap.animateCamera(miUbicacion);
+    }
 
     //metodo para obtener mi ubicación, se comprueba si es null para que la app no se cierre si sucede
     public void actualizarUbicacion(Location location) {
@@ -157,6 +169,7 @@ public class MapsActivityCercanos extends FragmentActivity implements OnMapReady
             mMap.animateCamera(miUbicacion);
 
             // agregarMarcador(lat, lon);
+          //  funciones.mostrarToastCorto(coordenadas.toString());
         }
     }
 
@@ -204,64 +217,12 @@ public class MapsActivityCercanos extends FragmentActivity implements OnMapReady
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,15000,0,locListener);
     }
 
-    public void getEventosCercanos(){
-        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(new JsonObjectRequest(
-                Request.Method.GET,
-                Constantes.GET,
-                null,
-                new Response.Listener<JSONObject>(){
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        procesarRespuestaEventos(response);
-                    }
-                }
-                ,
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        funciones.mostrarToastCorto(("Se ha producido un Error Volley: " + error.getMessage()));
-                    }
-                }
-        ) {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json; charset=utf-8");
-                headers.put("Accept", "application/json");
-                return headers;
-            }
-            @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8" + getParamsEncoding();
-            }
-        });
-
+    private void irAdescripcion(Integer titulo){
+        Intent intent = new Intent(MapsActivityCercanos.this, InvitacionEvento.class); //ir a descripcion del evento
+        intent.putExtra("ID_evento",titulo);
+        startActivity(intent);
     }
-    private void procesarRespuestaEventos(JSONObject response) {
-        try {
-            // Obtener atributo "estado"
-            String estado = response.getString("estado");
 
-            switch (estado) {
-                case "1": // EXITO
-                    // Obtener array "metas" Json
-                    JSONArray mensaje = response.getJSONArray("eventos");
-                    // Parsear con Gson
-                    MisEventos.getInstance().setEventosCercanos(gson.fromJson(mensaje.toString(), Evento[].class));
-                    //funciones.mostrarToastLargo("Toast procesarResp: " + String.valueOf(MisEventos.getInstance().getEventos().length));
-                    //funciones.mostrarToastLargo(MisEventos.getInstance().getEventos()[0].getNombre());
-                    break;
-                case "2": // FALLIDO
-                    funciones.mostrarToastCorto("Debug2: Error en procesarRespuesta");;
-                    break;
-            }
-
-        } catch (JSONException e) {
-            //Log.d(TAG, e.getMessage());
-        }
-
-    }
 
 }
 
