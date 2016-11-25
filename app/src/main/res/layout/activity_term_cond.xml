@@ -11,12 +11,12 @@
     tools:context="com.coppate.g04.coppate.TermCond">
 
     <TextView
-        android:text="Los terminos y condiciones se deben extraer de la base de datos"
+        android:text="Fecha de entrada en vigencia: 24 de Noviembre de 2016. Esta sección describe los términos, condiciones y la política de privacidad de datos aplicables a la utilización de la Aplicación por todo usuario registrado. Al registrarse como Usuario y/o continuar utilizando la Aplicación, el mismo acepta cumplir con estos Términos, Condiciones y con la Política de Privacidad. SI NO ESTÁS DE ACUERDO CON TODA O ALGUNA CLÁUSULA, NO SELECCIONE LA OPCIÓN ACEPTAR TÉRMINOS Y CONDICIONES, Y NO CONTINÚE UTILIZANDO LA APLICACIÓN. Al aceptar estos Términos y Condiciones, presta su consentimiento para el tratamiento, cesión y/o transferencia de los datos personales recabados por la aplicación Coppate, con fines publicitarios, de difusión o en general para cualquier fin legítimo, de conformidad con lo establecido por el art. 5 y subsiguientes de la Ley de Protección de Datos Personales Nº 25.326 (con sus modificatorias y complementarias). Para registrarse y utilizar Coppate, el Usuario deberá ser mayor de 18 años, tener capacidad de ejercicio de derechos de acuerdo a las leyes de su jurisdicción de residencia. Coppate ha tomado todas las medidas de seguridad a su alcance tecnológico y económico para proteger la privacidad y los datos personales. Se ha dispuesto las precauciones pertinentes en la transmisión de la información entre los dispositivos móviles. No obstante, ello no asegura que las claves empleadas para proteger la información o datos personales no puedan ser descifrados por terceros, y los mismos sean utilizados sin el consentimiento del Usuario. Al aceptar estos Términos y Condiciones y utilizar la Aplicación, el Usuario reconoce y acepta esta circunstancia y asume el riesgo que ello implica. Coppate le recomienda que no proporcione datos personales (incluyendo números de teléfono y direcciones de correo electrónico) a través de la Aplicación, debido a que la misma puede ser recopilada y utilizada por terceros sin el consentimiento. Para el uso de las funciones disponibles en la Aplicación Coppate, se requiere acceder a la información de ubicación del dispositivo móvil que utiliza cada Usuario para acceder a la Aplicación.
+Coppate y ninguno de sus integrantes serán responsable por los daños y acciones clandestinas e ilegales. Que los Usuarios puedan eventualmente realizar como consecuencia del mal uso de la aplicación."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:textColor="@color/negro"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="82dp"
-        android:id="@+id/textView13" />
+        android:textSize="11.5dp"
+        android:id="@+id/textView13"
+        android:layout_alignParentTop="true" />
 </RelativeLayout>
