@@ -19,7 +19,6 @@
         android:id="@+id/ad_acerca"
         android:textColor="@color/negro"
         android:textAllCaps="true"
-        android:textStyle="bold"
         android:layout_alignParentBottom="true"
         />
 

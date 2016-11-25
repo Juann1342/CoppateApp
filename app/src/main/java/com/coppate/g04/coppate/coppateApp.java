@@ -1,9 +1,12 @@
 package com.coppate.g04.coppate;
 
 import android.app.Application;
+import android.os.Bundle;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 //Aplicación peincipal
 
@@ -19,6 +22,14 @@ public class coppateApp extends Application {
         super.onCreate();
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
+
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("font/fuente6.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
+
 
     }
 }

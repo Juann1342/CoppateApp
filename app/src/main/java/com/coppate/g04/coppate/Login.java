@@ -31,6 +31,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 
 public class Login extends AppCompatActivity {
     private LoginButton loginButton;        //Botón y volver atrás como atributos
@@ -110,7 +112,11 @@ public class Login extends AppCompatActivity {
         });
     }
 
-
+    //el la siguiente clase cambiamos la fuente
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     private void goMainScreen() {
         Intent intent = new Intent(this, MainActivity.class);

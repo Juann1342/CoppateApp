@@ -1,6 +1,7 @@
 package com.coppate.g04.coppate;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AcercaDe extends AppCompatActivity {
 
@@ -26,10 +29,6 @@ public class AcercaDe extends AppCompatActivity {
 
         acerca = (TextView)findViewById(R.id.ad_acerca);
         volver = (Button)findViewById(R.id.ad_volver);
-
-        //las dos lineas siguientes se utilizan para la fuente de las palabras
-        Typeface face=Typeface.createFromAsset(getAssets(),"font/fuente3.ttf");
-        acerca.setTypeface(face);
 
         acerca.setText("\nAplicación desarrollada por los estudiantes de la UPE\n\n\n" +
                 "Juan Nuñez         Guillermo Bazzi\n\n" +
@@ -103,4 +102,11 @@ public class AcercaDe extends AppCompatActivity {
         overridePendingTransition(R.anim.reingreso, R.anim.nothing);
 
     }
+
+    //el la siguiente clase cambiamos la fuente
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
 }

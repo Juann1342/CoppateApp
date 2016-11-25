@@ -1,6 +1,7 @@
 package com.coppate.g04.coppate;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,6 +35,8 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class perfil extends Activity {
 
@@ -129,6 +132,12 @@ public class perfil extends Activity {
 
         }
 
+    }
+
+    //el la siguiente clase cambiamos la fuente
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     // funcion para cargar imagen de perfil de facebook

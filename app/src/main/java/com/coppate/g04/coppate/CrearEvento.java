@@ -3,6 +3,7 @@ package com.coppate.g04.coppate;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,6 +40,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class CrearEvento extends AppCompatActivity {
@@ -438,6 +441,13 @@ public class CrearEvento extends AppCompatActivity {
         });
 
     }
+
+    //el la siguiente clase cambiamos la fuente
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
 
     private void goInvitarContactos(String codigo, Boolean invitar){
         funciones.playSoundGotaAgua();

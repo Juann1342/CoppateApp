@@ -40,7 +40,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/de_usuario_creador"
-                        android:textColor="@color/violetadiseno"
+                        android:textColor="@color/negro"
                         android:layout_weight="3.14" />
                 </LinearLayout>
 
@@ -55,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="false"
                         android:layout_centerHorizontal="false"
-                        android:textColor="@color/violetadiseno"
+                        android:textColor="@color/negro"
                         android:id="@+id/de_descrip_evento"
                         android:layout_weight="1"
                         android:padding="2dp"
@@ -75,11 +75,11 @@
                 android:layout_height="match_parent">
 
                 <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="147dp"
+                    android:layout_width="101dp"
+                    android:layout_height="130dp"
                     android:id="@+id/de_ubicacion_mapa"
-                    android:background="@drawable/pin11"
-                    android:textColor="@color/colorPrimary"/>
+                    android:background="@drawable/crear11"
+                    android:textColor="@color/colorPrimary" />
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -119,7 +119,7 @@
                     android:id="@+id/de_txv_usuario"
                     android:layout_weight="1"
                     android:textAlignment="center"
-                    android:textColor="@color/violetadiseno"
+                    android:textColor="@color/negro"
                     android:padding="2dp"
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
@@ -148,7 +148,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/de_puntuacion"
                     android:layout_weight="1"
-                    android:textColor="@color/violetadiseno"
+                    android:textColor="@color/negro"
                     android:textAlignment="center"
                     android:padding="2dp"
                     android:paddingBottom="2dp"

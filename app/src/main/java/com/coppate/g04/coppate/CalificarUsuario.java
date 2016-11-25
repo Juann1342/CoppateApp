@@ -1,6 +1,7 @@
 package com.coppate.g04.coppate;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by Jul-note on 22/10/2016.
@@ -131,6 +134,12 @@ public class CalificarUsuario extends Activity {
                 }
             }
         });
+    }
+
+    //el la siguiente clase cambiamos la fuente
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override

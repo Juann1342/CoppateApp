@@ -38,6 +38,7 @@ public class Contact implements Parcelable {
         }
     };
 
+
     @Override
     public String toString() {
         return name + " | " + label + " : " + phone;
