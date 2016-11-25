@@ -1,219 +1,283 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_editar_evento"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.coppate.g04.coppate.DescripcionEvento"
-    android:weightSum="1"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    tools:context="com.coppate.g04.coppate.DescripcionEvento">
+
+
+    <TextView
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/ee_nombre_evento"
+        android:hint="Nombre de Evento"
+        android:enabled="false"
+        android:layout_height="36dp"
+        android:textStyle="normal|bold"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_width="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="8dp" />
+
+
+    <EditText
+        android:layout_height="54dp"
+        android:inputType="textPersonName"
+        android:ems="8"
+        android:id="@+id/ee_descripcion_evento"
+        android:layout_weight="0.17"
+        android:hint="Descripción"
+        android:enabled="false"
+        android:textAlignment="center"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/ee_nombre_evento"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_width="0dp"
+        android:elevation="0dp"
+        android:gravity="top|left"
+        android:lines="2"
+        android:singleLine="false"
+        android:textSize="14sp" />
+
+    <android.support.constraint.ConstraintLayout
+        android:orientation="horizontal"
+        android:layout_width="304dp"
+        android:textAlignment="center"
+        android:weightSum="0"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/constraintLayout"
+        android:layout_height="55dp"
+        app:layout_constraintLeft_toLeftOf="@+id/col_1"
+        app:layout_constraintTop_toBottomOf="@+id/col_1"
+        app:layout_constraintRight_toRightOf="@+id/ee_descripcion_evento"
+        android:layout_marginTop="4dp">
+
+        <Button
+            android:text="Editar"
+            android:layout_height="wrap_content"
+            android:id="@+id/ee_editar_evento"
+            android:background="@drawable/btncambia"
+            android:drawable="@drawable/lapiz"
+            android:textColor="@color/colorPrimary"
+            android:textAllCaps="false"
+            android:textAlignment="center"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="98dp"
+            android:gravity="top|center_horizontal" />
+
+
+        <Button
+            android:text="Eliminar "
+            android:layout_height="wrap_content"
+            android:id="@+id/ee_cancelar_evento"
+            android:background="@drawable/btncambia"
+            android:textColor="@color/colorPrimary"
+            android:textAllCaps="false"
+            android:textAlignment="center"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="98dp"
+            android:gravity="top|center_horizontal"
+            android:elevation="0dp" />
+
+        <Button
+            android:text="Guardar"
+            android:layout_height="wrap_content"
+            android:id="@+id/ee_guardar_cambios"
+            android:background="@drawable/btncambia"
+            android:textColor="@color/colorPrimary"
+            android:textAllCaps="false"
+            android:textAlignment="center"
+            android:visibility="invisible"
+            android:elevation="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/ee_cancelar_evento"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            android:layout_width="98dp"
+            android:gravity="top|center_horizontal" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/col_1"
         android:weightSum="1"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/ee_descripcion_evento"
+        app:layout_constraintLeft_toLeftOf="@+id/ee_descripcion_evento">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="117dp"
-            android:layout_weight="0.94">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:text="Descripción del evento del usuario XXX"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/ee_usuario"
-                        android:textColor="@color/negro"
-                        android:textStyle="normal"
-                        android:layout_weight="0.07" />
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="16dp">
-
-                    </LinearLayout>
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:ems="10"
-                        android:id="@+id/ee_descripcion_evento"
-                        android:layout_weight="0.17"
-                        android:hint="Descripcion de Evento"
-                        android:enabled="false" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:ems="10"
-                        android:id="@+id/ee_nombre_evento"
-                        android:layout_weight="0.15"
-                        android:hint="Nombre de Evento"
-                        android:enabled="false" />
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:ems="10"
-                        android:id="@+id/ee_lugar"
-                        android:hint="Lugar de Encuentro"
-                        android:enabled="false" />
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:ems="10"
-                        android:id="@+id/ee_costo"
-                        android:hint="Costo"
-                        android:enabled="false" />
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:ems="10"
-                        android:id="@+id/ee_cupoMin"
-                        android:hint="Cupo Maximo"
-                        android:layout_alignTop="@+id/ee_cupoMin"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_toRightOf="@+id/ee_lugarEncuentro"
-                        android:layout_toEndOf="@+id/ee_lugarEncuentro"
-                        android:enabled="false" />
-
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:ems="10"
-                        android:id="@+id/ee_cupoMax"
-                        android:hint="Cupo Minimo"
-                        android:layout_below="@+id/ee_cupoMax"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_toLeftOf="@+id/ee_cupoMax"
-                        android:layout_toStartOf="@+id/ee_cupoMax"
-                        android:enabled="false" />
-
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:ems="10"
-                        android:id="@+id/ee_edadDesde"
-                        android:hint="Edad Desde"
-                        android:layout_below="@+id/ee_cupoMax"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_toLeftOf="@+id/ee_cupoMax"
-                        android:layout_toStartOf="@+id/ee_cupoMax"
-                        android:enabled="false" />
-
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:ems="10"
-                        android:id="@+id/ee_edadHasta"
-                        android:hint="Edad Hasta"
-                        android:layout_alignTop="@+id/ee_edadDesde"
-                        android:layout_toRightOf="@+id/ee_edadDesde"
-                        android:layout_toEndOf="@+id/ee_edadDesde"
-                        android:enabled="false" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="121dp"
-                android:layout_height="match_parent">
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
+        <TextView
+            android:text="Lugar Encueentro"
+            android:id="@+id/encuentro"
             android:textAlignment="center"
-            android:weightSum="0">
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_weight="0" />
 
-            <Button
-                android:text="Editar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/ee_editar_evento"
-                android:background="@drawable/btncambia"
-                android:drawable="@drawable/lapiz"
-                android:textColor="@color/colorPrimary"
-                android:textAllCaps="false"
-                android:textAlignment="center"
-                android:layout_marginLeft="0dp"
-                android:layout_marginStart="0dp" />
+        <TextView
+            android:text="Costo $"
+            android:id="@+id/coste"
+            android:textAlignment="center"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_weight="0" />
 
+        <TextView
+            android:text="Cupo  Minimo"
+            android:id="@+id/cupoMin"
+            android:textAlignment="center"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_weight="0" />
 
-            <Button
-                android:text="Cancelar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/ee_cancelar_evento"
-                android:background="@drawable/btncambia"
-                android:textColor="@color/colorPrimary"
-                android:textAllCaps="false"
-                android:textAlignment="center"
-                android:layout_marginLeft="0dp"
-                android:layout_marginStart="0dp" />
+        <TextView
+            android:text="Cupo Maximo"
+            android:id="@+id/cupoMAX"
+            android:textAlignment="center"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_weight="0" />
 
-            <Button
-                android:text="Guardar Cambios"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ee_guardar_cambios"
-                android:background="@drawable/btncambia"
-                android:textColor="@color/colorPrimary"
-                android:textAllCaps="false"
-                android:textAlignment="center"
-                android:visibility="invisible"
-                android:elevation="0dp" />
+        <TextView
+            android:text="edad   Minima"
+            android:id="@+id/edadmin"
+            android:textAlignment="center"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_weight="0" />
 
-        </LinearLayout>
+        <TextView
+            android:text="Edad  Maxima"
+            android:id="@+id/edadMAX"
+            android:textAlignment="center"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_weight="0" />
+
+        <TextView
+            android:text="Sexo"
+            android:id="@+id/sexxo"
+            android:textAlignment="center"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_weight="0" />
+
+        <TextView
+            android:text="Tipo"
+            android:id="@+id/tippo"
+            android:textAlignment="center"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_weight="0" />
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="71dp"
-        android:layout_height="89dp"
-        android:id="@+id/ee_ubicacion_mapa"
-        android:background="@drawable/mapabuscar"
-        android:textColor="@color/colorPrimary"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/Col_Datos"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/col_1"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintTop_toTopOf="@+id/col_1"
+        app:layout_constraintRight_toRightOf="@+id/ee_descripcion_evento">
 
-</RelativeLayout>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:textSize="14sp"
+            android:inputType="textPersonName"
+            android:ems="12"
+            android:id="@+id/ee_lugar"
+            android:hint="Lugar de Encuentro"
+            android:enabled="false" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:textSize="14sp"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/ee_costo"
+            android:hint="Costo"
+            android:enabled="false" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:textSize="14sp"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/ee_cupoMin"
+            android:hint=" Minimo"
+            android:enabled="false" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:textSize="14sp"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/ee_cupoMax"
+            android:hint="Maximo"
+            android:enabled="false" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:textSize="14sp"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/ee_edadDesde"
+            android:hint="Edad Desde"
+            android:enabled="false" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:textSize="14sp"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/ee_edadHasta"
+            android:hint="Edad Hasta"
+            android:enabled="false" />
+
+        <Spinner
+            android:id="@+id/ce_spnSexoEvento"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/ce_spnTipoEvento"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:textSize="14sp" />
+
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

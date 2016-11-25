@@ -23,6 +23,7 @@ import com.facebook.GraphRequestAsyncTask;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.Profile;
+import com.facebook.login.widget.ProfilePictureView;
 
 import org.json.JSONObject;
 
@@ -37,6 +38,7 @@ import java.util.Date;
 public class perfil extends Activity {
 
     private static final String TAG = "";
+    ProfilePictureView profileImage;
     ImageView foto_perfil;
     EditText nombre;
     EditText fecha_nac;
@@ -68,14 +70,14 @@ public class perfil extends Activity {
 
         funciones = new Funciones(getApplicationContext());
 
-        foto_perfil = (ImageView) findViewById(R.id.ap_perfil_pict);
+      //  foto_perfil = (ImageView) findViewById(R.id.ap_perfil_pict);
         nombre = (EditText) findViewById(R.id.ap_txt_Mi_nombre);
         fecha_nac = (EditText) findViewById(R.id.ap_txt_birthday);
         apodo = (EditText) findViewById(R.id.ap_apodo);
-        editar_perfil = (Button) findViewById(R.id.ap_editar_perfil);
+       // editar_perfil = (Button) findViewById(R.id.ap_editar_perfil);
 
         //foto_perfil.setImageResource(Profile.getCurrentProfile().getProfilePictureUri(320,320));
-        foto_perfil.setImageBitmap(getUserPic(Usuario.getInstance().getId_usuario()));
+       // foto_perfil.setImageBitmap(getUserPic(Usuario.getInstance().getId_usuario()));
         //foto_perfil.setImageBitmap(getBitmap());
 
         try {
@@ -89,7 +91,7 @@ public class perfil extends Activity {
             foto_perfil.setImageBitmap(Usuario.getInstance().getFoto());
          */
 
-        editar_perfil.setOnClickListener(new View.OnClickListener() {
+        /*editar_perfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 nombre.setEnabled(true);
@@ -97,16 +99,17 @@ public class perfil extends Activity {
                 apodo.setEnabled(true);
                 activo = true;
             }
-        });
+        });*/
 
-        foto_perfil.setOnClickListener(new View.OnClickListener() {
+       /* foto_perfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (activo) {
                     tomarFoto();
                 }
             }
-        });
+        });*/
+        tomarFoto();
     }
 
     /* toma la foto y la asigna pero solo de la camara frontal (debe ser por el tamanio de la camara trasera) */
@@ -129,7 +132,7 @@ public class perfil extends Activity {
     }
 
     // funcion para cargar imagen de perfil de facebook
-    public Bitmap getUserPic(String userID) {
+    /*public Bitmap getUserPic(String userID) {
 
         URL imageURL = null;
         Bitmap bitmap = null;
@@ -148,6 +151,9 @@ public class perfil extends Activity {
             funciones.mostrarToastLargo("Error: "+e.toString());
         }
         return bitmap;
+       */
+
+
         /*Bundle params = new Bundle();
         params.putString("fields", "id,email,gender,cover,picture.type(large)");
         final GraphRequestAsyncTask graphRequestAsyncTask = new GraphRequest(AccessToken.getCurrentAccessToken(), "me", params, HttpMethod.GET,
@@ -206,11 +212,14 @@ public class perfil extends Activity {
             Log.e("Error", e.getMessage());
             e.printStackTrace();
         }
-        return mIcon11;*/
-    }
+        return mIcon11;
+    }*/
 
     public void tomarFoto(){
-        try {
+
+        profileImage = (ProfilePictureView) findViewById(R.id.profilePicture);
+        profileImage.setProfileId(Profile.getCurrentProfile().getId());
+        /*try {
             fecha_actual = funciones.getFechaActual();
             NOMBRE_FOTO = "coppate"+fecha_actual+".jpg";
             //Creamos el Intent para llamar a la Camara
@@ -227,7 +236,7 @@ public class perfil extends Activity {
             startActivityForResult(camaraIntent, 1);
         } catch (Exception e) {
             funciones.mostrarToastCorto("Se ha producido un error al querer utilizar la camara");
-        }
+        }*/
     }
 
     public void onBackPressed() {

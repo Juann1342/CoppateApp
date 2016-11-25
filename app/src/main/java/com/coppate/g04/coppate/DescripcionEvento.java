@@ -171,7 +171,7 @@ public class DescripcionEvento extends AppCompatActivity {
         /*Intent intent = new Intent(MainActivity.this, OpinionUsuario.class);
         Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
         startActivity(intent,bndlanimation);*/
-        Intent opiniones = new Intent(DescripcionEvento.this, PerfilOtrosUser.class);
+        Intent opiniones = new Intent(DescripcionEvento.this, OpinionUsuario.class);
         Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
         startActivity(opiniones,bndlanimation);
     }

@@ -1,4 +1,6 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,9 +11,13 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity"
     android:orientation="horizontal"
+    android:id="@+id/swipelayout"
     android:background="@color/cardview_light_background">
 
 
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <TabHost android:id="@android:id/tabhost"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -56,7 +62,8 @@
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
                             android:layout_margin="10dp"
-                            android:textColor="@color/colorPrimary" />
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="14sp" />
 
                         <Button
                             android:onClick="irMapa"
@@ -80,20 +87,6 @@
                         android:text="Lista de eventos cercanos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
-
-                    <Button
-                        android:text="ir a perfil del otro usuario"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/boton_pulsado"
-                        android:textColor="@color/colorPrimary"
-                        android:id="@+id/btnOtrosUser" />
-
-                    <Button
-                        android:text="Button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/probando" />
 
                     <ListView
                         android:id="@+id/ma_lv_eventos_cercanos"
@@ -143,13 +136,16 @@
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_width="197dp"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:id="@+id/layoutMisEventos"
+                            android:visibility="gone">
 
                             <TextView android:id="@+id/txtview_mis_eventos"
                                 android:text="Eventos Propios"
                                 android:layout_width="match_parent"
                                 android:layout_height="33dp"
-                                android:paddingStart="4dp" />
+                                android:paddingStart="4dp"
+                                android:paddingLeft="4dp" />
 
                             <ListView
                                 android:layout_width="match_parent"
@@ -169,7 +165,8 @@
                                 android:layout_height="33dp"
                                 android:id="@+id/txtview_eventos_paticipo"
                                 android:textAlignment="viewEnd"
-                                android:paddingEnd="4dp" />
+                                android:paddingEnd="4dp"
+                                tools:ignore="RtlCompat" />
 
                             <ListView
                                 android:layout_width="match_parent"
@@ -188,7 +185,7 @@
 
         </LinearLayout>
     </TabHost>
+    </ScrollView>
 
-
-</LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout >
 

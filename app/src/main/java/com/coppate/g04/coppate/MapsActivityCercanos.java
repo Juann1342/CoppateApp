@@ -13,6 +13,10 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,6 +27,15 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MapsActivityCercanos extends FragmentActivity implements OnMapReadyCallback {
 
@@ -35,6 +48,11 @@ public class MapsActivityCercanos extends FragmentActivity implements OnMapReady
     double lat = 0.0;
     double lon = 0.0;
 
+    Funciones funciones;
+
+    private Gson gson = new Gson();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +62,11 @@ public class MapsActivityCercanos extends FragmentActivity implements OnMapReady
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        funciones= new Funciones(getApplicationContext());
+
+
+
+
     }
 
 
@@ -53,6 +76,25 @@ public class MapsActivityCercanos extends FragmentActivity implements OnMapReady
         mMap = googleMap;
 
         miUbicacion();
+
+
+        int largo = 0;
+        try {
+
+            largo = MisEventos.getInstance().getEventosCercanos().length;
+            for (int i = 0; i < largo; i++) {
+
+                agregarMarcador(MisEventos.getInstance().getEventosCercanos()[i].getLatitud(),MisEventos.getInstance().getEventosCercanos()[i].getLongitud(),MisEventos.getInstance().getEventosCercanos()[i].getId_evento());
+            }
+
+            //  lista_eventos_cercanos = new ArrayList<String>();
+            //  lista_eventos_otros_participo = new ArrayList<String>();
+        }
+        catch (Exception e) {
+            funciones.mostrarToastCorto("Deslice hacia abajo");
+        }
+
+
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -67,25 +109,7 @@ public class MapsActivityCercanos extends FragmentActivity implements OnMapReady
             @Override
             public void onMapLongClick(LatLng latLng) {  //obtiene latitud y longitud de donde estoy pulsando
 
-                //###############USAR PARA LEVANTAR EVENTOS DE LA BD Y MARCARLOS EN EL MAPA#######
 
-             /*   mMap.addMarker(new MarkerOptions()
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.marcadorflag))
-                        .anchor(0.0f, 1.0f)
-                        .position(latLng));
-
-
-
-                //obtener coordenadas
-                Projection proj = mMap.getProjection();
-                Point coord = proj.toScreenLocation(latLng);
-
-                Toast.makeText(
-                        MapsActivityCercanos.this,
-                        "Coordenadas\n"+"Latitud:"+latLng.latitude+"\n"+
-                                "Longitud:"+latLng.longitude+"\n",
-                        Toast.LENGTH_SHORT).show(); */
-                    //###########################################//
                 Intent intent = new Intent(MapsActivityCercanos.this, CrearEvento.class); //ir a la activity crear evento
                 startActivity(intent);
 
@@ -96,13 +120,15 @@ public class MapsActivityCercanos extends FragmentActivity implements OnMapReady
             }
         });
 //acciones al pulsar un marcador
+
+
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                Toast.makeText(getApplicationContext(),"Evento :)", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(MapsActivityCercanos.this, DescripcionEvento.class); //ir a descripcion del evento
-                startActivity(intent);
+                irAdescripcion(Integer.valueOf(marker.getTitle()));
+               // marker.setTitle("");
+
 
                 return false;
 
@@ -115,18 +141,22 @@ public class MapsActivityCercanos extends FragmentActivity implements OnMapReady
 
     //metodo para agregar el marcador, con camera update centro el mapa en mi posicion
 
-  /*  public void agregarMarcador(double lat, double lon) {
+    public void agregarMarcador(double lat, double lon,String titulo) {
         LatLng coordenadas = new LatLng(lat, lon);
-        CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas,14);
 
+        //CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas,14);
         //si el marcador es distinto a null se debera remover
-        if (marcador != null) marcador.remove();
-        marcador = mMap.addMarker(new MarkerOptions()
+        if (marcador != null){
+            marcador.remove();
+        }
+                mMap.addMarker(new MarkerOptions()
                 .position(coordenadas)
-                .title("Aquí te encuentras")
-               .icon(BitmapDescriptorFactory.fromResource(R.drawable.man)));
-        mMap.animateCamera(miUbicacion);
-    }*/
+
+                .anchor(0.0f, 1.0f)
+                .title(titulo)
+               .icon(BitmapDescriptorFactory.fromResource(R.drawable.eventomapa)));
+      //  mMap.animateCamera(miUbicacion);
+    }
 
     //metodo para obtener mi ubicación, se comprueba si es null para que la app no se cierre si sucede
     public void actualizarUbicacion(Location location) {
@@ -139,6 +169,7 @@ public class MapsActivityCercanos extends FragmentActivity implements OnMapReady
             mMap.animateCamera(miUbicacion);
 
             // agregarMarcador(lat, lon);
+          //  funciones.mostrarToastCorto(coordenadas.toString());
         }
     }
 
@@ -185,6 +216,13 @@ public class MapsActivityCercanos extends FragmentActivity implements OnMapReady
         actualizarUbicacion(location);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,15000,0,locListener);
     }
+
+    private void irAdescripcion(Integer titulo){
+        Intent intent = new Intent(MapsActivityCercanos.this, InvitacionEvento.class); //ir a descripcion del evento
+        intent.putExtra("ID_evento",titulo);
+        startActivity(intent);
+    }
+
 
 }
 

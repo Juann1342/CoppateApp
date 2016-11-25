@@ -13,6 +13,8 @@ public class MisEventos {
 
     Evento[] evento_otro_usuario;
 
+    Evento[] eventos_cercanos;
+
     private static MisEventos ourInstance = new MisEventos();
 
     public static MisEventos getInstance() {
@@ -45,5 +47,10 @@ public class MisEventos {
     public void setEventoOtroUsuario(Evento[] evento_otro_usuario) {
         this.evento_otro_usuario = evento_otro_usuario;
     }
+    public Evento[] getEventosCercanos() {return eventos_cercanos;
+    }
+
+    public void setEventosCercanos(Evento[] eventos_cercanos) {this.eventos_cercanos = eventos_cercanos;}
+
 
 }
