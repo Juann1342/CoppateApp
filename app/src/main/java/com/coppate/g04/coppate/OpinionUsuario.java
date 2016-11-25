@@ -2,6 +2,7 @@ package com.coppate.g04.coppate;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Path;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class OpinionUsuario extends Activity {
 
@@ -83,6 +86,12 @@ public class OpinionUsuario extends Activity {
                 goCalificar(v);
             }
         });
+    }
+
+    //el la siguiente clase cambiamos la fuente
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     //funcion que pasa a pantalla de calificacion de usuario

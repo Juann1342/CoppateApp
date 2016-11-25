@@ -4,6 +4,7 @@ package com.coppate.g04.coppate;
 // http://www.sachinmuralig.me/2013/11/android-simple-multi-contacts-picker.html
 
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class InvitarContactos extends AppCompatActivity {
@@ -104,6 +107,15 @@ public class InvitarContactos extends AppCompatActivity {
             }
         });
     }
+
+
+    //el la siguiente clase cambiamos la fuente
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+
 
     // directamente no esta ingresando en OnactivityResult
     // este onctivity se recibe desde Crear evento.. ahora no sirve para nada

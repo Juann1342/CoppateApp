@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.coppate.g04.coppate.DescripcionEvento"
     android:weightSum="1"
-    android:orientation="vertical">
+      android:orientation="vertical">
 
     <LinearLayout
         android:orientation="vertical"
@@ -67,7 +67,6 @@
                         android:id="@+id/ie_descrip_evento"
                         android:layout_weight="1"
                         android:textColor="@color/negro"
-                        android:textStyle="normal"
                         android:padding="2dp"
                         android:paddingBottom="2dp"
                         android:paddingEnd="2dp"
@@ -88,7 +87,7 @@
                     android:layout_width="98dp"
                     android:layout_height="123dp"
                     android:id="@+id/ie_ubicacion_mapa"
-                    android:background="@drawable/mapabuscar"
+                    android:background="@drawable/crear11"
                     android:textColor="@color/colorPrimary"/>
 
                 <LinearLayout

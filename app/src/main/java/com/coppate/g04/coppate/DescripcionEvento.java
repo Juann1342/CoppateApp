@@ -5,6 +5,7 @@ import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DescripcionEvento extends AppCompatActivity {
 
@@ -167,6 +171,13 @@ public class DescripcionEvento extends AppCompatActivity {
 
     }
 
+    //el la siguiente clase cambiamos la fuente
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+
     private void goPerfilUsuario(){
         /*Intent intent = new Intent(MainActivity.this, OpinionUsuario.class);
         Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in,R.anim.left_out).toBundle();
@@ -181,6 +192,7 @@ public class DescripcionEvento extends AppCompatActivity {
         overridePendingTransition(R.anim.reingreso, R.anim.nothing);
 
     }
+
 
     private void actualizarPantalla(ImageView foto,TextView descripcion_evento,TextView usuario_creador,ImageView calificacion,TextView puntuacion){
 
