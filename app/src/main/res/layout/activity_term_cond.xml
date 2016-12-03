@@ -10,13 +10,30 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.coppate.g04.coppate.TermCond">
 
-    <TextView
-        android:text="Fecha de entrada en vigencia: 24 de Noviembre de 2016. Esta sección describe los términos, condiciones y la política de privacidad de datos aplicables a la utilización de la Aplicación por todo usuario registrado. Al registrarse como Usuario y/o continuar utilizando la Aplicación, el mismo acepta cumplir con estos Términos, Condiciones y con la Política de Privacidad. SI NO ESTÁS DE ACUERDO CON TODA O ALGUNA CLÁUSULA, NO SELECCIONE LA OPCIÓN ACEPTAR TÉRMINOS Y CONDICIONES, Y NO CONTINÚE UTILIZANDO LA APLICACIÓN. Al aceptar estos Términos y Condiciones, presta su consentimiento para el tratamiento, cesión y/o transferencia de los datos personales recabados por la aplicación Coppate, con fines publicitarios, de difusión o en general para cualquier fin legítimo, de conformidad con lo establecido por el art. 5 y subsiguientes de la Ley de Protección de Datos Personales Nº 25.326 (con sus modificatorias y complementarias). Para registrarse y utilizar Coppate, el Usuario deberá ser mayor de 18 años, tener capacidad de ejercicio de derechos de acuerdo a las leyes de su jurisdicción de residencia. Coppate ha tomado todas las medidas de seguridad a su alcance tecnológico y económico para proteger la privacidad y los datos personales. Se ha dispuesto las precauciones pertinentes en la transmisión de la información entre los dispositivos móviles. No obstante, ello no asegura que las claves empleadas para proteger la información o datos personales no puedan ser descifrados por terceros, y los mismos sean utilizados sin el consentimiento del Usuario. Al aceptar estos Términos y Condiciones y utilizar la Aplicación, el Usuario reconoce y acepta esta circunstancia y asume el riesgo que ello implica. Coppate le recomienda que no proporcione datos personales (incluyendo números de teléfono y direcciones de correo electrónico) a través de la Aplicación, debido a que la misma puede ser recopilada y utilizada por terceros sin el consentimiento. Para el uso de las funciones disponibles en la Aplicación Coppate, se requiere acceder a la información de ubicación del dispositivo móvil que utiliza cada Usuario para acceder a la Aplicación.
-Coppate y ninguno de sus integrantes serán responsable por los daños y acciones clandestinas e ilegales. Que los Usuarios puedan eventualmente realizar como consecuencia del mal uso de la aplicación."
-        android:layout_width="wrap_content"
+
+    <ScrollView
+        android:id="@+id/ScrollView13"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/negro"
-        android:textSize="11.5dp"
-        android:id="@+id/textView13"
-        android:layout_alignParentTop="true" />
+        android:scrollbars="vertical"
+        android:fillViewport="true">
+        <TextView
+            android:id="@+id/textView13"
+            android:text="TÉRMINOS Y CONDICIONES
+          Fecha de entrada en vigencia: 24 de Noviembre de 2016.
+    Este documento describe los términos y condiciones (los “Términos y Condiciones”) y la política de privacidad de datos (la “Política de Privacidad”) aplicables a la utilización de la Aplicación por todo usuario registrado (el “Usuario”). Al registrarse como Usuario y/o continuar utilizando la Aplicación, el Usuario acepta cumplir con estos Términos y Condiciones y con la Política de Privacidad.
+    SI NO ESTÁS DE ACUERDO CON TODA O ALGUNA CLÁUSULA DE ESTOS TÉRMINOS Y CONDICIONES O DE LAS POLÍTICAS DE PRIVACIDAD, NO SELECCIONÁ LA OPCIÓN “Al INICIAR SESIÓN ESTÁ ACEPTANDO LOS TÉRMINOS Y CONDICIONES” Y NO CONTINÚES UTILIZANDO LA APLICACIÓN.
+    Al aceptar estos Términos y Condiciones, el Usuario presta su consentimiento para el tratamiento, cesión y/o transferencia de los datos personales recabados por la aplicación Coppate, con fines publicitarios, de difusión o en general para cualquier fin legítimo, de conformidad con lo establecido por el art. 5 y subsiguientes de la Ley de Protección de Datos Personales Nº 25.326 (con sus modificatorias y complementarias).
+    Para registrarse y utilizar Coppate, el Usuario deberá ser mayor de 18 años, tener capacidad de ejercicio de derechos de acuerdo a las leyes de su jurisdicción de residencia y comprometerse a cumplir con estos Términos y Condiciones siempre que utilice la Aplicación.
+    Coppate ha tomado todas las medidas de seguridad a su alcance tecnológico y económico para proteger la privacidad y los datos personales de los Usuarios. A tal fin, ha dispuesto las precauciones pertinentes en la transmisión de la información entre los dispositivos móviles de los Usuarios . No obstante, ello no asegura que las claves empleadas para proteger la información o datos personales de los Usuarios no puedan ser descifrados por terceros, y los mismos sean utilizados sin el consentimiento del Usuario. Al aceptar estos Términos y Condiciones y utilizar la Aplicación, el Usuario reconoce y acepta esta circunstancia y asume el riesgo que ello implica.
+    Coppate le recomienda que no proporcione datos personales (incluyendo números de teléfono y direcciones de correo electrónico) a través de la Aplicación, debido a que la misma puede ser recopilada y utilizada por terceros sin el consentimiento del Usuario.
+    Para el uso de las funciones disponibles en la Aplicación Coppate, se requiere acceder a la información de ubicación del dispositivo móvil que utiliza cada Usuario para acceder a la Aplicación. Al aceptar estos Términos y Condiciones, el Usuario entiende y acepta que Coppate tendrá acceso a dicha información y podrá publicarla en la Aplicación para que sea accesible por los otros Usuarios.
+    Coppate y ninguno de sus integrantes serán responsable por los daños y acciones clandestinas e ilegales. Que los Usuarios puedan eventualmente realizar como consecuencia del mal uso de la aplicación."
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:textSize="18dp"
+            android:layout_weight="1.0"/>
+    </ScrollView>
 </RelativeLayout>
+
+
