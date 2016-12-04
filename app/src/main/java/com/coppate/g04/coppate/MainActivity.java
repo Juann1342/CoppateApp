@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        int largo2= 0;
+        int largo2 = 0;
 
         try {
 
@@ -203,21 +203,36 @@ public class MainActivity extends AppCompatActivity {
             //  lista_eventos_otros_participo = new ArrayList<String>();
         }
         catch (Exception e) {
-            funciones.mostrarToastCorto("Deslice hacia abajo");
+            funciones.mostrarToastCorto("Deslice hacia abajo para actualizar");
+        }
+
+        int largo3 = 0;
+        try {
+
+            largo3 = MisEventos.getInstance().getEventos_que_participo().length;
+            for (int i = 0; i < largo3; i++) {
+                lista_eventos_otros_participo.add(MisEventos.getInstance().getEventos_que_participo()[i].getNombre());
+            }
+
+            //  lista_eventos_cercanos = new ArrayList<String>();
+            //  lista_eventos_otros_participo = new ArrayList<String>();
+        }
+        catch (Exception e) {
+            funciones.mostrarToastCorto("Deslice hacia abajo para actualizar");
         }
 
 
         // cargamos datos de prueba que tienen que venir de la BD, tanto los propios como los otros
         // lista_eventos_cercanos.add("Evento cercano: 1");
         //lista_eventos_mios.add("Eventos mios: 1"); -- codigo hardcode
-        lista_eventos_otros_participo.add("PaintBall");
+ /*       lista_eventos_otros_participo.add("PaintBall");
         lista_eventos_otros_participo.add("Picadito");
         lista_eventos_otros_participo.add("Hoy Se sale Fuerte");
         lista_eventos_otros_participo.add("Clase de Resaca");
         lista_eventos_otros_participo.add("Domingo en Casa");
         lista_eventos_otros_participo.add("Despedida de Soltera");
         lista_eventos_otros_participo.add("Mi Cumple 18");
-        lista_eventos_otros_participo.add("Fiesta a pleno");
+        lista_eventos_otros_participo.add("Fiesta a pleno");*/
 
         // llamammos a las funciones que listan los eventos cercanos, de otros y mios
         mostrarEventosCercanos(lista_eventos_cercanos);
@@ -410,12 +425,7 @@ public class MainActivity extends AppCompatActivity {
     private void mostrarEventosEnQueParticipo(ArrayList<String> array_eventos_participo){
         try {
             participo = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
-            // hay que hacer que el "ARRAYADAPTER lo tome de la base de datos y luego recorrerlo, ahora esta a manopla
-            /*String objeto = "Participo en Evento: ";
-            String num = "";
-            for(int i = 4;i>0;i--){
-                participo.add(objeto+i);
-            }*/
+
             for (int i = 0;i<array_eventos_participo.size();i++){
                 participo.add(array_eventos_participo.get(i));
             }
@@ -633,7 +643,7 @@ public class MainActivity extends AppCompatActivity {
                     // Obtener array "metas" Json
                     JSONArray mensaje = response.getJSONArray("eventos");
                     // Parsear con Gson
-                    ListaMiembros.getInstance().setMiembro(gson.fromJson(mensaje.toString(), Miembro[].class));
+                    MisEventos.getInstance().setEventos_que_participo(gson.fromJson(mensaje.toString(), Evento[].class));
                     //funciones.mostrarToastLargo("Toast procesarResp: " + String.valueOf(MisEventos.getInstance().getEventos().length));
                     //funciones.mostrarToastLargo(MisEventos.getInstance().getEventos()[0].getNombre());
                     break;

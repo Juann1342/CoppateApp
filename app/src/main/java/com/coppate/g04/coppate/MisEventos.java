@@ -7,13 +7,16 @@ import java.util.ArrayList;
  * Created by guillermo.bazzi on 11/19/2016.
  */
 public class MisEventos {
-    Evento[] eventos;
+    Evento[] eventos; // Lista de eventos de los cuales soy Owner
 
-    Evento[] evento;
+    Evento[] evento; // Evento del cual soy Owner
 
-    Evento[] evento_otro_usuario;
+    Evento[] evento_otro_usuario; // Se usa para mostrar el detalle de un evento de otro usuario
 
-    Evento[] eventos_cercanos;
+    Evento[] eventos_cercanos; // Lista de eventos cercanos
+
+    Evento[] eventos_que_participo; // Lista de eventos de los cuales participo
+
 
     private static MisEventos ourInstance = new MisEventos();
 
@@ -52,5 +55,7 @@ public class MisEventos {
 
     public void setEventosCercanos(Evento[] eventos_cercanos) {this.eventos_cercanos = eventos_cercanos;}
 
+    public Evento[] getEventos_que_participo() {return eventos_que_participo;}
 
+    public void setEventos_que_participo(Evento[] eventos_que_participo) {this.eventos_que_participo = eventos_que_participo;}
 }
