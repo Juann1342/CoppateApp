@@ -2,9 +2,9 @@
 <!--en este archivo cambiamos el color del icono de la tab2 segun si esta seleccionado o no-->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!--muestra el icono cuando esta seleccionado-->
-    <item android:drawable="@drawable/pin1"
+    <item android:drawable="@drawable/pin2"
         android:state_selected="true"/>
     <!--muestra el icono cuando  no esta seleccionado-->
-    <item android:drawable="@drawable/pin"
+    <item android:drawable="@drawable/pin22"
         android:state_selected="false"/>
 </selector>
