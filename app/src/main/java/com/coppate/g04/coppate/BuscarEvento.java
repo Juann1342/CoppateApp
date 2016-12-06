@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -38,6 +39,9 @@ public class BuscarEvento extends AppCompatActivity {
     Boolean codigo;
     Funciones funciones;
     Button fecha_buscar;
+    EditText nombre_evento;
+    EditText fecha_desde;
+    EditText fecha_hasta;
     EditText txtDate;
     private int mYear, mMonth, mDay;
 
@@ -58,11 +62,17 @@ public class BuscarEvento extends AppCompatActivity {
         // HttpPost
         buscar = (Button)findViewById(R.id.buscar);
 
+        // creamos una variable de tipo Context.INPUT (para el teclado en pantalla)
+        final InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+
         codigo = false;
         acceso_de_codigo = (Button)findViewById(R.id.be_ingresar_codigo);
         ingreso_codigo = (EditText)findViewById(R.id.be_txt_ingresar_codigo);
         fecha_buscar = (Button) findViewById(R.id.fechaBuscar);
         txtDate = (EditText) findViewById(R.id.fechaVer);
+        fecha_desde = (EditText)findViewById(R.id.be_edad_desde);
+        fecha_hasta = (EditText)findViewById(R.id.edad_hasta);
+        nombre_evento = (EditText)findViewById(R.id.NombreEvento);
 
         ingreso_codigo.setEnabled(codigo);
 
@@ -99,6 +109,7 @@ public class BuscarEvento extends AppCompatActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
+
         acceso_de_codigo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +117,15 @@ public class BuscarEvento extends AppCompatActivity {
                 ingreso_codigo.setEnabled(codigo);
                 ingreso_codigo.setVisibility(v.VISIBLE);
                 ingreso_codigo.requestFocus();
+                tipo.setVisibility(v.INVISIBLE);
+                sexo.setVisibility(v.INVISIBLE);
+                txtDate.setVisibility(v.INVISIBLE);
+                fecha_buscar.setVisibility(v.INVISIBLE);
+                fecha_desde.setVisibility(v.INVISIBLE);
+                fecha_hasta.setVisibility(v.INVISIBLE);
+                nombre_evento.setVisibility(v.INVISIBLE);
+                // ademas de mostrar el campo de busqueda de codigo, agregamos que se despliegue el  teclado para ingresar.
+                imm.showSoftInput(ingreso_codigo, InputMethodManager.SHOW_IMPLICIT);
             }
         });
 

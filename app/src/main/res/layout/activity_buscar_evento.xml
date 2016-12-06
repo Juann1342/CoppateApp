@@ -55,18 +55,19 @@
     <EditText
         android:layout_width="64dp"
         android:layout_height="50dp"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:text=""
         android:ems="10"
-        android:id="@+id/edad_desde"
+        android:id="@+id/be_edad_desde"
         app:layout_constraintBottom_toBottomOf="@+id/textView6"
         app:layout_constraintTop_toTopOf="@+id/textView6"
-        app:layout_constraintLeft_toRightOf="@+id/textView6" />
+        app:layout_constraintLeft_toRightOf="@+id/textView6"
+        android:numeric="integer" />
 
     <EditText
         android:layout_width="65dp"
         android:layout_height="48dp"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:text=""
         android:ems="10"
         android:id="@+id/edad_hasta"
@@ -74,7 +75,8 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="16dp"
         app:layout_constraintBottom_toTopOf="@+id/buscar"
-        android:layout_marginBottom="24dp" />
+        android:layout_marginBottom="16dp"
+        android:numeric="integer" />
 
     <TextView
         android:text="edad desde"
@@ -134,7 +136,7 @@
 
     <EditText
         android:layout_height="48dp"
-        android:inputType="textPersonName"
+        android:inputType="none"
         android:text=""
         android:hint="dd/mm/aa"
         android:ems="10"
@@ -178,7 +180,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Nombre de Evento"
+        android:hint="Nombre de Evento"
         android:ems="10"
         android:id="@+id/NombreEvento"
         app:layout_constraintBottom_toBottomOf="@+id/buscar_evento"

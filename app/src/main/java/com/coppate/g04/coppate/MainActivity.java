@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        int largo2 = 0;
+        int largo2= 0;
 
         try {
 

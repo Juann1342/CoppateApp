@@ -119,6 +119,7 @@ public class InvitacionEvento extends AppCompatActivity {
                     @Override
                     public void onClick(View view)
                     {
+                        //MisEventos.getInstance().getEventos_sumado().add(MisEventos.getInstance().getEvento());
                         InvitacionEvento.this.finish();
                         overridePendingTransition(R.anim.reingreso, R.anim.nothing);
 

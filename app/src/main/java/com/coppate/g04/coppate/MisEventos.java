@@ -18,6 +18,16 @@ public class MisEventos {
     Evento[] eventos_que_participo; // Lista de eventos de los cuales participo
 
 
+    ArrayList<Evento[]> eventos_sumado;
+
+    public ArrayList<Evento[]> getEventos_sumado() {
+        return eventos_sumado;
+    }
+
+    public void addEvent(Evento[] eventos_sumado) {
+        this.eventos_sumado.add(eventos_sumado);
+    }
+
     private static MisEventos ourInstance = new MisEventos();
 
     public static MisEventos getInstance() {

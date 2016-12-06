@@ -258,6 +258,11 @@ public class CrearEvento extends AppCompatActivity {
         btn_crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+
+                String str_nombre = nombre_evento.getText().toString();
+                String str_lugar = lugar_evento.getText().toString();
+                String str_descripcion = descripcion.getText().toString();
+
                 /*if (getActualListContact().size() > 0) {
                     // para mostrarlo en pantalla tipo mensaje se usa Toast
                     funciones.mostrarToastLargo((Usuario.getInstance().getNombre() + " ha creado el evento: " + nombre_evento.getText() + " de tipo: " + tipo + " solo para: " + sexo + " y se ha enviado una notificacion a los contactos seleccionados.."));
@@ -267,111 +272,120 @@ public class CrearEvento extends AppCompatActivity {
                 }*/
 
                 if (latitud != null) {
-                    if (!invita_contactos) {
+                    if((str_nombre == null) || (str_nombre.equals("")) || (str_lugar == null) || (str_lugar.equals("") || (str_descripcion == null) || (str_descripcion.equals("")))) {
+                        funciones.mostrarToastCorto("Los campos de Nombre, Lugar y Descripcion no pueden quedar vacios");
+                    }else {
+                        if (!invita_contactos) {
 
-                        Dialog customDialog = null;
-                        customDialog = new Dialog(CrearEvento.this, R.style.Theme_Dialog_Translucent);
-                        // con este tema personalizado evitamos los bordes por defecto
-                        //customDialog = new Dialog(this,R.style.AppTheme);
-                        //deshabilitamos el título por defecto
-                        customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        //obligamos al usuario a pulsar los botones para cerrarlo
-                        customDialog.setCancelable(false);
-                        //establecemos el contenido de nuestro dialog para poder visualizarlo en pantalla
-                        customDialog.setContentView(R.layout.dialog);
+                            Dialog customDialog = null;
+                            customDialog = new Dialog(CrearEvento.this, R.style.Theme_Dialog_Translucent);
+                            // con este tema personalizado evitamos los bordes por defecto
+                            //customDialog = new Dialog(this,R.style.AppTheme);
+                            //deshabilitamos el título por defecto
+                            customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            //obligamos al usuario a pulsar los botones para cerrarlo
+                            customDialog.setCancelable(false);
+                            //establecemos el contenido de nuestro dialog para poder visualizarlo en pantalla
+                            customDialog.setContentView(R.layout.dialog);
 
-                        // creamos y mostramos el titulo en pantalla
-                        TextView titulo = (TextView) customDialog.findViewById(R.id.titulo);
-                        titulo.setText("Invitar Contactos");
+                            // creamos y mostramos el titulo en pantalla
+                            TextView titulo = (TextView) customDialog.findViewById(R.id.titulo);
+                            titulo.setText("Invitar Contactos");
 
-                        // creamos y mostramos el mensaje que deseamos visualizar
-                        TextView contenido = (TextView) customDialog.findViewById(R.id.contenido);
-                        contenido.setText("¿Deseas invitar Contactos al evento?");
+                            // creamos y mostramos el mensaje que deseamos visualizar
+                            TextView contenido = (TextView) customDialog.findViewById(R.id.contenido);
+                            contenido.setText("¿Deseas invitar Contactos al evento?");
 
-                        // seteamos el texto del boton afirmativo como el texto del propio boton
-                        Button aceptar = (Button) customDialog.findViewById(R.id.aceptar);
-                        aceptar.setText("Si, invitar");
-                        aceptar.setOnClickListener(new View.OnClickListener() {
+                            // seteamos el texto del boton afirmativo como el texto del propio boton
+                            Button aceptar = (Button) customDialog.findViewById(R.id.aceptar);
+                            aceptar.setText("Si, invitar");
+                            aceptar.setOnClickListener(new View.OnClickListener() {
 
-                            @Override
-                            public void onClick(View view) {
-                                try {
+                                @Override
+                                public void onClick(View view) {
+                                    try {
+                                        guardarEvento();
+                                        /* if(ok en la base de datos al guardar el evento) hace lo que sigue*/
+                                        obtenerIdEventoCreado();
+                                        guarda_evento = true;
+                                        invita_contactos = true;
+                                        try {
+                                            funciones.mostrarToastCorto(MisEventos.getInstance().getEvento()[0].getId_evento());
+                                        } catch (Exception e) {
+                                            funciones.mostrarToastCorto("Error al hacer GetEvento()[0]");
+                                        }
+                                        goInvitarContactos(MisEventos.getInstance().getEvento()[0].getId_evento(), invita_contactos);
+                                    } catch (Exception e) {
+                                        funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
+                                    }
+
+                                }
+                            });
+
+                            // seteamos el texto del boton negativo como el texto del propio boton
+                            Button cancelar = (Button) customDialog.findViewById(R.id.cancelar);
+                            cancelar.setText("No");
+                            final Dialog finalCustomDialog1 = customDialog;
+                            cancelar.setOnClickListener(new View.OnClickListener() {
+
+                                @Override
+                                public void onClick(View view) {
+                                    try {
+                                        guardarEvento();
+                                        guarda_evento = true;
+                                        goInvitarContactos("nada", invita_contactos);
+                                        //funciones.playSoundGotaAgua(arg0);
+                                    } catch (Exception e) {
+                                        funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
+                                    }
+                                    // si el usuario presiona en aceptar, se cierra el cuadro y vuele al activity que lo llamo.
+                                    //finalCustomDialog1.dismiss();
+                                }
+                            });
+                            customDialog.show();
+
+
+                        /*AlertDialog.Builder dialogo = new AlertDialog.Builder(CrearEvento.this);
+                        dialogo.setTitle("Invitar Contactos");
+                        dialogo.setMessage("¿Desea invitar Contactos al evento?");
+                        dialogo.setIcon(R.drawable.icono32);
+                        dialogo.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogo, int id) {
+                                // actualizar campos de la base de datos de fecha y cancelar asistencia (dar de baja al usuario en el evento)
+                                // y comprobar si en main se elimina el evento del listview
+
+                                try{
                                     guardarEvento();
                                     /* if(ok en la base de datos al guardar el evento) hace lo que sigue*/
-                                    obtenerIdEventoCreado();
-                                    guarda_evento = true;
-                                    invita_contactos = true;
-                                    goInvitarContactos(MisEventos.getInstance().getEvento()[0].getId_evento(), invita_contactos);
-                                } catch (Exception e) {
+                                    /*guarda_evento = true;
+                                    invita_contactos = true;*/
+                                    /* hay que hacer una funcion que tome el codigo del evento ese para pasarlo
+                                    a goInvitarContactos()*/
+                                    /*goInvitarContactos("Evento de Prueba", invita_contactos);
+                                }catch (Exception e){
                                     funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
                                 }
-
                             }
                         });
-
-                        // seteamos el texto del boton negativo como el texto del propio boton
-                        Button cancelar = (Button) customDialog.findViewById(R.id.cancelar);
-                        cancelar.setText("No");
-                        final Dialog finalCustomDialog1 = customDialog;
-                        cancelar.setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View view) {
+                        dialogo.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogo, int id) {
                                 try {
                                     guardarEvento();
                                     guarda_evento = true;
-                                    goInvitarContactos("nada", invita_contactos);
+                                    goInvitarContactos("nada",invita_contactos);
                                     //funciones.playSoundGotaAgua(arg0);
-                                } catch (Exception e) {
+                                }catch (Exception e){
                                     funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
                                 }
-                                // si el usuario presiona en aceptar, se cierra el cuadro y vuele al activity que lo llamo.
-                                //finalCustomDialog1.dismiss();
+                                //finish();
                             }
                         });
-                        customDialog.show();
+                        dialogo.show();*/
 
+                            // al pulsar en crear evento se lanza el sonido de la gota de agua. no me es posible ahora corregirlo
+                            // para que luego de aceptar los botones SI o NO se lance el sonido...
 
-                    /*AlertDialog.Builder dialogo = new AlertDialog.Builder(CrearEvento.this);
-                    dialogo.setTitle("Invitar Contactos");
-                    dialogo.setMessage("¿Desea invitar Contactos al evento?");
-                    dialogo.setIcon(R.drawable.icono32);
-                    dialogo.setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialogo, int id) {
-                            // actualizar campos de la base de datos de fecha y cancelar asistencia (dar de baja al usuario en el evento)
-                            // y comprobar si en main se elimina el evento del listview
-
-                            try{
-                                guardarEvento();
-                                /* if(ok en la base de datos al guardar el evento) hace lo que sigue*/
-                                /*guarda_evento = true;
-                                invita_contactos = true;*/
-                                /* hay que hacer una funcion que tome el codigo del evento ese para pasarlo
-                                a goInvitarContactos()*/
-                                /*goInvitarContactos("Evento de Prueba", invita_contactos);
-                            }catch (Exception e){
-                                funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
-                            }
                         }
-                    });
-                    dialogo.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialogo, int id) {
-                            try {
-                                guardarEvento();
-                                guarda_evento = true;
-                                goInvitarContactos("nada",invita_contactos);
-                                //funciones.playSoundGotaAgua(arg0);
-                            }catch (Exception e){
-                                funciones.mostrarToastCorto("Se ha producido un error al guardar el evento en la base de datos");
-                            }
-                            //finish();
-                        }
-                    });
-                    dialogo.show();*/
-
-                        // al pulsar en crear evento se lanza el sonido de la gota de agua. no me es posible ahora corregirlo
-                        // para que luego de aceptar los botones SI o NO se lance el sonido...
-
                     }
                 }
                 else{
@@ -458,17 +472,21 @@ public class CrearEvento extends AppCompatActivity {
 
     private void goInvitarContactos(String codigo, Boolean invitar){
         funciones.playSoundGotaAgua();
+        funciones.mostrarToastCorto("Invitar = "+invitar);
+        funciones.mostrarToastCorto("Codigo = "+codigo);
         if(invitar){
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT, "Te invito al evento que he organizado a través de Coppate. Introduce el siguente código en el buscador de eventos. Codigo: '" + codigo + "' :Si aún no tienes la aplicación puedes encontrarla disponible en Play Store");
             sendIntent.setType("text/plain");
-            startActivity(sendIntent);
-            finish();
+            //startActivity(sendIntent);
+            startActivity(Intent.createChooser(sendIntent, getResources().getText(Integer.parseInt(codigo))));
+
         }else {
             CrearEvento.this.finish();
             overridePendingTransition(R.anim.reingreso, R.anim.nothing);
         }
+        CrearEvento.this.finish();
     }
 
     private void obtenerIdEventoCreado(){
