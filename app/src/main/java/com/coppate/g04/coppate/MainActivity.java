@@ -3,19 +3,13 @@ package com.coppate.g04.coppate;
 import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -70,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
     // generamos las listas para los eventos de otros (el listview que muestra)
     ArrayList<String> lista_eventos_mios = new ArrayList<String>();
-    ArrayList<String> lista_eventos_cercanos = new ArrayList<String>();
     ArrayList<String> lista_eventos_otros_participo = new ArrayList<String>();
 
     Funciones funciones;
@@ -81,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<String> adaptador;
     ArrayAdapter<String> participo;
     ArrayAdapter<String> adapt_eventos_otros;
+    private static EventoListaAdapter cercanos_prueba;
+
+    private ArrayList<FilaEvento> arrayEventos;
+    private EventoListaAdapter adapter;
 
     Boolean actualizar;
 
@@ -103,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         funciones = new Funciones(getApplicationContext());
 
+        // inicializamos la lista de los eventos cercanos
 
         // cargamos los datos en pantalla de los textview,listview,y botones
         // los textos
@@ -114,6 +112,9 @@ public class MainActivity extends AppCompatActivity {
         lista_mis_eventos = (ListView) findViewById(R.id.ma_listar_mis_eventos);
         lista_eventos_a_participar = (ListView) findViewById(R.id.ma_eventos_donde_participo);
         eventos_de_otros = (ListView) findViewById(R.id.ma_lv_eventos_cercanos);
+
+        //cercanos_prueba = new EventoListaAdapter(MainActivity.this,);
+
 
         final android.support.v7.app.AlertDialog alert = null;      //Comprueba si está activado el gps
         final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
@@ -172,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
         // inicializamos los arraylist que nos serviran para cargar los datos de los adaptadores para los listview
         lista_eventos_mios = new ArrayList<String>();
 
-        lista_eventos_cercanos = new ArrayList<String>();
         lista_eventos_otros_participo = new ArrayList<String>();
 
         int largo = 0;
@@ -188,22 +188,6 @@ public class MainActivity extends AppCompatActivity {
             funciones.mostrarToastCorto("Deslice hacia abajo");
             actualizar = true;
 
-        }
-
-        int largo2= 0;
-
-        try {
-
-            largo2 = MisEventos.getInstance().getEventosCercanos().length;
-            for (int i = 0; i < largo2; i++) {
-                lista_eventos_cercanos.add(MisEventos.getInstance().getEventosCercanos()[i].getNombre());
-            }
-
-            //  lista_eventos_cercanos = new ArrayList<String>();
-            //  lista_eventos_otros_participo = new ArrayList<String>();
-        }
-        catch (Exception e) {
-            funciones.mostrarToastCorto("Deslice hacia abajo para actualizar");
         }
 
         int largo3 = 0;
@@ -222,20 +206,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        // cargamos datos de prueba que tienen que venir de la BD, tanto los propios como los otros
-        // lista_eventos_cercanos.add("Evento cercano: 1");
-        //lista_eventos_mios.add("Eventos mios: 1"); -- codigo hardcode
- /*       lista_eventos_otros_participo.add("PaintBall");
-        lista_eventos_otros_participo.add("Picadito");
-        lista_eventos_otros_participo.add("Hoy Se sale Fuerte");
-        lista_eventos_otros_participo.add("Clase de Resaca");
-        lista_eventos_otros_participo.add("Domingo en Casa");
-        lista_eventos_otros_participo.add("Despedida de Soltera");
-        lista_eventos_otros_participo.add("Mi Cumple 18");
-        lista_eventos_otros_participo.add("Fiesta a pleno");*/
-
         // llamammos a las funciones que listan los eventos cercanos, de otros y mios
-        mostrarEventosCercanos(lista_eventos_cercanos);
+        mostrarEventosCercanos();
         mostrarMisEventos(lista_eventos_mios);
         mostrarEventosEnQueParticipo(lista_eventos_otros_participo);
 
@@ -302,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         swr.setRefreshing(false);
 
-                        mostrarEventosCercanos(lista_eventos_cercanos);
+                        mostrarEventosCercanos();
                         mostrarMisEventos(lista_eventos_mios);
                         mostrarEventosEnQueParticipo(lista_eventos_otros_participo);
 
@@ -377,12 +349,7 @@ public class MainActivity extends AppCompatActivity {
     private void mostrarMisEventos(ArrayList<String> array_mis_eventos){
         try {
             adaptador = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
-            // hay que hacer que el "ARRAYADAPTER lo tome de la base de datos y luego recorrerlo, ahora esta a manopla
-            /*String objeto = "Creo Evento: ";
-            String num = "";
-            for(int i = 0;i<30;i++){
-                adaptador.add(objeto+i);
-            }*/
+
             // recorremos la lista de los eventos que trae de la base de datos y los cargamos en el adaptadorde mis eventos
             for (int i = 0;i<array_mis_eventos.size();i++){
                 adaptador.add(array_mis_eventos.get(i));
@@ -416,7 +383,7 @@ public class MainActivity extends AppCompatActivity {
             Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in, R.anim.left_out).toBundle();
             // lanzamos la actividad de DESCRIPCION y le cargamos la animacion
             startActivity(intent_descripcion, bndlanimation);
-            MainActivity.this.finish();
+            //MainActivity.this.finish();
         }catch (Exception e){
             funciones.mostrarToastCorto("Error al cargar la siguiente pantalla");
         }
@@ -460,16 +427,48 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void mostrarEventosCercanos(ArrayList<String> array_eventos_cercanos){
-
+    private void mostrarEventosCercanos(){
+        arrayEventos = new ArrayList<FilaEvento>();
         try {
             // inicializamos el adapter para mostrar los eventos cercanos
-            adapt_eventos_otros = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
-            // le cargamos los datos que deben traerlos de la base de datos.
-            for (int i = 0; i<array_eventos_cercanos.size(); i++){
-                adapt_eventos_otros.add(array_eventos_cercanos.get(i));
+            /*adapt_eventos_otros = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
+            // le cargamos los datos que deben traerlos de la base de datos.*/
+            int largo = MisEventos.getInstance().getEventosCercanos().length;
+            Integer sexo = 0;
+            Integer categor = 0;
+            for (int i = 0; i<largo; i++){
+                sexo = Integer.valueOf(MisEventos.getInstance().getEventosCercanos()[i].getId_sexo());
+                categor = Integer.valueOf(MisEventos.getInstance().getEventosCercanos()[i].getId_categoria());
+                if(sexo == 1){
+                    if(categor == 1){
+                        arrayEventos.add(new FilaEvento(MisEventos.getInstance().getEventosCercanos()[i].getNombre(),MisEventos.getInstance().getEventosCercanos()[i].getDesc_evento(),R.drawable.masculino,R.drawable.personas));
+                    }
+                    else if(categor == 2){
+                        arrayEventos.add(new FilaEvento(MisEventos.getInstance().getEventosCercanos()[i].getNombre(),MisEventos.getInstance().getEventosCercanos()[i].getDesc_evento(),R.drawable.masculino,R.drawable.pelota));
+                    }
+                }
+                else if(sexo == 2){
+                    if(categor == 1){
+                        arrayEventos.add(new FilaEvento(MisEventos.getInstance().getEventosCercanos()[i].getNombre(),MisEventos.getInstance().getEventosCercanos()[i].getDesc_evento(),R.drawable.femenino,R.drawable.personas));
+                    }
+                    else if(categor == 2){
+                        arrayEventos.add(new FilaEvento(MisEventos.getInstance().getEventosCercanos()[i].getNombre(),MisEventos.getInstance().getEventosCercanos()[i].getDesc_evento(),R.drawable.femenino,R.drawable.pelota));
+                    }
+                }
+                else if(sexo == 3){
+                    if(categor == 1){
+                        arrayEventos.add(new FilaEvento(MisEventos.getInstance().getEventosCercanos()[i].getNombre(),MisEventos.getInstance().getEventosCercanos()[i].getDesc_evento(),R.drawable.unisex,R.drawable.personas));
+                    }
+                    else if(categor == 2){
+                        arrayEventos.add(new FilaEvento(MisEventos.getInstance().getEventosCercanos()[i].getNombre(),MisEventos.getInstance().getEventosCercanos()[i].getDesc_evento(),R.drawable.unisex,R.drawable.pelota));
+                    }
+                }
+                /*cercanos_prueba.agregarTitulo(MisEventos.getInstance().getEventosCercanos()[i].getNombre());
+                cercanos_prueba.agregarDescripcion(MisEventos.getInstance().getEventosCercanos()[i].getDesc_evento());*/
+
             }
-            eventos_de_otros.setAdapter(adapt_eventos_otros);
+            adapter = new EventoListaAdapter(this,arrayEventos);
+            eventos_de_otros.setAdapter(adapter);
             // hacemos que el listview tome el item que seleccionamos
             eventos_de_otros.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -477,6 +476,7 @@ public class MainActivity extends AppCompatActivity {
                     entrarAEvento(view);
                 }
             });
+
         }catch (Exception e){
             funciones.mostrarToastCorto("Se ha producido un error al cargar los eventos cercanos");
         }
@@ -554,7 +554,7 @@ public class MainActivity extends AppCompatActivity {
     private void goPerfil() {
         Intent intent = new Intent(this, perfil.class);
         startActivity(intent);
-    }  //dirige a la pantalla perfil
+    }  //dirige a la pantalla Perfil
 
 
     private void goBuscarEvento() {

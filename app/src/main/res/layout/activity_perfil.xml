@@ -28,7 +28,8 @@
 
     <LinearLayout
         android:layout_height="wrap_content"
-        android:layout_width="match_parent" >
+        android:layout_width="match_parent"
+        android:layout_gravity="center">
 
         <com.facebook.login.widget.ProfilePictureView
             android:id="@+id/profilePicture"
@@ -102,4 +103,40 @@
         android:id="@+id/ap_txt_birthday"
         android:hint="Mi Fecha de nacimiento"
         android:enabled="false" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:text="Guardar Cambios"
+            android:layout_width="193dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/ap_btnGuardarCambios"
+            android:background="@drawable/btncambia"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_margin="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+
+        <Button
+            android:text="Editar Perfil"
+            android:layout_width="193dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/ap_btnEditarPerfil"
+            android:background="@drawable/btncambia"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_margin="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
 </LinearLayout>

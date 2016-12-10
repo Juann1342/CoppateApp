@@ -135,6 +135,7 @@ public class EditarEvento extends Activity {
 
         obtenerDatosEventoPorID();
 
+        guardar_cambios.setVisibility(View.INVISIBLE);
 
         editar_evento.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -657,8 +658,8 @@ public class EditarEvento extends Activity {
     }
 
     private void goMain(){
-        Intent mainotravez = new Intent(EditarEvento.this,MainActivity.class);
-        startActivity(mainotravez);
+        /*Intent mainotravez = new Intent(EditarEvento.this,MainActivity.class);
+        startActivity(mainotravez);*/
         EditarEvento.this.finish();
         overridePendingTransition(R.anim.reingreso, R.anim.nothing);
 
@@ -667,7 +668,7 @@ public class EditarEvento extends Activity {
 
      private void goListaSolicitud(){
          Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in, R.anim.left_out).toBundle();
-         Intent aprobar = new Intent(EditarEvento.this, Aprobacion_administrador.class);
+         Intent aprobar = new Intent(EditarEvento.this, AprobacionAdministrador.class);
          startActivity(aprobar,bndlanimation);
      }
 

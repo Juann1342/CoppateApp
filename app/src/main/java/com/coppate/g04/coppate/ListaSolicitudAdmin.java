@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class lista_solicitud_admin extends AppCompatActivity {
+public class ListaSolicitudAdmin extends AppCompatActivity {
 
     ListView aceptar_invitados;
     ArrayAdapter<String> adaptador;
@@ -85,7 +85,7 @@ public class lista_solicitud_admin extends AppCompatActivity {
 
     private void mostrarMisSolicitantes(ArrayList<String> array_mis_solicitantes){
         try {
-            adaptador = new ArrayAdapter<String>(lista_solicitud_admin.this, android.R.layout.simple_list_item_1);
+            adaptador = new ArrayAdapter<String>(ListaSolicitudAdmin.this, android.R.layout.simple_list_item_1);
             // hay que hacer que el "ARRAYADAPTER lo tome de la base de datos y luego recorrerlo, ahora esta a manopla
             /*String objeto = "Creo Evento: ";
             String num = "";
@@ -118,14 +118,14 @@ public class lista_solicitud_admin extends AppCompatActivity {
             Integer id_evento = aceptar_invitados.getPositionForView(v);
             Integer idEvent = Integer.valueOf(MisEventos.getInstance().getEventos()[id_evento].getId_evento());
             funciones.mostrarToastCorto("ID_evento: "+idEvent.toString());
-            Intent intent_descripcion = new Intent(lista_solicitud_admin.this, EditarEvento.class);
+            Intent intent_descripcion = new Intent(ListaSolicitudAdmin.this, EditarEvento.class);
             // le pasamos el parametro del ide de evento para tomarlo en la pantalla de DESCRIPCION DE EVENTO y mostrar los datos necesarios
             intent_descripcion.putExtra("ID_evento", idEvent);
             // creamos la animacion de deslizamiento
             Bundle bndlanimation = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.left_in, R.anim.left_out).toBundle();
             // lanzamos la actividad de DESCRIPCION y le cargamos la animacion
             startActivity(intent_descripcion, bndlanimation);
-            lista_solicitud_admin.this.finish();
+            ListaSolicitudAdmin.this.finish();
         }catch (Exception e){
             funciones.mostrarToastCorto("Error al cargar la siguiente pantalla");
         }

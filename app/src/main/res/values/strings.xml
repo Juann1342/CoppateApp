@@ -17,6 +17,8 @@
     <string name="title01">Sexo</string>
     <string name="boton_true">Aceptar</string>
     <string name="boton_false">Cancelar</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_main3">Main3Activity</string>
 
 
 </resources>
