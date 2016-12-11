@@ -63,7 +63,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_margin="10dp"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="12sp" />
+                            android:textSize="14sp" />
 
                         <Button
                             android:onClick="irMapa"
@@ -77,26 +77,25 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
                             android:layout_margin="10dp"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="12sp" />
+                            android:textColor="@color/colorPrimary"/>
 
 
                     </LinearLayout>
-
-
-                    <TextView android:id="@+id/ma_lista_eventos_cercanos"
-                        android:text="Lista de eventos cercanos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-
-                    <ListView
-                        android:id="@+id/ma_lv_eventos_cercanos"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="356dp" />
+                        android:layout_height="373dp">
+
+                        <ListView
+                            android:id="@+id/ma_lv_eventos_cercanos"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
 
 
                 </LinearLayout>
+
+
+
 
                 <LinearLayout android:id="@+id/tab1"
                     android:orientation="vertical"

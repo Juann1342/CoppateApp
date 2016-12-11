@@ -10,6 +10,11 @@ import android.content.res.Resources;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+
+import android.os.Message;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
+
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -17,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -52,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     // boton que redirige a la actitiy crear evento
     Button probando;
     Button btn_crear_evento;
+
     TextView txt_mis_eventos;
     Button botonBuscar;
     android.support.v7.app.AlertDialog alert;
@@ -81,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
     Boolean actualizar;
 
+    FloatingActionButton fab;
 
     Handler mHandler;
 
@@ -107,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
         txt_mis_eventos = (TextView) findViewById(R.id.txtview_mis_eventos);
         // los botones
         btn_crear_evento = (Button) findViewById(R.id.ma_crear_evento);
+        //boton flotante de crear evento
+
         botonBuscar = (Button)findViewById(R.id.botonBuscar);
         //los listview
         lista_mis_eventos = (ListView) findViewById(R.id.ma_listar_mis_eventos);

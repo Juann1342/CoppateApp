@@ -63,7 +63,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_margin="10dp"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="12sp" />
+                            android:textSize="14sp" />
 
                         <Button
                             android:onClick="irMapa"
@@ -77,9 +77,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="10dp"
                             android:layout_margin="10dp"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="12sp" />
-
+                            android:textColor="@color/colorPrimary"/>
 
                     </LinearLayout>
 
@@ -89,11 +87,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-
                     <ListView
                         android:id="@+id/ma_lv_eventos_cercanos"
                         android:layout_width="match_parent"
-                        android:layout_height="356dp" />
+                        android:layout_height="match_parent" />
 
 
                 </LinearLayout>
@@ -113,6 +110,7 @@
                         android:id="@+id/ma_crear_evento"
                         android:textColor="@color/colorPrimary"
                         android:background="@drawable/crear8"/>
+
 
                     <LinearLayout
                         android:orientation="horizontal"
