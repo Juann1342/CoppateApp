@@ -5,44 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.PixelCopy;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphRequestAsyncTask;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.Profile;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.facebook.login.widget.ProfilePictureView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -55,6 +26,7 @@ public class perfil extends Activity {
     EditText fecha_nac;
     EditText apodo;
     Button editar_perfil;
+    Button guardar_cambios;
     String fecha_actual = "";
 
     Bitmap bitmap = null;
@@ -85,7 +57,8 @@ public class perfil extends Activity {
         nombre = (EditText) findViewById(R.id.ap_txt_Mi_nombre);
         fecha_nac = (EditText) findViewById(R.id.ap_txt_birthday);
         apodo = (EditText) findViewById(R.id.ap_apodo);
-       // editar_perfil = (Button) findViewById(R.id.ap_editar_perfil);
+        editar_perfil = (Button) findViewById(R.id.ap_btnEditarPerfil);
+        guardar_cambios = (Button)findViewById(R.id.ap_btnGuardarCambios);
 
         //foto_perfil.setImageResource(Profile.getCurrentProfile().getProfilePictureUri(320,320));
        // foto_perfil.setImageBitmap(getUserPic(Usuario.getInstance().getId_usuario()));
@@ -98,20 +71,31 @@ public class perfil extends Activity {
         }catch (Exception e){
             funciones.mostrarToastCorto("se ha producido un error al cargar los datos de usuario");
         }
-        /* tomar datos del perfil de usuario y cargarlos en los campos
+        /* tomar datos del Perfil de usuario y cargarlos en los campos
             foto_perfil.setImageBitmap(Usuario.getInstance().getFoto());
          */
 
-        /*editar_perfil.setOnClickListener(new View.OnClickListener() {
+        editar_perfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 nombre.setEnabled(true);
                 fecha_nac.setEnabled(true);
                 apodo.setEnabled(true);
+                guardar_cambios.setVisibility(View.VISIBLE);
                 activo = true;
             }
-        });*/
+        });
 
+        guardar_cambios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // hay que guardar los cambios hechos por el usuario en la base de datos
+                funciones.mostrarToastCorto("Guardando datos...");
+                perfil.this.finish();
+                overridePendingTransition(R.anim.reingreso, R.anim.nothing);
+
+            }
+        });
        /* foto_perfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +132,7 @@ public class perfil extends Activity {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    // funcion para cargar imagen de perfil de facebook
+    // funcion para cargar imagen de Perfil de facebook
     /*public Bitmap getUserPic(String userID) {
 
         URL imageURL = null;

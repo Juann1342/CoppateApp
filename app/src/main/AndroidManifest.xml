@@ -39,11 +39,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <intent-filter>
             <action android:name="android.intent.action.SEND" />
+
             <category android:name="android.intent.category.DEFAULT" />
+
             <data android:mimeType="text/plain" />
         </intent-filter>
+
         <activity android:name=".Login" />
         <activity
             android:name=".MensajeDescargo"
@@ -131,8 +135,26 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".ResultadoBusqueda" />
-        <activity android:name=".Aprobacion_administrador" />
-        <activity android:name=".lista_solicitud_admin"></activity>
+        <activity android:name=".AprobacionAdministrador" />
+        <activity android:name=".ListaSolicitudAdmin" />
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.coppate.g04.coppate.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Main3Activity"
+            android:label="@string/title_activity_main3"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.coppate.g04.coppate.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

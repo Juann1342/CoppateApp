@@ -8,7 +8,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class Aprobacion_administrador extends AppCompatActivity {
+public class AprobacionAdministrador extends AppCompatActivity {
 
     Button copparse;
     Button rechazar;
@@ -40,7 +40,7 @@ public class Aprobacion_administrador extends AppCompatActivity {
 
                 // hay actualizar en la base de datos una persona que se ha sumado al evento.
                 Dialog customDialog = null;
-                customDialog = new Dialog(Aprobacion_administrador.this,R.style.Theme_Dialog_Translucent);
+                customDialog = new Dialog(AprobacionAdministrador.this,R.style.Theme_Dialog_Translucent);
                 customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 customDialog.setCancelable(false);
                 customDialog.setContentView(R.layout.message);
@@ -59,7 +59,7 @@ public class Aprobacion_administrador extends AppCompatActivity {
                     @Override
                     public void onClick(View view)
                     {
-                        Aprobacion_administrador.this.finish();
+                        AprobacionAdministrador.this.finish();
                         overridePendingTransition(R.anim.reingreso, R.anim.nothing);
 
                     }
@@ -72,7 +72,7 @@ public class Aprobacion_administrador extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-        Aprobacion_administrador.this.finish();
+        AprobacionAdministrador.this.finish();
         overridePendingTransition(R.anim.reingreso, R.anim.nothing);
 
     }

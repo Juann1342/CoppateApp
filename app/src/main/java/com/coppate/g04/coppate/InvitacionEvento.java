@@ -245,7 +245,7 @@ public class InvitacionEvento extends AppCompatActivity {
                     calif_total = (ImageView) findViewById(R.id.ie_calif_total);
                     puntuacion = (TextView) findViewById(R.id.ie_puntuacion);
 
-                    // foto del usuario del perfil
+                    // foto del usuario del Perfil
                     foto_perfil.setImageResource(R.drawable.foto_perfil);
                     usuario_creador.setText("Usuario XXXXX, obtenido a traves del id evento: "+id_evento.toString());
                     puntuacion.setText("Puntuacion total del usuario XXXX a traves del id evento: "+id_evento.toString());*/
