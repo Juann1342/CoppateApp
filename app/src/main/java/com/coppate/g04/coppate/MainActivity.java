@@ -58,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
     // boton que redirige a la actitiy crear evento
     Button probando;
-    Button btn_crear_evento;
+
+    ImageButton ircrear;
 
     TextView txt_mis_eventos;
     Button botonBuscar;
@@ -89,8 +90,6 @@ public class MainActivity extends AppCompatActivity {
 
     Boolean actualizar;
 
-    FloatingActionButton fab;
-
     Handler mHandler;
 
     private LinearLayout LayoutMisEventos;
@@ -114,9 +113,8 @@ public class MainActivity extends AppCompatActivity {
         // cargamos los datos en pantalla de los textview,listview,y botones
         // los textos
         txt_mis_eventos = (TextView) findViewById(R.id.txtview_mis_eventos);
-        // los botones
-        btn_crear_evento = (Button) findViewById(R.id.ma_crear_evento);
-        //boton flotante de crear evento
+        //boton de crear evento
+        ircrear= (ImageButton) findViewById(R.id.imageButton);
 
         botonBuscar = (Button)findViewById(R.id.botonBuscar);
         //los listview
@@ -224,12 +222,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        btn_crear_evento.setOnClickListener(new View.OnClickListener() {
+        ircrear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goCrearEvento(v);
             }
         });
+
 
 
       /*  probando.setOnClickListener(new View.OnClickListener() {

@@ -1,26 +1,29 @@
 package com.coppate.g04.coppate;
 
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AcercaDe extends AppCompatActivity {
 
+
     Button volver;
     TextView acerca;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,7 @@ public class AcercaDe extends AppCompatActivity {
                 });
                 customDialog.show();
 
+
                 /*new android.app.AlertDialog.Builder(AcercaDe.this)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle("Agradecidos")
@@ -94,8 +98,14 @@ public class AcercaDe extends AppCompatActivity {
                                 finish();
                             }
                         });*/
+
             }
+
+
         });
+
+
+
     }
     public void onBackPressed() {
         AcercaDe.this.finish();
