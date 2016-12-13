@@ -21,7 +21,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AcercaDe extends AppCompatActivity {
 
-
+    FloatingActionButton ircrear;
     Button volver;
     TextView acerca;
 
@@ -32,6 +32,7 @@ public class AcercaDe extends AppCompatActivity {
 
         acerca = (TextView)findViewById(R.id.ad_acerca);
         volver = (Button)findViewById(R.id.ad_volver);
+        ircrear= (FloatingActionButton) findViewById(R.id.fabb);
 
         acerca.setText("\nAplicación desarrollada por los estudiantes de la UPE\n\n\n" +
                 "Juan Nuñez         Guillermo Bazzi\n\n" +
@@ -42,6 +43,13 @@ public class AcercaDe extends AppCompatActivity {
                 "Materia Desarrollo de Software profesores\n\n" +
                 "Ing. Sebastian Ramirez\n" +
                 "Ing. Federico Brucchieri");
+
+        ircrear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                goCrearevento(v);
+            }
+        });
 
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +119,12 @@ public class AcercaDe extends AppCompatActivity {
         AcercaDe.this.finish();
         overridePendingTransition(R.anim.reingreso, R.anim.nothing);
 
+    }
+
+
+    private void goCrearevento(View v) {
+        Intent intent = new Intent(this, CrearEvento.class);
+        startActivity(intent);
     }
 
     //el la siguiente clase cambiamos la fuente
