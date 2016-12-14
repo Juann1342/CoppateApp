@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/lib/com.app.chasebank"
+    xmlns:app2="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="@dimen/cardview_compat_inset_shadow"
     android:paddingRight="@dimen/cardview_compat_inset_shadow"
     android:paddingTop="@dimen/cardview_compat_inset_shadow"
@@ -107,7 +107,7 @@
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="309dp">
+                        android:layout_height="350dp">
 
                         <LinearLayout
                             android:orientation="vertical"
@@ -153,13 +153,13 @@
 
                     </LinearLayout>
 
-                    <ImageButton
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/ma_fab"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background= "@drawable/minicrear1"
-                        android:id="@+id/imageButton"
-                        android:layout_margin="16dp"
-                        android:layout_gravity="bottom|end"/>
+                        android:layout_gravity="center|bottom"
+                        android:src="@drawable/crear24"
+                        app2:backgroundTint="@color/violeta1"/>
 
                 </LinearLayout>
 

@@ -35,12 +35,5 @@
         android:textAllCaps="true"
         android:layout_alignParentBottom="true"
         />
-    <com.melnykov.fab.FloatingActionButton
-        android:id="@+id/fabb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="16dp"
-        android:src="@drawable/minicrear1"/>
 
 </FrameLayout>

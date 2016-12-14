@@ -17,6 +17,16 @@ public class MisEventos {
 
     Evento[] eventos_que_participo; // Lista de eventos de los cuales participo
 
+    Boolean actualizar = true; // creo un booleano en el Singleton para luego usarlo desde el main activity
+
+    public Boolean getActualizar() {
+        return actualizar;
+    }
+
+    public void setActualizar(Boolean actualizar) {
+        this.actualizar = actualizar;
+    }
+
 
     ArrayList<Evento[]> eventos_sumado;
 
