@@ -21,7 +21,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AcercaDe extends AppCompatActivity {
 
-    FloatingActionButton ircrear;
+    //FloatingActionButton ircrear;
     Button volver;
     TextView acerca;
 
@@ -32,7 +32,7 @@ public class AcercaDe extends AppCompatActivity {
 
         acerca = (TextView)findViewById(R.id.ad_acerca);
         volver = (Button)findViewById(R.id.ad_volver);
-        ircrear= (FloatingActionButton) findViewById(R.id.fabb);
+        //ircrear= (FloatingActionButton) findViewById(R.id.fabb);
 
         acerca.setText("\nAplicación desarrollada por los estudiantes de la UPE\n\n\n" +
                 "Juan Nuñez         Guillermo Bazzi\n\n" +
@@ -44,12 +44,12 @@ public class AcercaDe extends AppCompatActivity {
                 "Ing. Sebastian Ramirez\n" +
                 "Ing. Federico Brucchieri");
 
-        ircrear.setOnClickListener(new View.OnClickListener() {
+        /*ircrear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
                 goCrearevento(v);
             }
-        });
+        });*/
 
         volver.setOnClickListener(new View.OnClickListener() {
             @Override

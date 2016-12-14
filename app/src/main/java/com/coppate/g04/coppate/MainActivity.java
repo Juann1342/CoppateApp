@@ -3,6 +3,7 @@ package com.coppate.g04.coppate;
 import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.app.Notification;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -59,11 +61,13 @@ public class MainActivity extends AppCompatActivity {
     // boton que redirige a la actitiy crear evento
     Button probando;
 
-    ImageButton ircrear;
+    //ImageButton ircrear;
 
     TextView txt_mis_eventos;
     Button botonBuscar;
     android.support.v7.app.AlertDialog alert;
+
+    private ProgressDialog progress;
 
 
     // tomamos los ListView para mostrar los eventos cercanos, de otros y propios
@@ -82,17 +86,15 @@ public class MainActivity extends AppCompatActivity {
     // creamos los adaptadores para los listview
     ArrayAdapter<String> adaptador;
     ArrayAdapter<String> participo;
-    ArrayAdapter<String> adapt_eventos_otros;
-    private static EventoListaAdapter cercanos_prueba;
 
     private ArrayList<FilaEvento> arrayEventos;
-    private EventoListaAdapter adapter;
-
-    Boolean actualizar;
+    private EventoListaAdapter eventoListaAdapter;
 
     Handler mHandler;
 
     private LinearLayout LayoutMisEventos;
+
+    Boolean actualizar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,11 +104,13 @@ public class MainActivity extends AppCompatActivity {
         LayoutMisEventos = (LinearLayout) findViewById(R.id.layoutMisEventos);
         LayoutMisEventos.setVisibility(View.VISIBLE);
 
-        actualizar = false;
+        //actualizar = false;
         final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.rosafuxia1,R.color.violetadiseno,R.color.violeta1);
 
         funciones = new Funciones(getApplicationContext());
+
+        actualizar = false;
 
         // inicializamos la lista de los eventos cercanos
 
@@ -114,15 +118,13 @@ public class MainActivity extends AppCompatActivity {
         // los textos
         txt_mis_eventos = (TextView) findViewById(R.id.txtview_mis_eventos);
         //boton de crear evento
-        ircrear= (ImageButton) findViewById(R.id.imageButton);
+        //ircrear= (ImageButton) findViewById(R.id.imageButton);
 
         botonBuscar = (Button)findViewById(R.id.botonBuscar);
         //los listview
         lista_mis_eventos = (ListView) findViewById(R.id.ma_listar_mis_eventos);
         lista_eventos_a_participar = (ListView) findViewById(R.id.ma_eventos_donde_participo);
         eventos_de_otros = (ListView) findViewById(R.id.ma_lv_eventos_cercanos);
-
-        //cercanos_prueba = new EventoListaAdapter(MainActivity.this,);
 
 
         final android.support.v7.app.AlertDialog alert = null;      //Comprueba si está activado el gps
@@ -173,11 +175,6 @@ public class MainActivity extends AppCompatActivity {
         listarEventoPorOwner();
         listarEventoEnQueParticipo();
         getEventosCercanos();
-        /*try {
-            funciones.mostrarToastCorto(ListaMiembros.getInstance().getMiembros()[0].getId_evento().toString());
-        }catch (Exception e){
-            funciones.mostrarToastCorto("Error lista eventos que participo: "+e.toString());
-        }*/
 
         // inicializamos los arraylist que nos serviran para cargar los datos de los adaptadores para los listview
         lista_eventos_mios = new ArrayList<String>();
@@ -195,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (Exception e) {
             funciones.mostrarToastCorto("Deslice hacia abajo");
-            actualizar = true;
+            //actualizar = true;
 
         }
 
@@ -207,8 +204,6 @@ public class MainActivity extends AppCompatActivity {
                 lista_eventos_otros_participo.add(MisEventos.getInstance().getEventos_que_participo()[i].getNombre());
             }
 
-            //  lista_eventos_cercanos = new ArrayList<String>();
-            //  lista_eventos_otros_participo = new ArrayList<String>();
         }
         catch (Exception e) {
             funciones.mostrarToastCorto("Deslice hacia abajo para actualizar");
@@ -222,13 +217,27 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        ircrear.setOnClickListener(new View.OnClickListener() {
+        /*ircrear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goCrearEvento(v);
             }
-        });
+        });*/
 
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.ma_fab);
+        fab.setImageResource(R.drawable.crear6);
+        fab.setSize(FloatingActionButton.SIZE_AUTO);
+        //fab.setImageDrawable(R.drawable.crear6);
+        //fab.setBackgroundTintList(getResources().getColorStateList(R.drawable.btncambia));
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                goCrearEvento(view);
+            }
+        });
 
 
       /*  probando.setOnClickListener(new View.OnClickListener() {
@@ -243,11 +252,14 @@ public class MainActivity extends AppCompatActivity {
         botonBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goBuscarEvento();
+                goBuscar();
                 //goAcercaDe();
             }
         });
 
+        if(MisEventos.getInstance().getActualizar() == true){
+            descargar(tabs.getCurrentTabView(),swipeRefreshLayout);
+        }
         if(actualizar){
             actualizarPantalla(swipeRefreshLayout);
             actualizar=false;
@@ -255,6 +267,47 @@ public class MainActivity extends AppCompatActivity {
             NoActualizarPantalla(swipeRefreshLayout);
             actualizar=true;
         }
+    }
+
+    // funcion que sirve para crear un hilo en segundo plano mientras se cargan los datos de la base de datos en las listas de pantalla
+    public void descargar(View view, final SwipeRefreshLayout swipeRefreshLayout){
+
+        progress=new ProgressDialog(this);
+        progress.setMessage("Actualizando la lista de eventos....");
+        progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progress.setIcon(R.drawable.icono32);
+        // progress.setIndeterminate(true);
+        progress.setProgress(0);
+        progress.show();
+        final int totalProgressTime = 100;
+        final Thread t = new Thread() {
+            @Override
+            public void run() {
+                int jumpTime = 0;
+
+                while(jumpTime < totalProgressTime) {
+                    try {
+                        if(MisEventos.getInstance().getActualizar()){
+                            actualizarPantalla(swipeRefreshLayout);
+                            MisEventos.getInstance().setActualizar(false);
+                            actualizar = false;
+                        }
+                        jumpTime += 5;
+                        progress.setProgress(jumpTime);
+                        sleep(200);
+                        if(jumpTime == totalProgressTime){
+                            progress.dismiss();
+                            finish();
+                            startActivity(getIntent());
+                        }
+                    }
+                    catch (InterruptedException e) {
+                        //Log.e(TAG, e.getMessage());
+                    }
+                }
+            }
+        };
+        t.start();
     }
 
     private  void NoActualizarPantalla(final SwipeRefreshLayout swr){
@@ -297,6 +350,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -440,7 +495,7 @@ public class MainActivity extends AppCompatActivity {
     private void mostrarEventosCercanos(){
         arrayEventos = new ArrayList<FilaEvento>();
         try {
-            // inicializamos el adapter para mostrar los eventos cercanos
+            // inicializamos el eventoListaAdapter para mostrar los eventos cercanos
             /*adapt_eventos_otros = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
             // le cargamos los datos que deben traerlos de la base de datos.*/
             int largo = MisEventos.getInstance().getEventosCercanos().length;
@@ -477,8 +532,8 @@ public class MainActivity extends AppCompatActivity {
                 cercanos_prueba.agregarDescripcion(MisEventos.getInstance().getEventosCercanos()[i].getDesc_evento());*/
 
             }
-            adapter = new EventoListaAdapter(this,arrayEventos);
-            eventos_de_otros.setAdapter(adapter);
+            eventoListaAdapter = new EventoListaAdapter(this,arrayEventos);
+            eventos_de_otros.setAdapter(eventoListaAdapter);
             // hacemos que el listview tome el item que seleccionamos
             eventos_de_otros.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -504,10 +559,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent_entrar_a_evento, bndlanimation);
     }
 
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }*/
 
     private void AlertNoGps() { //Funcion que da la opción de activar el gps
         final android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
