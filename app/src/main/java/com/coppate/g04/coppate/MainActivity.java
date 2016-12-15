@@ -228,6 +228,8 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.ma_fab);
         //fab.setImageResource(R.drawable.crear16);
         //fab.setSize(FloatingActionButton.SIZE_AUTO);
+        //fab.setImageResource(R.drawable.crear6);
+        //fab.setSize(FloatingActionButton.SIZE_AUTO);
         //fab.setImageDrawable(R.drawable.crear6);
         //fab.setBackgroundTintList(getResources().getColorStateList(R.drawable.btncambia));
         fab.setOnClickListener(new View.OnClickListener() {
