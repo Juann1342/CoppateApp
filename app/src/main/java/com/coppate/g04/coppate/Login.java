@@ -94,7 +94,7 @@ public class Login extends AppCompatActivity {
 
                 loguearUsuario();  //Llama al webservice
 
-                Toast.makeText(Login.this,"ID: " + Usuario.getInstance().getId_usuario() + " Nombre: " + Usuario.getInstance().getAlias(),Toast.LENGTH_LONG).show();
+           //     Toast.makeText(Login.this,"ID: " + Usuario.getInstance().getId_usuario() + " Nombre: " + Usuario.getInstance().getAlias(),Toast.LENGTH_LONG).show();
                 goMainScreen();
             }
 
@@ -176,7 +176,7 @@ public class Login extends AppCompatActivity {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                funciones.mostrarToastCorto(("Error Volley: " + error.getMessage()));
+                 //               funciones.mostrarToastCorto(("Error Volley: " + error.getMessage()));
                             }
                         }
 

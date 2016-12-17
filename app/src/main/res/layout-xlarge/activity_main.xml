@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app2="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app2="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/cardview_compat_inset_shadow"
@@ -15,9 +14,7 @@
     android:background="@color/cardview_light_background">
 
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+
     <TabHost android:id="@android:id/tabhost"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -85,7 +82,10 @@
                     <TextView android:id="@+id/ma_lista_eventos_cercanos"
                         android:text="Lista de eventos cercanos"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorBotones"/>
 
                     <ListView
                         android:id="@+id/ma_lv_eventos_cercanos"
@@ -119,7 +119,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="33dp"
                                 android:paddingStart="4dp"
-                                android:paddingLeft="4dp" />
+                                android:paddingLeft="4dp"
+                                android:textSize="16dp"
+                                android:textColor="@color/colorBotones"/>
 
                             <ListView
                                 android:layout_width="match_parent"
@@ -134,12 +136,13 @@
                             android:layout_height="match_parent">
 
                             <TextView
-                                android:text="Eventos en los que participo"
+                                android:text="Eventos donde participo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="33dp"
                                 android:id="@+id/txtview_eventos_paticipo"
                                 android:textAlignment="viewEnd"
                                 android:paddingEnd="4dp"
+                                android:textStyle="bold"
                                 tools:ignore="RtlCompat" />
 
                             <ListView
@@ -165,7 +168,6 @@
 
         </LinearLayout>
     </TabHost>
-    </ScrollView>
 
-</android.support.v4.widget.SwipeRefreshLayout >
+</LinearLayout>
 

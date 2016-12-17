@@ -125,11 +125,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Projection proj = mMap.getProjection();
                         Point coord = proj.toScreenLocation(latLng);
 
-                        Toast.makeText(
+                    /*    Toast.makeText(
                                 MapsActivity.this,
                                 "Coordenadas\n"+"Latitud:"+latLng.latitude+"\n"+
                                         "Longitud:"+latLng.longitude+"\n",
-                                Toast.LENGTH_SHORT).show();
+                                Toast.LENGTH_SHORT).show();*/
 
                         Intent intent=new Intent();
 

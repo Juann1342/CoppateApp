@@ -17,7 +17,6 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -104,10 +103,6 @@ public class MainActivity extends AppCompatActivity {
         LayoutMisEventos = (LinearLayout) findViewById(R.id.layoutMisEventos);
         LayoutMisEventos.setVisibility(View.VISIBLE);
 
-        //actualizar = false;
-        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
-        swipeRefreshLayout.setColorSchemeResources(R.color.rosafuxia1,R.color.violetadiseno,R.color.violeta1);
-
         funciones = new Funciones(getApplicationContext());
 
         actualizar = false;
@@ -148,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 Usuario.getInstance().setFoto(Profile.getCurrentProfile().getProfilePictureUri(128,128));
                 funciones.mostrarToastLargo("Hola :" + Usuario.getInstance().getNombre() + " " + Usuario.getInstance().getApellido());
             }catch (Exception e){
-                funciones.mostrarToastCorto(e.toString());
+              //  funciones.mostrarToastCorto(e.toString());
             }
         }
 
@@ -191,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         catch (Exception e) {
-            funciones.mostrarToastCorto("Deslice hacia abajo");
+          //  funciones.mostrarToastCorto("Deslice hacia abajo");
             //actualizar = true;
 
         }
@@ -206,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         catch (Exception e) {
-            funciones.mostrarToastCorto("Deslice hacia abajo para actualizar");
+           // funciones.mostrarToastCorto("Deslice hacia abajo para actualizar");
         }
 
 
@@ -260,19 +255,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if(MisEventos.getInstance().getActualizar() == true){
-            descargar(tabs.getCurrentTabView(),swipeRefreshLayout);
+            descargar(tabs.getCurrentTabView());
         }
-        if(actualizar){
-            actualizarPantalla(swipeRefreshLayout);
-            actualizar=false;
-        }else {
-            NoActualizarPantalla(swipeRefreshLayout);
-            actualizar=true;
-        }
+
     }
 
     // funcion que sirve para crear un hilo en segundo plano mientras se cargan los datos de la base de datos en las listas de pantalla
-    public void descargar(View view, final SwipeRefreshLayout swipeRefreshLayout){
+    public void descargar(View view ){
 
         progress=new ProgressDialog(this);
         progress.setMessage("Actualizando la lista de eventos....");
@@ -290,7 +279,6 @@ public class MainActivity extends AppCompatActivity {
                 while(jumpTime < totalProgressTime) {
                     try {
                         if(MisEventos.getInstance().getActualizar()){
-                            actualizarPantalla(swipeRefreshLayout);
                             MisEventos.getInstance().setActualizar(false);
                             actualizar = false;
                         }
@@ -310,47 +298,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         t.start();
-    }
-
-    private  void NoActualizarPantalla(final SwipeRefreshLayout swr){
-        swr.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
-            @Override
-            public void onRefresh() {
-                //swipeRefreshLayout.setRefreshing(true);
-                (new Handler()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swr.setRefreshing(false);
-                    }
-                },500);   //Actualiza pantalla
-            }
-        });
-    }
-
-    private  void actualizarPantalla(final SwipeRefreshLayout swr){
-        swr.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
-            @Override
-            public void onRefresh() {
-                //swipeRefreshLayout.setRefreshing(true);
-                (new Handler()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swr.setRefreshing(false);
-
-                        mostrarEventosCercanos();
-                        mostrarMisEventos(lista_eventos_mios);
-                        mostrarEventosEnQueParticipo(lista_eventos_otros_participo);
-
-                        finish();
-                        startActivity(getIntent());
-
-
-                    }
-                },4000);   //Actualiza pantalla
-            }
-        });
     }
 
 
@@ -433,7 +380,7 @@ public class MainActivity extends AppCompatActivity {
             });
             // termina el listview
         }catch (Exception e){
-            funciones.mostrarToastCorto("No fue posible cargar la lista de eventos");
+    //        funciones.mostrarToastCorto("No fue posible cargar la lista de eventos");
         }
     }
 
@@ -452,7 +399,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent_descripcion, bndlanimation);
             //MainActivity.this.finish();
         }catch (Exception e){
-            funciones.mostrarToastCorto("Error al cargar la siguiente pantalla");
+       //     funciones.mostrarToastCorto("Error al cargar la siguiente pantalla");
         }
     }
 
@@ -475,7 +422,7 @@ public class MainActivity extends AppCompatActivity {
             });
             // termina el listview
         }catch (Exception e){
-            funciones.mostrarToastCorto("No fue posible cargar la lista de eventos");
+        //    funciones.mostrarToastCorto("No fue posible cargar la lista de eventos");
         }
     }
 
@@ -490,7 +437,7 @@ public class MainActivity extends AppCompatActivity {
             // lanzamos la actividad de DESCRIPCION y le cargamos la animacion
             startActivity(intent_descripcion, bndlanimation);
         }catch (Exception e){
-            funciones.mostrarToastCorto("Error al cargar la siguiente pantalla");
+         //   funciones.mostrarToastCorto("Error al cargar la siguiente pantalla");
         }
     }
 
@@ -545,7 +492,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }catch (Exception e){
-            funciones.mostrarToastCorto("Se ha producido un error al cargar los eventos cercanos");
+      //      funciones.mostrarToastCorto("Se ha producido un error al cargar los eventos cercanos");
         }
     }
 
@@ -646,7 +593,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        funciones.mostrarToastCorto(("Se ha producido un Error Volley: " + error.getMessage()));
+             //           funciones.mostrarToastCorto(("Se ha producido un Error Volley: " + error.getMessage()));
                     }
                 }
         ) {
@@ -688,7 +635,7 @@ public class MainActivity extends AppCompatActivity {
                                 new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-                                        funciones.mostrarToastCorto("Debug1: Error en listarEventoEnQueParticipo");
+                      //                  funciones.mostrarToastCorto("Debug1: Error en listarEventoEnQueParticipo");
                                     }
                                 }
 
@@ -711,7 +658,7 @@ public class MainActivity extends AppCompatActivity {
                     //funciones.mostrarToastLargo(MisEventos.getInstance().getEventos()[0].getNombre());
                     break;
                 case "2": // FALLIDO
-                    funciones.mostrarToastCorto("Debug2: Error en seteaEventosMiembro");;
+         //           funciones.mostrarToastCorto("Debug2: Error en seteaEventosMiembro");;
                     break;
             }
 
@@ -745,7 +692,7 @@ public class MainActivity extends AppCompatActivity {
                                 new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-                                        funciones.mostrarToastCorto("Debug1: Error en listarEventoPorOwner");
+                    //                    funciones.mostrarToastCorto("Debug1: Error en listarEventoPorOwner");
                                     }
                                 }
 
@@ -775,7 +722,7 @@ public class MainActivity extends AppCompatActivity {
                     //funciones.mostrarToastLargo(MisEventos.getInstance().getEventos()[0].getNombre());
                     break;
                 case "2": // FALLIDO
-                    funciones.mostrarToastCorto("Debug2: Error en procesarRespuesta");;
+           //         funciones.mostrarToastCorto("Debug2: Error en procesarRespuesta");;
                     break;
             }
 
@@ -894,7 +841,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        funciones.mostrarToastCorto(("Se ha producido un Error Volley: " + error.getMessage()));
+           //             funciones.mostrarToastCorto(("Se ha producido un Error Volley: " + error.getMessage()));
                     }
                 }
         ) {
@@ -927,7 +874,7 @@ public class MainActivity extends AppCompatActivity {
                     //funciones.mostrarToastLargo(MisEventos.getInstance().getEventos()[0].getNombre());
                     break;
                 case "2": // FALLIDO
-                    funciones.mostrarToastCorto("Debug2: No encontró el registro");;
+          //          funciones.mostrarToastCorto("Debug2: No encontró el registro");;
                     break;
             }
 
