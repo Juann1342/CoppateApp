@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
         if(MisEventos.getInstance().getActualizar()){
             descargar();
         }
+        // proobandop
 
         //+*******************************************************************************************
 
