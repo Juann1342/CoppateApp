@@ -1,179 +1,211 @@
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/CoordinadorPrincipal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app2="http://schemas.android.com/apk/res-auto"
-    android:paddingLeft="@dimen/cardview_compat_inset_shadow"
-    android:paddingRight="@dimen/cardview_compat_inset_shadow"
-    android:paddingTop="@dimen/cardview_compat_inset_shadow"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity"
-    android:orientation="horizontal"
-    android:background="@color/cardview_light_background">
 
-    <TabHost android:id="@android:id/tabhost"
+    tools:context=".MainActivity">
+
+    <!-- Inicio de la Appbar -->
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/AppbarPrincipal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <LinearLayout
-
-            android:orientation="vertical"
+        android:layout_height="70dp">
+        <!-- Inicio de la TabLayout-->
+        <android.support.design.widget.TabLayout
+            android:id="@+id/TabLayoutPrincipal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:background="@color/blanco"
+            android:layout_height="70dp"
+            app:tabIndicatorHeight="2dp" />
+        <!-- Fin de la TabLayout-->
 
-            <TabWidget android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@android:id/tabs"
-                android:background="@color/colorPrimary"
-                android:dividerPadding="1dip"
-                android:orientation="horizontal" />
+    </android.support.design.widget.AppBarLayout>
+    <!-- Fin de la Appbar -->
 
-            <FrameLayout android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@android:id/tabcontent" >
+    <!-- Inicio del ViewPager -->
+    <android.support.v4.view.ViewPager
 
-                <LinearLayout android:id="@+id/tab2"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorPrimary">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:id="@+id/ViewPagerPrincipal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+    </android.support.v4.view.ViewPager>
+    <!-- Fin del ViewPager -->
 
-                        <Button
-                            android:text="Buscar"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/botonBuscar"
-                            android:background="@drawable/btncambia"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_margin="10dp"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="12sp" />
+</android.support.design.widget.CoordinatorLayout>
 
-                        <Button
-                            android:onClick="irMapa"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="Mapa"
-                            android:id="@+id/botonMapa"
-                            android:background="@drawable/btncambia"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_margin="10dp"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="12sp" />
+    <!--<?xml version="1.0" encoding="utf-8"?>
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/lib/com.app.chasebank"
+        xmlns:app2="http://schemas.android.com/apk/res-auto"
+        android:paddingLeft="@dimen/cardview_compat_inset_shadow"
+        android:paddingRight="@dimen/cardview_compat_inset_shadow"
+        android:paddingTop="@dimen/cardview_compat_inset_shadow"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:context=".MainActivity"
+        android:orientation="horizontal"
+        android:id="@+id/swipelayout"
+        android:background="@color/cardview_light_background">
 
 
-                    </LinearLayout>
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TabHost android:id="@android:id/tabhost"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-                    <TextView android:id="@+id/ma_lista_eventos_cercanos"
-                        android:text="Lista de eventos cercanos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorBotones"/>
+            <LinearLayout
 
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
 
-                    <ListView
-                        android:id="@+id/ma_lv_eventos_cercanos"
-                        android:layout_width="match_parent"
-                        android:layout_height="356dp" />
-
-
-                </LinearLayout>
-
-                <LinearLayout android:id="@+id/tab1"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <TabWidget android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@android:id/tabs"
                     android:background="@color/colorPrimary"
-                    android:weightSum="1">
+                    android:dividerPadding="1dip"
+                    android:orientation="horizontal" />
 
-                    <LinearLayout
-                        android:orientation="horizontal"
+                <FrameLayout android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@android:id/tabcontent" >
+
+                    <LinearLayout android:id="@+id/tab2"
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="350dp">
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary">
 
                         <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="197dp"
-                            android:layout_height="match_parent"
-                            android:id="@+id/layoutMisEventos"
-                            android:visibility="gone">
-
-                            <TextView android:id="@+id/txtview_mis_eventos"
-                                android:text="Eventos Propios"
-                                android:layout_width="match_parent"
-                                android:layout_height="33dp"
-                                android:paddingStart="4dp"
-                                android:paddingLeft="4dp"
-                                android:textSize="16dp"
-                                android:textStyle="bold"
-                                android:textColor="@color/colorBotones"/>
-
-                            <ListView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/ma_listar_mis_eventos" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-                            <TextView
-                                android:text="Eventos en los que participo"
-                                android:layout_width="wrap_content"
-                                android:layout_height="33dp"
-                                android:id="@+id/txtview_eventos_paticipo"
-                                android:textAlignment="viewEnd"
-                                android:paddingEnd="4dp"
-                                tools:ignore="RtlCompat"
-                                android:textSize="16dp"
-                                android:textStyle="bold"
-                                android:textColor="@color/colorBotones"/>
-
-                            <ListView
-                                android:layout_width="match_parent"
+                            <Button
+                                android:text="Buscar"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/ma_eventos_donde_participo" />
+                                android:id="@+id/botonBuscar"
+                                android:background="@drawable/btncambia"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_margin="10dp"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="14sp" />
+
+                            <Button
+                                android:onClick="irMapa"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:text="Mapa"
+                                android:id="@+id/botonMapa"
+                                android:background="@drawable/btncambia"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_margin="10dp"
+                                android:textColor="@color/colorPrimary"/>
+
 
                         </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="373dp">
+
+                            <ListView
+                                android:id="@+id/ma_lv_eventos_cercanos"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+
 
                     </LinearLayout>
 
 
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/ma_fab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|bottom"
-                        android:src="@drawable/crear24"
-                        app2:backgroundTint="@color/violeta1"
-                        app2:fab_type="normal" />
 
 
-                </LinearLayout>
+                    <LinearLayout android:id="@+id/tab1"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary"
+                        android:weightSum="1">
 
-            </FrameLayout>
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="350dp">
 
-        </LinearLayout>
-    </TabHost>
-</LinearLayout>
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="197dp"
+                                android:layout_height="match_parent"
+                                android:id="@+id/layoutMisEventos"
+                                android:visibility="gone">
 
+                                <TextView android:id="@+id/txtview_mis_eventos"
+                                    android:text="Eventos Propios"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="33dp"
+                                    android:paddingStart="4dp"
+                                    android:paddingLeft="4dp" />
 
+                                <ListView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/ma_listar_mis_eventos" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:text="Eventos en los que participo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="33dp"
+                                    android:id="@+id/txtview_eventos_paticipo"
+                                    android:textAlignment="viewEnd"
+                                    android:paddingEnd="4dp"
+                                    tools:ignore="RtlCompat" />
+
+                                <ListView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/ma_eventos_donde_participo" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <android.support.design.widget.FloatingActionButton
+                            android:id="@+id/ma_fab"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|bottom" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+            </LinearLayout>
+        </TabHost>
+        </ScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout >-->

@@ -57,7 +57,7 @@ public class ListaSolicitudAdmin extends AppCompatActivity {
 
 
 
-        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
+        /*final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.rosafuxia1,R.color.violetadiseno,R.color.violeta1);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -77,7 +77,7 @@ public class ListaSolicitudAdmin extends AppCompatActivity {
                     }
                 },4000);   //Actualiza pantalla
             }
-        });
+        });*/
 
     }
 

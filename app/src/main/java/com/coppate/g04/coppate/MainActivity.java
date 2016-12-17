@@ -14,11 +14,17 @@ import android.os.Handler;
 
 import android.os.Message;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +33,7 @@ import android.widget.ImageButton;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -68,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ProgressDialog progress;
 
+    FloatingActionButton fab;
 
     // tomamos los ListView para mostrar los eventos cercanos, de otros y propios
     ListView eventos_de_otros;
@@ -93,6 +101,13 @@ public class MainActivity extends AppCompatActivity {
 
     private LinearLayout LayoutMisEventos;
 
+    //Log
+    private final String TAG = getClass().getSimpleName();
+
+
+    private Adaptador_ViewPagerPrincipal Adaptador_ViewPagerPrincipal;
+    private ViewPager ViewPager;
+
     Boolean actualizar;
 
     @Override
@@ -100,8 +115,49 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LayoutMisEventos = (LinearLayout) findViewById(R.id.layoutMisEventos);
+
+        // Iniciamos la barra de tabs
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.TabLayoutPrincipal);
+        // agregamos las 2 tabs que tenemos con los eventos cercanos y los propios
+        tabLayout.addTab(tabLayout.newTab());
+        tabLayout.addTab(tabLayout.newTab());
+        tabLayout.addTab(tabLayout.newTab());
+
+        // Iniciamos el viewPager.
+        ViewPager = (ViewPager) findViewById(R.id.ViewPagerPrincipal);
+        // Creamos el adaptador, al cual le pasamos por parámetro el gestor de Fragmentos y muy importante, el nº de tabs o secciones que hemos creado.
+        Adaptador_ViewPagerPrincipal = new Adaptador_ViewPagerPrincipal(getSupportFragmentManager(), tabLayout.getTabCount(), this);
+        // Y los vinculamos.
+        ViewPager.setAdapter(Adaptador_ViewPagerPrincipal);
+
+        // Y por último, vinculamos el viewpager con el control de tabs para sincronizar ambos.
+        tabLayout.setupWithViewPager(ViewPager);
+
+        tabLayout.getTabAt(0).setIcon(R.drawable.miseventos2);
+        tabLayout.getTabAt(1).setIcon(R.drawable.pin2);
+        tabLayout.getTabAt(2).setIcon(R.drawable.icono32);
+
+        ImageView tab = (ImageView) LayoutInflater.from(this).inflate(R.layout.image_boton, null);
+        ImageView tab2 = (ImageView)LayoutInflater.from(this).inflate(R.layout.buscar_boton_tab,null);
+        ImageView tab3 = (ImageView)LayoutInflater.from(this).inflate(R.layout.tab_eventos_propios,null);
+
+        tabLayout.getTabAt(0).setCustomView(tab2);
+        tabLayout.getTabAt(1).setCustomView(tab);
+        tabLayout.getTabAt(2).setCustomView(tab3);
+
+        if(MisEventos.getInstance().getActualizar()){
+            descargar();
+        }
+
+        //+*******************************************************************************************
+
+
+        /*LayoutMisEventos = (LinearLayout) findViewById(R.id.layoutMisEventos);
         LayoutMisEventos.setVisibility(View.VISIBLE);
+
+        //actualizar = false;
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.rosafuxia1,R.color.violetadiseno,R.color.violeta1);
 
         funciones = new Funciones(getApplicationContext());
 
@@ -143,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                 Usuario.getInstance().setFoto(Profile.getCurrentProfile().getProfilePictureUri(128,128));
                 funciones.mostrarToastLargo("Hola :" + Usuario.getInstance().getNombre() + " " + Usuario.getInstance().getApellido());
             }catch (Exception e){
-              //  funciones.mostrarToastCorto(e.toString());
+                funciones.mostrarToastCorto(e.toString());
             }
         }
 
@@ -186,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         catch (Exception e) {
-          //  funciones.mostrarToastCorto("Deslice hacia abajo");
+            funciones.mostrarToastCorto("Deslice hacia abajo");
             //actualizar = true;
 
         }
@@ -201,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         catch (Exception e) {
-           // funciones.mostrarToastCorto("Deslice hacia abajo para actualizar");
+            funciones.mostrarToastCorto("Deslice hacia abajo para actualizar");
         }
 
 
@@ -220,9 +276,7 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.ma_fab);
-        //fab.setImageResource(R.drawable.crear16);
-        //fab.setSize(FloatingActionButton.SIZE_AUTO);
+        /*fab = (FloatingActionButton) tabLayout.getChildAt(0).getfindViewById(R.id.ma_fab);
         //fab.setImageResource(R.drawable.crear6);
         //fab.setSize(FloatingActionButton.SIZE_AUTO);
         //fab.setImageDrawable(R.drawable.crear6);
@@ -230,11 +284,11 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
                 goCrearEvento(view);
             }
-        });
+        });*/
 
 
       /*  probando.setOnClickListener(new View.OnClickListener() {
@@ -246,22 +300,28 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
 
-        botonBuscar.setOnClickListener(new View.OnClickListener() {
+        /*botonBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goBuscar();
                 //goAcercaDe();
             }
-        });
+        });*/
 
-        if(MisEventos.getInstance().getActualizar() == true){
-            descargar(tabs.getCurrentTabView());
+        /*if(MisEventos.getInstance().getActualizar() == true){
+            descargar(tabs.getCurrentTabView(),swipeRefreshLayout);
         }
-
+        if(actualizar){
+            actualizarPantalla(swipeRefreshLayout);
+            actualizar=false;
+        }else {
+            NoActualizarPantalla(swipeRefreshLayout);
+            actualizar=true;
+        }*/
     }
 
     // funcion que sirve para crear un hilo en segundo plano mientras se cargan los datos de la base de datos en las listas de pantalla
-    public void descargar(View view ){
+    public void descargar(){
 
         progress=new ProgressDialog(this);
         progress.setMessage("Actualizando la lista de eventos....");
@@ -298,6 +358,47 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         t.start();
+    }
+
+    private  void NoActualizarPantalla(final SwipeRefreshLayout swr){
+        swr.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                //swipeRefreshLayout.setRefreshing(true);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swr.setRefreshing(false);
+                    }
+                },500);   //Actualiza pantalla
+            }
+        });
+    }
+
+    private  void actualizarPantalla(final SwipeRefreshLayout swr){
+        swr.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                //swipeRefreshLayout.setRefreshing(true);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swr.setRefreshing(false);
+
+                        mostrarEventosCercanos();
+                        mostrarMisEventos(lista_eventos_mios);
+                        mostrarEventosEnQueParticipo(lista_eventos_otros_participo);
+
+                        finish();
+                        startActivity(getIntent());
+
+
+                    }
+                },4000);   //Actualiza pantalla
+            }
+        });
     }
 
 
@@ -380,7 +481,7 @@ public class MainActivity extends AppCompatActivity {
             });
             // termina el listview
         }catch (Exception e){
-    //        funciones.mostrarToastCorto("No fue posible cargar la lista de eventos");
+            funciones.mostrarToastCorto("No fue posible cargar la lista de eventos");
         }
     }
 
@@ -399,7 +500,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent_descripcion, bndlanimation);
             //MainActivity.this.finish();
         }catch (Exception e){
-       //     funciones.mostrarToastCorto("Error al cargar la siguiente pantalla");
+            funciones.mostrarToastCorto("Error al cargar la siguiente pantalla");
         }
     }
 
@@ -422,7 +523,7 @@ public class MainActivity extends AppCompatActivity {
             });
             // termina el listview
         }catch (Exception e){
-        //    funciones.mostrarToastCorto("No fue posible cargar la lista de eventos");
+            funciones.mostrarToastCorto("No fue posible cargar la lista de eventos");
         }
     }
 
@@ -437,7 +538,7 @@ public class MainActivity extends AppCompatActivity {
             // lanzamos la actividad de DESCRIPCION y le cargamos la animacion
             startActivity(intent_descripcion, bndlanimation);
         }catch (Exception e){
-         //   funciones.mostrarToastCorto("Error al cargar la siguiente pantalla");
+            funciones.mostrarToastCorto("Error al cargar la siguiente pantalla");
         }
     }
 
@@ -492,7 +593,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }catch (Exception e){
-      //      funciones.mostrarToastCorto("Se ha producido un error al cargar los eventos cercanos");
+            funciones.mostrarToastCorto("Se ha producido un error al cargar los eventos cercanos");
         }
     }
 
@@ -593,7 +694,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-             //           funciones.mostrarToastCorto(("Se ha producido un Error Volley: " + error.getMessage()));
+                        funciones.mostrarToastCorto(("Se ha producido un Error Volley: " + error.getMessage()));
                     }
                 }
         ) {
@@ -635,7 +736,7 @@ public class MainActivity extends AppCompatActivity {
                                 new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-                      //                  funciones.mostrarToastCorto("Debug1: Error en listarEventoEnQueParticipo");
+                                        funciones.mostrarToastCorto("Debug1: Error en listarEventoEnQueParticipo");
                                     }
                                 }
 
@@ -658,7 +759,7 @@ public class MainActivity extends AppCompatActivity {
                     //funciones.mostrarToastLargo(MisEventos.getInstance().getEventos()[0].getNombre());
                     break;
                 case "2": // FALLIDO
-         //           funciones.mostrarToastCorto("Debug2: Error en seteaEventosMiembro");;
+                    funciones.mostrarToastCorto("Debug2: Error en seteaEventosMiembro");;
                     break;
             }
 
@@ -692,7 +793,7 @@ public class MainActivity extends AppCompatActivity {
                                 new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-                    //                    funciones.mostrarToastCorto("Debug1: Error en listarEventoPorOwner");
+                                        funciones.mostrarToastCorto("Debug1: Error en listarEventoPorOwner");
                                     }
                                 }
 
@@ -722,7 +823,7 @@ public class MainActivity extends AppCompatActivity {
                     //funciones.mostrarToastLargo(MisEventos.getInstance().getEventos()[0].getNombre());
                     break;
                 case "2": // FALLIDO
-           //         funciones.mostrarToastCorto("Debug2: Error en procesarRespuesta");;
+                    funciones.mostrarToastCorto("Debug2: Error en procesarRespuesta");;
                     break;
             }
 
@@ -841,7 +942,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-           //             funciones.mostrarToastCorto(("Se ha producido un Error Volley: " + error.getMessage()));
+                        funciones.mostrarToastCorto(("Se ha producido un Error Volley: " + error.getMessage()));
                     }
                 }
         ) {
@@ -874,7 +975,7 @@ public class MainActivity extends AppCompatActivity {
                     //funciones.mostrarToastLargo(MisEventos.getInstance().getEventos()[0].getNombre());
                     break;
                 case "2": // FALLIDO
-          //          funciones.mostrarToastCorto("Debug2: No encontró el registro");;
+                    funciones.mostrarToastCorto("Debug2: No encontró el registro");;
                     break;
             }
 
