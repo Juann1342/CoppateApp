@@ -4,19 +4,18 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,14 +25,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gson.Gson;
+
 
 public class Fragment_seccion2 extends Fragment {
 
     Funciones funciones;
-    ListView mis_eventos;
 
     private ArrayList<FilaEvento> arrayEventosPropios;
     private EventoListaAdapter eventoListaAdapterPropios;
+
+    ListView mis_eventos;
 
     private Gson gson = new Gson();
 
@@ -48,17 +50,16 @@ public class Fragment_seccion2 extends Fragment {
     }
 
     private void initUI(View v){
-        funciones = new Funciones(getActivity().getApplicationContext());
         mis_eventos = (ListView) v.findViewById(R.id.ma_listar_mis_eventos);
         listarEventoPorOwner();
         mostrarEventosPropios();
-        FloatingActionButton fab = (FloatingActionButton)v.findViewById(R.id.ma_fab);
+        /*FloatingActionButton fab = (FloatingActionButton)v.findViewById(R.id.ma_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goCrearEvento(v);
             }
-        });
+        });*/
     }
 
     private void goCrearEvento(View v){
@@ -69,35 +70,36 @@ public class Fragment_seccion2 extends Fragment {
     }
 
     private void mostrarEventosPropios(){
+        funciones = new Funciones(getActivity().getApplicationContext());
         arrayEventosPropios = new ArrayList<FilaEvento>();
         eventoListaAdapterPropios = new EventoListaAdapter(getActivity(),arrayEventosPropios);
         try {
             // inicializamos el eventoListaAdapter para mostrar los eventos cercanos
             /*adapt_eventos_otros = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
             // le cargamos los datos que deben traerlos de la base de datos.*/
-            int largo = MisEventos.getInstance().getEventos().length;
-            Integer sexo = 0;
-            Integer categor = 0;
-            for (int i = 0; i<largo; i++) {
-                sexo = Integer.valueOf(MisEventos.getInstance().getEventos()[i].getId_sexo());
-                categor = Integer.valueOf(MisEventos.getInstance().getEventos()[i].getId_categoria());
-                if (sexo == 1) {
-                    if (categor == 1) {
-                        arrayEventosPropios.add(new FilaEvento(MisEventos.getInstance().getEventos()[i].getNombre(), MisEventos.getInstance().getEventos()[i].getDesc_evento(), R.drawable.masculino, R.drawable.personas));
-                    } else if (categor == 2) {
-                        arrayEventosPropios.add(new FilaEvento(MisEventos.getInstance().getEventos()[i].getNombre(), MisEventos.getInstance().getEventos()[i].getDesc_evento(), R.drawable.masculino, R.drawable.pelota));
+            int largo_propios = MisEventos.getInstance().getEventos().length;
+            Integer sexo_propios = 0;
+            Integer categoria_propios = 0;
+            for (int i = 1; i<largo_propios; i++) {
+                sexo_propios = Integer.valueOf(MisEventos.getInstance().getEventos()[largo_propios-i].getId_sexo());
+                categoria_propios = Integer.valueOf(MisEventos.getInstance().getEventos()[largo_propios-i].getId_categoria());
+                if (sexo_propios == 1) {
+                    if (categoria_propios == 1) {
+                        arrayEventosPropios.add(new FilaEvento(MisEventos.getInstance().getEventos()[largo_propios-i].getNombre(), MisEventos.getInstance().getEventos()[largo_propios-i].getDesc_evento(), R.drawable.masculino, R.drawable.personas));
+                    } else if (categoria_propios == 2) {
+                        arrayEventosPropios.add(new FilaEvento(MisEventos.getInstance().getEventos()[largo_propios-i].getNombre(), MisEventos.getInstance().getEventos()[largo_propios-i].getDesc_evento(), R.drawable.masculino, R.drawable.pelota));
                     }
-                } else if (sexo == 2) {
-                    if (categor == 1) {
-                        arrayEventosPropios.add(new FilaEvento(MisEventos.getInstance().getEventos()[i].getNombre(), MisEventos.getInstance().getEventos()[i].getDesc_evento(), R.drawable.femenino, R.drawable.personas));
-                    } else if (categor == 2) {
-                        arrayEventosPropios.add(new FilaEvento(MisEventos.getInstance().getEventos()[i].getNombre(), MisEventos.getInstance().getEventos()[i].getDesc_evento(), R.drawable.femenino, R.drawable.pelota));
+                } else if (sexo_propios == 2) {
+                    if (categoria_propios == 1) {
+                        arrayEventosPropios.add(new FilaEvento(MisEventos.getInstance().getEventos()[largo_propios-i].getNombre(), MisEventos.getInstance().getEventos()[largo_propios-i].getDesc_evento(), R.drawable.femenino, R.drawable.personas));
+                    } else if (categoria_propios == 2) {
+                        arrayEventosPropios.add(new FilaEvento(MisEventos.getInstance().getEventos()[largo_propios-i].getNombre(), MisEventos.getInstance().getEventos()[largo_propios-i].getDesc_evento(), R.drawable.femenino, R.drawable.pelota));
                     }
-                } else if (sexo == 3) {
-                    if (categor == 1) {
-                        arrayEventosPropios.add(new FilaEvento(MisEventos.getInstance().getEventos()[i].getNombre(), MisEventos.getInstance().getEventos()[i].getDesc_evento(), R.drawable.unisex, R.drawable.personas));
-                    } else if (categor == 2) {
-                        arrayEventosPropios.add(new FilaEvento(MisEventos.getInstance().getEventos()[i].getNombre(), MisEventos.getInstance().getEventos()[i].getDesc_evento(), R.drawable.unisex, R.drawable.pelota));
+                } else if (sexo_propios == 3) {
+                    if (categoria_propios == 1) {
+                        arrayEventosPropios.add(new FilaEvento(MisEventos.getInstance().getEventos()[largo_propios-i].getNombre(), MisEventos.getInstance().getEventos()[largo_propios-i].getDesc_evento(), R.drawable.unisex, R.drawable.personas));
+                    } else if (categoria_propios == 2) {
+                        arrayEventosPropios.add(new FilaEvento(MisEventos.getInstance().getEventos()[largo_propios-i].getNombre(), MisEventos.getInstance().getEventos()[largo_propios-i].getDesc_evento(), R.drawable.unisex, R.drawable.pelota));
                     }
                 }
                 /*cercanos_prueba.agregarTitulo(MisEventos.getInstance().getEventosCercanos()[i].getNombre());
@@ -114,7 +116,7 @@ public class Fragment_seccion2 extends Fragment {
             });
 
         }catch (Exception e){
-            funciones.mostrarToastCorto("Se ha producido un error al cargar los eventos cercanos");
+            funciones.mostrarToastCorto("Se ha producido un error al cargar los eventos propios");
         }
     }
 
@@ -145,10 +147,7 @@ public class Fragment_seccion2 extends Fragment {
      */
     public void listarEventoPorOwner() {
         // Petición GET
-        VolleySingleton.
-                getInstance(getActivity().getApplicationContext()).
-                addToRequestQueue(
-                        new JsonObjectRequest(
+        VolleySingleton.getInstance(getActivity().getApplicationContext()).addToRequestQueue(new JsonObjectRequest(
                                 Request.Method.GET,
                                 Constantes.GET_BY_OWNER + "?idOwner=" + Usuario.getInstance().getId_usuario(),
                                 null,
@@ -168,17 +167,22 @@ public class Fragment_seccion2 extends Fragment {
                                     }
                                 }
 
-                        )
+                        ){
+                            @Override
+                            public Map<String, String> getHeaders() {
+                                Map<String, String> headers = new HashMap<String, String>();
+                                headers.put("Content-Type", "application/json; charset=utf-8");
+                                headers.put("Accept", "application/json");
+                                return headers;
+                            }
+                            @Override
+                            public String getBodyContentType() {
+                                return "application/json; charset=utf-8" + getParamsEncoding();
+                            }
+                        }
                 );
     }
 
-
-    /**
-     * Interpreta los resultados de la respuesta y así
-     * realizar las operaciones correspondientes
-     *
-     * @param response Objeto Json con la respuesta
-     */
     private void procesarRespuesta(JSONObject response) {
         try {
             // Obtener atributo "estado"

@@ -97,28 +97,29 @@ public class Fragment_seccion1 extends Fragment {
             /*adapt_eventos_otros = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
             // le cargamos los datos que deben traerlos de la base de datos.*/
             int largo = MisEventos.getInstance().getEventosCercanos().length;
+            int largoX = 25; // seteamos un largo a mano hasta que definamos la posicion de los eventos cercanos
             Integer sexo = 0;
             Integer categor = 0;
-            for (int i = 0; i<largo; i++) {
-                sexo = Integer.valueOf(MisEventos.getInstance().getEventosCercanos()[i].getId_sexo());
-                categor = Integer.valueOf(MisEventos.getInstance().getEventosCercanos()[i].getId_categoria());
+            for (int i = 1; i<largoX; i++) {
+                sexo = Integer.valueOf(MisEventos.getInstance().getEventosCercanos()[largo-i].getId_sexo());
+                categor = Integer.valueOf(MisEventos.getInstance().getEventosCercanos()[largo-i].getId_categoria());
                 if (sexo == 1) {
                     if (categor == 1) {
-                        arrayEventos.add(new FilaEvento(MisEventos.getInstance().getEventosCercanos()[i].getNombre(), MisEventos.getInstance().getEventosCercanos()[i].getDesc_evento(), R.drawable.masculino, R.drawable.personas));
+                        arrayEventos.add(new FilaEvento(MisEventos.getInstance().getEventosCercanos()[largo-i].getNombre(), MisEventos.getInstance().getEventosCercanos()[largo-i].getDesc_evento(), R.drawable.masculino, R.drawable.personas));
                     } else if (categor == 2) {
-                        arrayEventos.add(new FilaEvento(MisEventos.getInstance().getEventosCercanos()[i].getNombre(), MisEventos.getInstance().getEventosCercanos()[i].getDesc_evento(), R.drawable.masculino, R.drawable.pelota));
+                        arrayEventos.add(new FilaEvento(MisEventos.getInstance().getEventosCercanos()[largo-i].getNombre(), MisEventos.getInstance().getEventosCercanos()[largo-i].getDesc_evento(), R.drawable.masculino, R.drawable.pelota));
                     }
                 } else if (sexo == 2) {
                     if (categor == 1) {
-                        arrayEventos.add(new FilaEvento(MisEventos.getInstance().getEventosCercanos()[i].getNombre(), MisEventos.getInstance().getEventosCercanos()[i].getDesc_evento(), R.drawable.femenino, R.drawable.personas));
+                        arrayEventos.add(new FilaEvento(MisEventos.getInstance().getEventosCercanos()[largo-i].getNombre(), MisEventos.getInstance().getEventosCercanos()[largo-i].getDesc_evento(), R.drawable.femenino, R.drawable.personas));
                     } else if (categor == 2) {
-                        arrayEventos.add(new FilaEvento(MisEventos.getInstance().getEventosCercanos()[i].getNombre(), MisEventos.getInstance().getEventosCercanos()[i].getDesc_evento(), R.drawable.femenino, R.drawable.pelota));
+                        arrayEventos.add(new FilaEvento(MisEventos.getInstance().getEventosCercanos()[largo-i].getNombre(), MisEventos.getInstance().getEventosCercanos()[largo-i].getDesc_evento(), R.drawable.femenino, R.drawable.pelota));
                     }
                 } else if (sexo == 3) {
                     if (categor == 1) {
-                        arrayEventos.add(new FilaEvento(MisEventos.getInstance().getEventosCercanos()[i].getNombre(), MisEventos.getInstance().getEventosCercanos()[i].getDesc_evento(), R.drawable.unisex, R.drawable.personas));
+                        arrayEventos.add(new FilaEvento(MisEventos.getInstance().getEventosCercanos()[largo-i].getNombre(), MisEventos.getInstance().getEventosCercanos()[largo-i].getDesc_evento(), R.drawable.unisex, R.drawable.personas));
                     } else if (categor == 2) {
-                        arrayEventos.add(new FilaEvento(MisEventos.getInstance().getEventosCercanos()[i].getNombre(), MisEventos.getInstance().getEventosCercanos()[i].getDesc_evento(), R.drawable.unisex, R.drawable.pelota));
+                        arrayEventos.add(new FilaEvento(MisEventos.getInstance().getEventosCercanos()[largo-i].getNombre(), MisEventos.getInstance().getEventosCercanos()[largo-i].getDesc_evento(), R.drawable.unisex, R.drawable.pelota));
                     }
                 }
                 /*cercanos_prueba.agregarTitulo(MisEventos.getInstance().getEventosCercanos()[i].getNombre());

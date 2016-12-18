@@ -25,6 +25,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Fragment_seccion3 extends Fragment {
 
@@ -61,29 +63,29 @@ public class Fragment_seccion3 extends Fragment {
             // inicializamos el eventoListaAdapter para mostrar los eventos cercanos
             /*adapt_eventos_otros = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1);
             // le cargamos los datos que deben traerlos de la base de datos.*/
-            int largo = MisEventos.getInstance().getEventos_que_participo().length;
-            Integer sexo = 0;
-            Integer categor = 0;
-            for (int i = 0; i<largo; i++) {
-                sexo = Integer.valueOf(MisEventos.getInstance().getEventos_que_participo()[i].getId_sexo());
-                categor = Integer.valueOf(MisEventos.getInstance().getEventos_que_participo()[i].getId_categoria());
-                if (sexo == 1) {
-                    if (categor == 1) {
-                        arrayEventosParticipo.add(new FilaEvento(MisEventos.getInstance().getEventos_que_participo()[i].getNombre(), MisEventos.getInstance().getEventos_que_participo()[i].getDesc_evento(), R.drawable.masculino, R.drawable.personas));
-                    } else if (categor == 2) {
-                        arrayEventosParticipo.add(new FilaEvento(MisEventos.getInstance().getEventos_que_participo()[i].getNombre(), MisEventos.getInstance().getEventos_que_participo()[i].getDesc_evento(), R.drawable.masculino, R.drawable.pelota));
+            int largo_participo = MisEventos.getInstance().getEventos_que_participo().length;
+            Integer sexo_participo = 0;
+            Integer categoria_participo = 0;
+            for (int i = 1; i<largo_participo; i++) {
+                sexo_participo = Integer.valueOf(MisEventos.getInstance().getEventos_que_participo()[largo_participo-i].getId_sexo());
+                categoria_participo = Integer.valueOf(MisEventos.getInstance().getEventos_que_participo()[largo_participo-i].getId_categoria());
+                if (sexo_participo == 1) {
+                    if (categoria_participo == 1) {
+                        arrayEventosParticipo.add(new FilaEvento(MisEventos.getInstance().getEventos_que_participo()[largo_participo-i].getNombre(), MisEventos.getInstance().getEventos_que_participo()[largo_participo-i].getDesc_evento(), R.drawable.masculino, R.drawable.personas));
+                    } else if (categoria_participo == 2) {
+                        arrayEventosParticipo.add(new FilaEvento(MisEventos.getInstance().getEventos_que_participo()[largo_participo-i].getNombre(), MisEventos.getInstance().getEventos_que_participo()[largo_participo-i].getDesc_evento(), R.drawable.masculino, R.drawable.pelota));
                     }
-                } else if (sexo == 2) {
-                    if (categor == 1) {
-                        arrayEventosParticipo.add(new FilaEvento(MisEventos.getInstance().getEventos_que_participo()[i].getNombre(), MisEventos.getInstance().getEventos_que_participo()[i].getDesc_evento(), R.drawable.femenino, R.drawable.personas));
-                    } else if (categor == 2) {
-                        arrayEventosParticipo.add(new FilaEvento(MisEventos.getInstance().getEventos_que_participo()[i].getNombre(), MisEventos.getInstance().getEventos_que_participo()[i].getDesc_evento(), R.drawable.femenino, R.drawable.pelota));
+                } else if (sexo_participo == 2) {
+                    if (categoria_participo == 1) {
+                        arrayEventosParticipo.add(new FilaEvento(MisEventos.getInstance().getEventos_que_participo()[largo_participo-i].getNombre(), MisEventos.getInstance().getEventos_que_participo()[largo_participo-i].getDesc_evento(), R.drawable.femenino, R.drawable.personas));
+                    } else if (categoria_participo == 2) {
+                        arrayEventosParticipo.add(new FilaEvento(MisEventos.getInstance().getEventos_que_participo()[largo_participo-i].getNombre(), MisEventos.getInstance().getEventos_que_participo()[largo_participo-i].getDesc_evento(), R.drawable.femenino, R.drawable.pelota));
                     }
-                } else if (sexo == 3) {
-                    if (categor == 1) {
-                        arrayEventosParticipo.add(new FilaEvento(MisEventos.getInstance().getEventos_que_participo()[i].getNombre(), MisEventos.getInstance().getEventos_que_participo()[i].getDesc_evento(), R.drawable.unisex, R.drawable.personas));
-                    } else if (categor == 2) {
-                        arrayEventosParticipo.add(new FilaEvento(MisEventos.getInstance().getEventos_que_participo()[i].getNombre(), MisEventos.getInstance().getEventos_que_participo()[i].getDesc_evento(), R.drawable.unisex, R.drawable.pelota));
+                } else if (sexo_participo == 3) {
+                    if (categoria_participo == 1) {
+                        arrayEventosParticipo.add(new FilaEvento(MisEventos.getInstance().getEventos_que_participo()[largo_participo-i].getNombre(), MisEventos.getInstance().getEventos_que_participo()[largo_participo-i].getDesc_evento(), R.drawable.unisex, R.drawable.personas));
+                    } else if (categoria_participo == 2) {
+                        arrayEventosParticipo.add(new FilaEvento(MisEventos.getInstance().getEventos_que_participo()[largo_participo-i].getNombre(), MisEventos.getInstance().getEventos_que_participo()[largo_participo-i].getDesc_evento(), R.drawable.unisex, R.drawable.pelota));
                     }
                 }
 
@@ -98,7 +100,7 @@ public class Fragment_seccion3 extends Fragment {
             });
 
         }catch (Exception e){
-            funciones.mostrarToastCorto("Se ha producido un error al cargar los eventos cercanos");
+            funciones.mostrarToastCorto("Se ha producido un error al cargar los eventos en que participo");
         }
     }
 
@@ -118,10 +120,7 @@ public class Fragment_seccion3 extends Fragment {
     }
 
     public void listarEventoEnQueParticipo(){
-        VolleySingleton.
-                getInstance(getActivity().getApplicationContext()).
-                addToRequestQueue(
-                        new JsonObjectRequest(
+        VolleySingleton.getInstance(getActivity().getApplicationContext()).addToRequestQueue(new JsonObjectRequest(
                                 Request.Method.GET,
                                 Constantes.GET_EVENTOS_BY_MIEMBRO + "?idUsuario=" + Usuario.getInstance().getId_usuario(),
                                 null,
@@ -140,7 +139,19 @@ public class Fragment_seccion3 extends Fragment {
                                     }
                                 }
 
-                        )
+                        ){
+                            @Override
+                            public Map<String, String> getHeaders() {
+                                Map<String, String> headers = new HashMap<String, String>();
+                                headers.put("Content-Type", "application/json; charset=utf-8");
+                                headers.put("Accept", "application/json");
+                                return headers;
+                            }
+                            @Override
+                            public String getBodyContentType() {
+                                return "application/json; charset=utf-8" + getParamsEncoding();
+                            }
+                        }
                 );
     }
 

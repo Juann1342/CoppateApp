@@ -12,6 +12,10 @@ public class Adaptador_ViewPagerPrincipal extends FragmentPagerAdapter {
     private int numeroDeSecciones;  //nº de secciones
     private Context contexto;       //contexto
 
+    Boolean fragmento1 = true;
+    Boolean fragmento2 = true;
+    Boolean fragmento3 = true;
+
 
     //recibimos en el constructor el gestor de fragmentos, el nº de secciones después de haber creado
     //las tabs y el contexto de aplicación
@@ -31,11 +35,11 @@ public class Adaptador_ViewPagerPrincipal extends FragmentPagerAdapter {
             case 0: // siempre empieza desde 0
 
                 return new Fragment_seccion1();
+
             case 1:
-
                 return new Fragment_seccion2();
-            case 2:
 
+            case 2:
                 return new Fragment_seccion3();
 
             // si la posición recibida no se corresponde a ninguna sección
@@ -44,6 +48,7 @@ public class Adaptador_ViewPagerPrincipal extends FragmentPagerAdapter {
         }
 
     }
+
 
     /*  getCount() devuelve el nº de secciones, dato que recibiremos cuando instanciemos el adaptador
         desde nuestra actividad principal */

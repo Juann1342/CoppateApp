@@ -10,17 +10,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-                    android:text="Eventos en los que participo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="33dp"
-                    android:id="@+id/txtview_eventos_paticipo" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-                <ListView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/ma_eventos_donde_participo" />
+            <TextView
+                android:text="Eventos en los que participo"
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:id="@+id/txtview_eventos_paticipo" />
 
-            </LinearLayout>
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ma_eventos_donde_participo" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 </RelativeLayout>
